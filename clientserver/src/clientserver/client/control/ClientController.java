@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author greundzo
  */
-public class clientController implements Initializable {
+public class ClientController implements Initializable {
     
     @FXML
     private Button button;
@@ -35,15 +35,18 @@ public class clientController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException{
         try {
-            Parent rootSecond = FXMLLoader.load(getClass().getResource("FirstStage.fxml"));
+            Parent rootSecond = FXMLLoader.load(getClass().getResource("SendMail.fxml"));
             
             Stage stageSecond = new Stage();
             
             stageSecond.setTitle("@DiMailService");
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.show();
-        }
-        catch(IOException e){
+            
+            Stage stage = (Stage) button.getScene().getWindow(); 
+            stage.close(); 
+            
+        }catch(IOException e){
             System.out.println("Can't load window.");
         }
     }

@@ -7,14 +7,23 @@ package clientserver.client.control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
  *
  * @author greundzo
  */
-public class StageViewController implements Initializable {
+public class SendMailController implements Initializable {
+
+    @FXML
+    private AnchorPane sendPane;
+    @FXML
+    private Button goBackButton;
 
     /**
      * Initializes the controller class.
@@ -23,5 +32,10 @@ public class StageViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void goBackAction(ActionEvent event) {
+        
+    }
     
 }

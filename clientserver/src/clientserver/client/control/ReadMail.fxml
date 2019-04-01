@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientserver.client.view.ReadMailController">
+   <children>
+      <ScrollPane prefHeight="400.0" prefWidth="200.0">
+         <content>
+            <TitledPane fx:id="mailList" animated="false" prefHeight="400.0" prefWidth="202.0" text="Posta in arrivo">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="194.0" />
+               </content>
+            </TitledPane>
+         </content>
+      </ScrollPane>
+      <AnchorPane fx:id="readPane" layoutX="214.0" layoutY="17.0" prefHeight="375.0" prefWidth="363.0">
+         <children>
+            <Button fx:id="mailButton" layoutY="2.0" mnemonicParsing="false" onAction="#newMailAction" text="Nuova Mail" />
+            <TextArea fx:id="readArea" layoutY="33.0" prefHeight="264.0" prefWidth="363.0" />
+            <GridPane alignment="CENTER" layoutX="-12.0" layoutY="302.0" prefHeight="42.0" prefWidth="375.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="105.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="89.0" minWidth="10.0" prefWidth="83.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="ansButton" mnemonicParsing="false" onAction="#ansMailAction" prefHeight="25.0" prefWidth="79.0" text="Rispondi " />
+                  <Button fx:id="ansToAllButton" mnemonicParsing="false" onAction="#ansToAllAction" prefHeight="17.0" prefWidth="107.0" text="Rispondi a tutti " GridPane.columnIndex="1" />
+                  <Button fx:id="forwardButton" alignment="CENTER" mnemonicParsing="false" onAction="#forwardMailAction" text="Inoltra" GridPane.columnIndex="2" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMailAction" prefHeight="25.0" prefWidth="98.0" text="Elimina" GridPane.columnIndex="3" />
+               </children>
+            </GridPane>
+            <Button fx:id="logoutButton" layoutX="300.0" layoutY="2.0" mnemonicParsing="false" onAction="#logoutAction" text="Logout" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
