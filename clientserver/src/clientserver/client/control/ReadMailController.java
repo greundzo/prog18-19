@@ -58,7 +58,7 @@ public class ReadMailController implements Initializable {
     @FXML
     private Button ansToAllButton;
 
-/*  @FXML
+    @FXML
     void newMailAction(ActionEvent event) {
         
     }
@@ -82,7 +82,7 @@ public class ReadMailController implements Initializable {
     void deleteMailAction(ActionEvent event) {
 
     }
-    */
+    
     @FXML
     void logoutAction(ActionEvent e) {          
         try {

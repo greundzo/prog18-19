@@ -21,7 +21,7 @@ public class ServerModel extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader serverLoader = new FXMLLoader();
         //serverLoader.setLocation(clientserver.server.model.getClass().getResource("ServerStage.fxml"));
-        Parent root = (Parent)serverLoader.load(getClass().getResource("ServerStage.fxml"));
+        Parent root = (Parent)serverLoader.load(getClass().getResource("/view/ServerStage.fxml"));
         
         Scene scene = new Scene(root);
         
