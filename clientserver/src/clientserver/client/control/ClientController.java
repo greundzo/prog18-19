@@ -35,7 +35,7 @@ public class ClientController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException{
         try {
-            Parent rootSecond = FXMLLoader.load(getClass().getResource("/view/SendMail.fxml"));
+            Parent rootSecond = FXMLLoader.load(getClass().getResource("ReadMail.fxml"));
             
             Stage stageSecond = new Stage();
             

@@ -5,6 +5,7 @@
  */
 package clientserver.server.model;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,15 +20,18 @@ public class ServerModel extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader serverLoader = new FXMLLoader();
-        //serverLoader.setLocation(clientserver.server.model.getClass().getResource("ServerStage.fxml"));
-        Parent root = (Parent)serverLoader.load(getClass().getResource("/view/ServerStage.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setTitle("@DiMailServer");
-        stage.setScene(scene);
-        stage.show();
+        try {
+            //serverLoader.setLocation(clientserver.server.model.getClass().getResource("ServerStage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("ServerStage.fxml"));
+
+            Scene scene = new Scene(root);
+
+            stage.setTitle("@DiMailServer");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException e) {
+            System.out.println("SERVER: FXML NOT FOUND");
+        }    
     }
 
     /**
