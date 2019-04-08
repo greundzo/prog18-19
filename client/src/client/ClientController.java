@@ -24,6 +24,7 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ClientController implements Initializable {
+    private final ClientModel model = new ClientModel();
     
     @FXML
     private Button button;
