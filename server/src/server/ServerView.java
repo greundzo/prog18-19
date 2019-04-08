@@ -21,7 +21,6 @@ public class ServerView extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {                       
-            //Parent root = FXMLLoader.load(getClass().getResource("FXMLServer.fxml"));
             FXMLLoader serverLoader = new FXMLLoader();
             serverLoader.setLocation(ServerView.class.getResource("FXMLServer.fxml"));
             Parent root = serverLoader.load();

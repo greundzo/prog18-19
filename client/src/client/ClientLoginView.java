@@ -22,15 +22,18 @@ public class ClientLoginView extends Application {
     public void start(Stage loginStage) {
         try {
             FXMLLoader loginLoader = new FXMLLoader();
-            //FileInputStream fxmlStream = new FileInputStream("/home/greundzo/prog18-19/clientserver/src/clientserver/client/view/Login.fxml");
-            //loginLoader.setLocation(ClientModel.class.getResource("/view/Login.fxml"));
-            Parent root = loginLoader.load(getClass().getResource("Login.fxml"));
+            loginLoader.setLocation(ClientLoginView.class.getResource("Login.fxml"));
+            ClientController control = loginLoader.getController();
+            
+            Parent root = loginLoader.load();
             
             Scene scene = new Scene(root);
 
             loginStage.setTitle("@DiMailService");
             loginStage.setScene(scene);
+            loginStage.setResizable(false);
             loginStage.show();
+            
         }catch(IOException e) {
             System.out.println("CLIENT: FXML NOT FOUND");
         }    

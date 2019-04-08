@@ -19,7 +19,7 @@
       <AnchorPane fx:id="readPane" layoutX="214.0" layoutY="17.0" prefHeight="375.0" prefWidth="363.0">
          <children>
             <Button fx:id="mailButton" layoutY="2.0" mnemonicParsing="false" onAction="#newMailAction" text="Nuova Mail" />
-            <TextArea fx:id="readArea" layoutY="33.0" prefHeight="264.0" prefWidth="363.0" />
+            <TextArea fx:id="readArea" editable="false" layoutY="33.0" prefHeight="264.0" prefWidth="363.0" />
             <GridPane alignment="CENTER" layoutX="-12.0" layoutY="302.0" prefHeight="42.0" prefWidth="375.0">
               <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

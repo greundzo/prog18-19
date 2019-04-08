@@ -14,13 +14,11 @@ import java.io.IOException;
  * @author greundzo
  */
 public class ClientModel {
-    private String username;
+    private final static String users[] = {"user1@di.unito.it", "user2@di.unito.it", "user3@di.unito.it"};
     
-    public boolean checkUser(String user) throws FileNotFoundException, IOException {
-        BufferedReader fileInputReader = new BufferedReader(new FileReader("users.txt"));
-        String line = null;
-        while((line = fileInputReader.readLine()) != null) {
-            if(user==line) {
+    public static boolean checkUser(String user) {
+        for(int i = 0; i < 3; i++) {
+            if(user.equals(users[i])){
                 return true;
             }
         }

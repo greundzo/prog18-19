@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -31,33 +33,44 @@ public class ClientController implements Initializable {
     @FXML
     private AnchorPane rootPane;
     @FXML
+    private TextField userText;
+    @FXML
     private Label label;
+    @FXML
+    private Label ghostUserLabel;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) throws IOException{
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            //FileInputStream fxmlStream = new FileInputStream("/home/greundzo/prog18-19/clientserver/src/clientserver/client/view/ReadMail.fxml");
-            //loader.setLocation(ClientController.class.getResource("/clientserver/client/view/ReadMail.fxml"));
-            Parent rootSecond = (Parent) loader.load(getClass().getResource("ReadMail.fxml"));
-            
-            Stage stageSecond = new Stage();
-            
-            stageSecond.setTitle("@DiMailService");
-            stageSecond.setScene(new Scene(rootSecond));
-            stageSecond.show();
-            
-            Stage stage = (Stage) button.getScene().getWindow(); 
-            stage.close(); 
-            
-        }catch(IOException e){
-            System.out.println("Can't load window.");
-        }
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                if(ClientModel.checkUser(userText.getText())) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(ClientController.class.getResource("ReadMail.fxml"));
+                        ReadMailController readMail = loader.getController();
+                        Parent rootSecond = (Parent) loader.load();
+                        
+                        Stage stageSecond = new Stage();
+                        
+                        stageSecond.setTitle("@DiMailService - " + userText.getText());
+                        stageSecond.setScene(new Scene(rootSecond));
+                        stageSecond.setResizable(false);
+                        stageSecond.show();
+                        
+                        Stage stage = (Stage) button.getScene().getWindow();
+                        stage.close();
+                        
+                    } catch (IOException e) {
+                        System.out.println("Can't load window.");
+                    }
+                } else {
+                    ghostUserLabel.setText("USER NOT FOUND");
+                }
+            }
+        });
+    }       
 }
+
+    
