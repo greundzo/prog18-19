@@ -1,3 +1,0 @@
-user1@di.unito.it
-user2@di.unito.it
-user3@di.unito.it
