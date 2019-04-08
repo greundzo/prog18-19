@@ -26,8 +26,10 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ClientController implements Initializable {
-    private final ClientModel model = new ClientModel();
-    
+
+    private final ClientModel model = ClientModel.getInstance();
+    private String usr = null;
+
     @FXML
     private Button button;
     @FXML
@@ -38,39 +40,61 @@ public class ClientController implements Initializable {
     private Label label;
     @FXML
     private Label ghostUserLabel;
-    
+
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        button.setOnAction(new EventHandler<ActionEvent>(){
+        button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event){
-                if(ClientModel.checkUser(userText.getText())) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(ClientController.class.getResource("ReadMail.fxml"));
-                        ReadMailController readMail = loader.getController();
-                        Parent rootSecond = (Parent) loader.load();
-                        
-                        Stage stageSecond = new Stage();
-                        
-                        stageSecond.setTitle("@DiMailService - " + userText.getText());
-                        stageSecond.setScene(new Scene(rootSecond));
-                        stageSecond.setResizable(false);
-                        stageSecond.show();
-                        
-                        Stage stage = (Stage) button.getScene().getWindow();
-                        stage.close();
-                        
-                    } catch (IOException e) {
-                        System.out.println("Can't load window.");
+            public void handle(ActionEvent event) {
+                usr = userText.getText();         ///   COMINCIA LA PARTE CRITICA
+                if (model.getUser() != usr) {
+                    if (model.checkUser(usr)) {
+                        if (model.setUser(usr)) {
+                            loadClient();
+                        } else {
+                            ghostUserLabel.setText("USER LOGGED.");
+                        }
+                    } else {
+                        ghostUserLabel.setText("USER NOT FOUND");
                     }
                 } else {
-                    ghostUserLabel.setText("USER NOT FOUND");
+                    ClientModel newModel = new ClientModel();
+                    if (newModel.checkUser(usr)) {
+                        if (newModel.setUser(usr)) {
+                            loadClient();
+                        } else {
+                            ghostUserLabel.setText("ERROR LOGGING");
+                        }
+                    } else {
+                        ghostUserLabel.setText("USER NOT FOUND");
+                    }
                 }
-            }
-        });
-    }       
-}
+            }                           /// FINE PARTE CRITICA
+        }
+        );
+    }
 
-    
+    @FXML
+    public void loadClient() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(ClientController.class.getResource("ReadMail.fxml"));
+            ReadMailController readMail = loader.getController();
+            Parent rootSecond = (Parent) loader.load();
+
+            Stage stageSecond = new Stage();
+
+            stageSecond.setTitle("@DiMailService - " + usr);
+            stageSecond.setScene(new Scene(rootSecond));
+            stageSecond.setResizable(false);
+            stageSecond.show();
+
+            Stage stage = (Stage) button.getScene().getWindow();
+            stage.close();
+
+        } catch (IOException e) {
+            System.out.println("Can't load window.");
+        }
+    }
+}

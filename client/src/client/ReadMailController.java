@@ -27,7 +27,8 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ReadMailController implements Initializable {
-
+    //getInstace clientModel & check username
+    
     @FXML
     private TitledPane mailList;
     @FXML
