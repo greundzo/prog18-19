@@ -6,10 +6,11 @@
 package client;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,7 +28,8 @@ import javafx.stage.Stage;
  */
 public class ClientController implements Initializable {
 
-    private final ClientModel model = ClientModel.getInstance();
+    private ClientModel model = ClientModel.getInstance();
+    private Socket clientSocket;
     private String usr = null;
 
     @FXML
@@ -44,35 +46,17 @@ public class ClientController implements Initializable {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                usr = userText.getText();         ///   COMINCIA LA PARTE CRITICA
-                if (model.getUser() != usr) {
-                    if (model.checkUser(usr)) {
-                        if (model.setUser(usr)) {
-                            loadClient();
-                        } else {
-                            ghostUserLabel.setText("USER LOGGED.");
-                        }
-                    } else {
-                        ghostUserLabel.setText("USER NOT FOUND");
-                    }
-                } else {
-                    ClientModel newModel = new ClientModel();
-                    if (newModel.checkUser(usr)) {
-                        if (newModel.setUser(usr)) {
-                            loadClient();
-                        } else {
-                            ghostUserLabel.setText("ERROR LOGGING");
-                        }
-                    } else {
-                        ghostUserLabel.setText("USER NOT FOUND");
-                    }
-                }
-            }                           /// FINE PARTE CRITICA
+        try {
+            String host = InetAddress.getLocalHost().getHostName();
+            clientSocket = new Socket(host, 8189);
+        } catch (IOException e) {
+            ghostUserLabel.setText("SERVER OFFLINE");
         }
-        );
+    }
+        
+    @FXML
+    private void loginAction(ActionEvent event) {
+        usr = userText.getText();
     }
 
     @FXML
@@ -98,3 +82,37 @@ public class ClientController implements Initializable {
         }
     }
 }
+
+
+
+
+/*button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                usr = userText.getText();         ///   COMINCIA LA PARTE CRITICA
+                if (model.getUser().equals(usr)) {
+                    if (model.checkUser(usr)) {
+                        if (model.setUser(usr)) {
+                            loadClient();
+                        } else {
+                            ghostUserLabel.setText("USER LOGGED.");
+                        }
+                    } else {
+                        ghostUserLabel.setText("USER NOT FOUND");
+                    }
+                } else {
+                    ClientModel newModel = new ClientModel();
+                    if (newModel.checkUser(usr)) {
+                        if (newModel.setUser(usr)) {
+                            loadClient();
+                        } else {
+                            ghostUserLabel.setText("ERROR LOGGING");
+                        }
+                    } else {
+                        ghostUserLabel.setText("USER NOT FOUND");
+                    }
+                }
+            }                           /// FINE PARTE CRITICA
+        }
+        );*/
+

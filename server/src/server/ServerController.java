@@ -5,6 +5,11 @@
  */
 package server;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -23,12 +28,19 @@ import javafx.scene.layout.Pane;
  * @author greundzo
  */
 public class ServerController implements Initializable {
-    
+
+    private final ServerModel servermodel = new ServerModel();
+    private ServerSocket serverlink;
+    private Socket socket;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
+    private ObservableList<?> log;
+
     @FXML
     private Button onOffButton;
-    
+
     @FXML
-    private ListView<String> serverLog;    
+    private ListView<String> list;
 
     @FXML
     private Pane serverPane;
@@ -36,25 +48,65 @@ public class ServerController implements Initializable {
     @FXML
     private AnchorPane serverAnchor;
 
-    //ObservableList<String> serverList = FXCollections.observableArrayList("a", "b", "c");
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        //serverLog.setItems(serverList);
-        //serverLog.getItems().addAll(serverList);
-    }    
+        servermodel.startStop();
+        try {
+            serverlink = new ServerSocket(8189);
+            socket = serverlink.accept();
+        } catch (IOException e) {
+            System.out.println("ERRORE SERVER");
+        } finally {
+            try {
+                //Thread.sleep(60000);
+                socket.close();
+                serverlink.close();
+            } catch (IOException e) {
+                System.out.println("ERRORE CHIUSURA");
+            //} catch (InterruptedException e) {
+              //  System.out.println("ERRORE THREAD");
+            }
+        }
+    }
 
     @FXML
     private void onOffAction(ActionEvent event) {
-        System.out.println("ccc");
-        String power = java.time.LocalDateTime.now() + "Server On";
+        servermodel.startStop();
+        if (servermodel.checkConnection()) {
+            try {
+                serverlink = new ServerSocket(8189);
+                socket = serverlink.accept();
+                input = new ObjectInputStream(socket.getInputStream());
+                output = new ObjectOutputStream(socket.getOutputStream());
+                System.out.println("ccc");
+                /*String power = java.time.LocalDateTime.now() + "Server On";
         //serverList.add(power);
-        serverLog.getItems().addAll(power);
-        serverLog.refresh();
-        
-    }
+        list.getItems().addAll(power);
+        list.refresh();*/
+            } catch (IOException e) {
+                System.out.println("ERRORE APERTURA");
+            } finally {
+                
+            }
+        } else {
+            try {
+                socket.close();
+                serverlink.close();
+            } catch (IOException e) {
+                System.out.println("ERRORE CHIUSURA");
+            } finally {
+                try {
+                    socket.close();
+                    serverlink.close();
+                } catch (IOException e) {
+                    System.out.println("FINALLY: ERRORE CHIUSURA");
+                }
+            }
+        }
     
-}
+    }
+}    

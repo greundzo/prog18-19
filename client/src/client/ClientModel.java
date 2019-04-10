@@ -15,8 +15,12 @@ import java.io.IOException;
  */
 public class ClientModel {
     public static ClientModel model;
-    private static String userName = null;
-    private final static String users[] = {"user1@di.unito.it", "user2@di.unito.it", "user3@di.unito.it"};
+    private static String userName;
+    
+    
+    public ClientModel() {
+        userName = null;
+    }
     
     public static synchronized ClientModel getInstance( ) {
       if (model == null)
@@ -37,6 +41,10 @@ public class ClientModel {
         return false;
     }
     
+    public void resetUser() {
+        userName = null;
+    }
+    /*
     public static boolean checkUser(String user) {
         for(int i = 0; i < 3; i++) {
             if(user.equals(users[i])){
@@ -44,5 +52,5 @@ public class ClientModel {
             }
         }
         return false;
-    }
+    }*/
 }

@@ -27,7 +27,8 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ReadMailController implements Initializable {
-    //getInstace clientModel & check username
+    
+    private ClientModel model = ClientModel.getInstance();
     
     @FXML
     private TitledPane mailList;
@@ -90,6 +91,7 @@ public class ReadMailController implements Initializable {
             loginStage.setScene(loginScene);
             loginStage.show();
             
+            model.resetUser();
             Stage stage = (Stage) logoutButton.getScene().getWindow(); 
             stage.close();
         }catch(IOException notFound) {
