@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ClientController">
     <children>
-        <Button fx:id="button" layoutX="197.0" layoutY="136.0" text="Sign In" />
+        <Button fx:id="button" layoutX="197.0" layoutY="136.0" onAction="#loginAction" text="Sign In" />
         <Label fx:id="label" layoutX="197.0" layoutY="161.0" minHeight="16" minWidth="69" />
       <GridPane layoutX="60.0" layoutY="46.0">
         <columnConstraints>

@@ -5,6 +5,7 @@
  */
 package client;
 
+//import server.ServerModel;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 public class ClientController implements Initializable {
 
     private ClientModel model = ClientModel.getInstance();
+    //private ServerModel servermodel;
     private Socket clientSocket;
     private String usr = null;
 
@@ -46,17 +48,26 @@ public class ClientController implements Initializable {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /*try {
+            String host = InetAddress.getLocalHost().getHostName();
+            clientSocket = new Socket(host, 8189);
+        } catch (IOException e) {
+            ghostUserLabel.setText("SERVER OFFLINE");
+        }*/
+    }
+        
+    @FXML
+    private void loginAction(ActionEvent event) {
+        usr = userText.getText();
         try {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
         }
-    }
-        
-    @FXML
-    private void loginAction(ActionEvent event) {
-        usr = userText.getText();
+        if(usr.equals("user1@di.unito.it")) {
+            loadClient();
+        }
     }
 
     @FXML

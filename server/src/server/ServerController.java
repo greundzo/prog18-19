@@ -32,6 +32,7 @@ public class ServerController implements Initializable {
     private final ServerModel servermodel = new ServerModel();
     private ServerSocket serverlink;
     private Socket socket;
+    private Thread service;
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private ObservableList<?> log;
@@ -57,6 +58,7 @@ public class ServerController implements Initializable {
         servermodel.startStop();
         try {
             serverlink = new ServerSocket(8189);
+            //service = new Thread();
             socket = serverlink.accept();
         } catch (IOException e) {
             System.out.println("ERRORE SERVER");

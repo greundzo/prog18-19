@@ -15,4 +15,13 @@ public class ServerModel {
     public boolean checkConnection(){
        return working;
     }
+    
+    public boolean checkUser(String usr) {
+        for(int i = 0; i < 3; i++) {
+            if(usr == users[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
