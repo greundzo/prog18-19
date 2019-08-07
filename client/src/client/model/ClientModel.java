@@ -18,13 +18,14 @@ public class ClientModel {
     private static String userName;
     
     
-    public ClientModel() {
-        userName = null;
+    public ClientModel(String usr) {
+        userName = usr;
     }
     
-    public static synchronized ClientModel getInstance( ) {
+    
+    public static synchronized ClientModel getInstance() {
       if (model == null)
-          model = new ClientModel();
+          model = new ClientModel(null);
       return model;
     }
 

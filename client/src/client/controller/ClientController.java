@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package client.controller;
 
 //import server.ServerModel;
+import client.*;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -18,8 +21,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -29,17 +32,18 @@ import javafx.stage.Stage;
  */
 public class ClientController implements Initializable {
 
-    private ClientModel model = ClientModel.getInstance();
+    private ClientModel model;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     //private ServerModel servermodel;
     private Socket clientSocket;
-    private String usr = null;
 
     @FXML
     private Button button;
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private TextField userText;
+    private ChoiceBox<String> choiceUser;
     @FXML
     private Label label;
     @FXML
@@ -48,25 +52,19 @@ public class ClientController implements Initializable {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*try {
-            String host = InetAddress.getLocalHost().getHostName();
-            clientSocket = new Socket(host, 8189);
-        } catch (IOException e) {
-            ghostUserLabel.setText("SERVER OFFLINE");
-        }*/
+        choiceUser.getItems().add("user1");
+        choiceUser.getItems().add("user2");
+        choiceUser.getItems().add("user3");
     }
         
     @FXML
-    private void loginAction(ActionEvent event) {
-        usr = userText.getText();
+    private void loginAction(ActionEvent event) {     
+        model = new ClientModel(choiceUser.getValue());        
         try {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
-        }
-        if(usr.equals("user1@di.unito.it")) {
-            loadClient();
         }
     }
 
@@ -80,7 +78,7 @@ public class ClientController implements Initializable {
 
             Stage stageSecond = new Stage();
 
-            stageSecond.setTitle("@DiMailService - " + usr);
+            stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
             stageSecond.show();

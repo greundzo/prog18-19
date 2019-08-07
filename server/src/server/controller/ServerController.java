@@ -55,7 +55,7 @@ public class ServerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        servermodel.startStop();
+        /*servermodel.startStop();
         try {
             serverlink = new ServerSocket(8189);
             //service = new Thread();
@@ -72,7 +72,7 @@ public class ServerController implements Initializable {
             //} catch (InterruptedException e) {
               //  System.out.println("ERRORE THREAD");
             }
-        }
+        }*/
     }
 
     @FXML

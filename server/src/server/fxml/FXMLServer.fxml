@@ -9,13 +9,13 @@
    <children>
       <AnchorPane fx:id="serverAnchor" layoutX="18.0" layoutY="18.0" prefHeight="362.0" prefWidth="563.0">
          <children>
-            <Button fx:id="onOffButton" defaultButton="true" layoutX="53.0" layoutY="156.0" mnemonicParsing="false" mouseTransparent="true" onAction="#onOffAction" text="On/Off" />
-            <ListView fx:id="list" layoutX="182.0" layoutY="28.0" pickOnBounds="false" prefHeight="305.0" prefWidth="357.0" />
             <Label layoutX="10.0" layoutY="28.0" text="\@DiMailServer">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
+            <Button fx:id="onOffButton" layoutX="59.0" layoutY="167.0" mnemonicParsing="false" mouseTransparent="true" onAction="#onOffAction" pickOnBounds="false" text="On/Off" />
+            <TextArea fx:id="consolelog" editable="false" layoutX="202.0" layoutY="61.0" prefHeight="262.0" prefWidth="347.0" />
          </children>
       </AnchorPane>
    </children>

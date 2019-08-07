@@ -1,10 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Niccolò Alleyson 833974 
+ * 
+ * 
  */
-package client;
+package client.view;
 
+import client.controller.*;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class ClientLoginView extends Application {
     public void start(Stage loginStage) {
         try {
             FXMLLoader loginLoader = new FXMLLoader();
-            loginLoader.setLocation(ClientLoginView.class.getResource("Login.fxml"));
+            loginLoader.setLocation(ClientLoginView.class.getResource("../fxml/Login.fxml"));
             ClientController control = loginLoader.getController();
             
             Parent root = loginLoader.load();
