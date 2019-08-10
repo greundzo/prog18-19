@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package server.controller;
 
+import server.model.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -51,28 +52,18 @@ public class ServerController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        /*servermodel.startStop();
         try {
             serverlink = new ServerSocket(8189);
-            //service = new Thread();
-            socket = serverlink.accept();
+            Runnable listener = new ServerListener(serverlink);
+            new Thread(listener).start();
         } catch (IOException e) {
-            System.out.println("ERRORE SERVER");
-        } finally {
-            try {
-                //Thread.sleep(60000);
-                socket.close();
-                serverlink.close();
-            } catch (IOException e) {
-                System.out.println("ERRORE CHIUSURA");
-            //} catch (InterruptedException e) {
-              //  System.out.println("ERRORE THREAD");
-            }
-        }*/
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package server.view;
 
+import server.controller.*;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class ServerView extends Application {
     public void start(Stage stage) throws Exception {
         try {                       
             FXMLLoader serverLoader = new FXMLLoader();
-            serverLoader.setLocation(ServerView.class.getResource("FXMLServer.fxml"));
+            serverLoader.setLocation(ServerView.class.getResource("/server/fxml/FXMLServer.fxml"));
             ServerController controller = serverLoader.getController();
             
             Parent root = serverLoader.load();

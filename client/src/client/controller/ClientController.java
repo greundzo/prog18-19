@@ -6,7 +6,7 @@
 package client.controller;
 
 //import server.ServerModel;
-import client.*;
+import client.model.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -72,7 +72,7 @@ public class ClientController implements Initializable {
     public void loadClient() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ClientController.class.getResource("ReadMail.fxml"));
+            loader.setLocation(ClientController.class.getResource("../fxml/ReadMail.fxml"));
             ReadMailController readMail = loader.getController();
             Parent rootSecond = (Parent) loader.load();
 

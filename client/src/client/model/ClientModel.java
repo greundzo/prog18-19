@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package client.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -22,12 +22,12 @@ public class ClientModel {
         userName = usr;
     }
     
-    
-    public static synchronized ClientModel getInstance() {
-      if (model == null)
-          model = new ClientModel(null);
-      return model;
-    }
+    /*
+    public static synchronized ClientModel getInstance(String usr) {
+        if (model.getUser() == null)
+            model = new ClientModel(null);
+        return model;
+    }*/
 
     
     public static String getUser() {
@@ -45,13 +45,4 @@ public class ClientModel {
     public void resetUser() {
         userName = null;
     }
-    /*
-    public static boolean checkUser(String user) {
-        for(int i = 0; i < 3; i++) {
-            if(user.equals(users[i])){
-                return true;
-            }
-        }
-        return false;
-    }*/
 }

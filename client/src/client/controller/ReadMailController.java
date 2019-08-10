@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package client.controller;
 
+import client.model.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +29,7 @@ import javafx.stage.Stage;
  */
 public class ReadMailController implements Initializable {
     
-    private ClientModel model = ClientModel.getInstance();
+   // private ClientModel model = ClientModel.getInstance();
     
     @FXML
     private TitledPane mailList;
@@ -81,7 +82,7 @@ public class ReadMailController implements Initializable {
     private void logoutAction(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ReadMailController.class.getResource("Login.fxml"));
+            loader.setLocation(ReadMailController.class.getResource("../fxml/Login.fxml"));
             Parent loginRoot = (Parent) loader.load();
             
             Scene loginScene = new Scene(loginRoot);
@@ -91,7 +92,7 @@ public class ReadMailController implements Initializable {
             loginStage.setScene(loginScene);
             loginStage.show();
             
-            model.resetUser();
+            //model.resetUser();
             Stage stage = (Stage) logoutButton.getScene().getWindow(); 
             stage.close();
         }catch(IOException notFound) {
