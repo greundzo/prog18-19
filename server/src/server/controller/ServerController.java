@@ -68,6 +68,7 @@ public class ServerController implements Initializable {
 
     @FXML
     private void onOffAction(ActionEvent event) {
+        /*
         servermodel.startStop();
         if (servermodel.checkConnection()) {
             try {
@@ -79,7 +80,7 @@ public class ServerController implements Initializable {
                 /*String power = java.time.LocalDateTime.now() + "Server On";
         //serverList.add(power);
         list.getItems().addAll(power);
-        list.refresh();*/
+        list.refresh();
             } catch (IOException e) {
                 System.out.println("ERRORE APERTURA");
             } finally {
@@ -99,7 +100,7 @@ public class ServerController implements Initializable {
                     System.out.println("FINALLY: ERRORE CHIUSURA");
                 }
             }
-        }
+        }*/
     
     }
 }    

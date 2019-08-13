@@ -35,7 +35,6 @@ public class ClientController implements Initializable {
     private ClientModel model;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    //private ServerModel servermodel;
     private Socket clientSocket;
 
     @FXML
@@ -52,9 +51,9 @@ public class ClientController implements Initializable {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        choiceUser.getItems().add("user1");
-        choiceUser.getItems().add("user2");
-        choiceUser.getItems().add("user3");
+        choiceUser.getItems().add("user1@di.unito.it");
+        choiceUser.getItems().add("user2@di.unito.it");
+        choiceUser.getItems().add("user3@di.unito.it");
     }
         
     @FXML
@@ -63,6 +62,8 @@ public class ClientController implements Initializable {
         try {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
+            
+            loadClient();
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
         }
@@ -72,7 +73,7 @@ public class ClientController implements Initializable {
     public void loadClient() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ClientController.class.getResource("../fxml/ReadMail.fxml"));
+            loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
             ReadMailController readMail = loader.getController();
             Parent rootSecond = (Parent) loader.load();
 

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 /**
  *
  * @author greundzo
@@ -21,15 +22,7 @@ public class ClientModel {
     public ClientModel(String usr) {
         userName = usr;
     }
-    
-    /*
-    public static synchronized ClientModel getInstance(String usr) {
-        if (model.getUser() == null)
-            model = new ClientModel(null);
-        return model;
-    }*/
 
-    
     public static String getUser() {
         return userName;
     }

@@ -23,8 +23,8 @@ public class ClientLoginView extends Application {
     public void start(Stage loginStage) {
         try {
             FXMLLoader loginLoader = new FXMLLoader();
-            ClientController control = loginLoader.getController();
             loginLoader.setLocation(this.getClass().getResource("../fxml/Login.fxml"));
+            ClientController control = loginLoader.getController();
             
             Parent root = (Parent) loginLoader.load();
             

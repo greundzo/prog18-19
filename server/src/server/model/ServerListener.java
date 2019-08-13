@@ -5,7 +5,11 @@
  */
 package server.model;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +20,8 @@ import java.net.Socket;
 public class ServerListener implements Runnable {
     private ServerSocket srv;
     private Socket incoming;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     boolean done = false;
     
     public ServerListener(ServerSocket in) {
@@ -26,6 +32,8 @@ public class ServerListener implements Runnable {
         try {
             while(!done) {
                 incoming = srv.accept();
+                in = new ObjectInputStream(incoming.getInputStream());
+                
             }
         } catch (IOException e) {
             e.printStackTrace();

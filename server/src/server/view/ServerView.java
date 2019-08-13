@@ -23,7 +23,7 @@ public class ServerView extends Application {
     public void start(Stage stage) throws Exception {
         try {                       
             FXMLLoader serverLoader = new FXMLLoader();
-            serverLoader.setLocation(ServerView.class.getResource("/server/fxml/FXMLServer.fxml"));
+            serverLoader.setLocation(ServerView.class.getResource("../fxml/FXMLServer.fxml"));
             ServerController controller = serverLoader.getController();
             
             Parent root = serverLoader.load();
