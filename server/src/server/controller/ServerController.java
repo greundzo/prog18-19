@@ -63,7 +63,8 @@ public class ServerController implements Initializable {
         try {
             //servermodel.startStop();
             serverlink = new ServerSocket(8189);
-            service = new Thread(new ServerListener(serverlink));
+            service = new ServerListener(serverlink);
+            service.setDaemon(true);
             service.start();
             logMsg("Server Started");
         } catch (IOException e) {

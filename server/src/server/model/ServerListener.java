@@ -19,7 +19,7 @@ import java.net.Socket;
  *
  * @author greundzo
  */
-public class ServerListener implements Runnable {
+public class ServerListener extends Thread {
     private ServerModel model;
     private final ServerSocket srv;
     private Socket incoming;
@@ -27,19 +27,19 @@ public class ServerListener implements Runnable {
     private DataInputStream in;
     private InputStream input;
     private OutputStream output;
-    boolean done = false;
+    boolean shutdown = false;
    
     
     public ServerListener(ServerSocket in) {
         srv = in;
     }
     
-    public void done() {
-        done = !done;
+    public void shutdown() {
+        shutdown = !shutdown;
     }
     
     public void run() {
-        while(!done) {
+        while(!shutdown) {
             try {
                 incoming = srv.accept();
                 /*in = new DataInputStream(incoming.getInputStream());
