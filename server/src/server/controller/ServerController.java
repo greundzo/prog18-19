@@ -5,21 +5,22 @@
  */
 package server.controller;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import server.model.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -35,9 +36,10 @@ public class ServerController implements Initializable {
     private ServerSocket serverlink;
     private Socket socket;
     private Thread service;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
-    private ObservableList<?> log;
+    private DataInputStream input;
+    private InputStream in;
+    private DataOutputStream output;
+    private OutputStream out;
 
     @FXML
     private Button offButton;
@@ -83,38 +85,5 @@ public class ServerController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*
-        if (servermodel.checkConnection()) {
-            try {
-                serverlink = new ServerSocket(8189);
-                socket = serverlink.accept();
-                input = new ObjectInputStream(socket.getInputStream());
-                output = new ObjectOutputStream(socket.getOutputStream());
-                System.out.println("ccc");
-                /*String power = java.time.LocalDateTime.now() + "Server On";
-        //serverList.add(power);
-        list.getItems().addAll(power);
-        list.refresh();
-            } catch (IOException e) {
-                System.out.println("ERRORE APERTURA");
-            } finally {
-                
-            }
-        } else {
-            try {
-                socket.close();
-                serverlink.close();
-            } catch (IOException e) {
-                System.out.println("ERRORE CHIUSURA");
-            } finally {
-                try {
-                    socket.close();
-                    serverlink.close();
-                } catch (IOException e) {
-                    System.out.println("FINALLY: ERRORE CHIUSURA");
-                }
-            }
-        }*/
-    
     }
 }    

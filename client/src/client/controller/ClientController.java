@@ -7,9 +7,12 @@ package client.controller;
 
 //import server.ServerModel;
 import client.model.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -33,8 +36,9 @@ import javafx.stage.Stage;
 public class ClientController implements Initializable {
 
     private ClientModel model;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private OutputStream output;
+    private DataOutputStream out;
+    private DataInputStream in;
     private Socket clientSocket;
 
     @FXML
@@ -62,6 +66,8 @@ public class ClientController implements Initializable {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
             model = new ClientModel(choiceUser.getValue());
+            //out = new DataOutputStream(clientSocket.getOutputStream());
+            //out.writeUTF(choiceUser.getValue());
             //if(model.login()) {
             loadClient();
             //} else {

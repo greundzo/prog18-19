@@ -28,7 +28,6 @@ public class ServerModel {
             return true;
         }
     }
-
 }
 
 
