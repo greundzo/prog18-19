@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -39,10 +40,10 @@ public class ServerController implements Initializable {
     private ObservableList<?> log;
 
     @FXML
-    private Button onOffButton;
+    private Button offButton;
 
     @FXML
-    private ListView<String> list;
+    private TextArea consolelog;
 
     @FXML
     private Pane serverPane;
@@ -58,18 +59,23 @@ public class ServerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            //servermodel.startStop();
             serverlink = new ServerSocket(8189);
-            Runnable listener = new ServerListener(serverlink);
-            new Thread(listener).start();
+            service = new Thread(new ServerListener(serverlink));
+            service.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void onOffAction(ActionEvent event) {
+    private void offAction(ActionEvent event) {
+        try {
+            service.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         /*
-        servermodel.startStop();
         if (servermodel.checkConnection()) {
             try {
                 serverlink = new ServerSocket(8189);

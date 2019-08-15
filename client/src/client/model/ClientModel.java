@@ -38,4 +38,9 @@ public class ClientModel {
     public void resetUser() {
         userName = null;
     }
+    
+    public boolean login() {
+        
+        return false;
+    }
 }

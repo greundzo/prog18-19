@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="serverPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
+<Pane fx:id="serverPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.ServerController">
    <children>
       <AnchorPane fx:id="serverAnchor" layoutX="18.0" layoutY="18.0" prefHeight="362.0" prefWidth="563.0">
          <children>
@@ -14,7 +14,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="onOffButton" layoutX="59.0" layoutY="167.0" mnemonicParsing="false" mouseTransparent="true" onAction="#onOffAction" pickOnBounds="false" text="On/Off" />
+            <Button fx:id="offButton" layoutX="59.0" layoutY="167.0" mnemonicParsing="false" mouseTransparent="true" onAction="#offAction" pickOnBounds="false" text="Off" />
             <TextArea fx:id="consolelog" editable="false" layoutX="202.0" layoutY="61.0" prefHeight="262.0" prefWidth="347.0" />
          </children>
       </AnchorPane>

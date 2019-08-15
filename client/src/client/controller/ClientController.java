@@ -62,8 +62,11 @@ public class ClientController implements Initializable {
         try {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
-            
+            //if(model.login()) {
             loadClient();
+            //} else {
+            //      ghostUserLabel.setText("login failed");
+            //}
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
         }

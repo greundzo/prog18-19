@@ -2,10 +2,11 @@ package server.model;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 
 public class ServerModel {
     private boolean working = false;
-    private final static String users[] = {"user1", "user2", "user3"};
+    private ArrayList<String> users;
             
     public ServerModel(){
     /*COMPLETARE COSTRUTTORE SE NECESSARIO*/    
@@ -19,7 +20,17 @@ public class ServerModel {
        return working;
     }
     
+    public boolean checkUserLogged(String usr) {
+        if (users.contains(usr)) {
+            return false;
+        } else {
+            users.add(usr);
+            return true;
+        }
+    }
+
 }
+
 
 
 
