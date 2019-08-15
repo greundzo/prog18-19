@@ -63,9 +63,17 @@ public class ServerController implements Initializable {
             serverlink = new ServerSocket(8189);
             service = new Thread(new ServerListener(serverlink));
             service.start();
+            logMsg("Server Started");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }    
+    
+    @FXML
+    public boolean logMsg(String msg) {
+        String on = java.time.LocalDateTime.now() + " " + msg;
+        consolelog.appendText(on + "\n");
+        return true;
     }
 
     @FXML

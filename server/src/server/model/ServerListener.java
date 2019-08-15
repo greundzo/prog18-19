@@ -5,8 +5,6 @@
  */
 package server.model;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,7 +22,7 @@ public class ServerListener implements Runnable {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     boolean done = false;
-    int i = 10;
+    int i = 5;
     
     public ServerListener(ServerSocket in) {
         srv = in;
@@ -35,24 +33,19 @@ public class ServerListener implements Runnable {
     }
     
     public void run() {
-        try {
-            while(!done) {
-                incoming = srv.accept();
-                i--;
-                if(i==0) {
-                    done = !done;
-                }
+        while(!done) {
+            try {
+                incoming = srv.accept();                
                 //model.checkUserLogged(/*input nome dato dallo stream*/);
                 //in = new ObjectInputStream(incoming.getInputStream());                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                incoming.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
+        try {
+            incoming.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }           
+    }    
 }    

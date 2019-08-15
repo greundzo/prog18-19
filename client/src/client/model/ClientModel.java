@@ -15,7 +15,6 @@ import java.io.IOException;
  * @author greundzo
  */
 public class ClientModel {
-    public static ClientModel model;
     private static String userName;
     
     
