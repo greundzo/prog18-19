@@ -29,7 +29,7 @@ import javafx.stage.Stage;
  */
 public class ReadMailController implements Initializable {
     
-   // private ClientModel model = ClientModel.getInstance();
+    private ClientModel model;
     
     @FXML
     private TitledPane mailList;
@@ -80,6 +80,12 @@ public class ReadMailController implements Initializable {
 
     @FXML
     private void logoutAction(ActionEvent event) throws IOException {
+        //model.outRequest();
+        backToLogin();
+    }
+    
+    @FXML
+    public void backToLogin() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ReadMailController.class.getResource("../fxml/Login.fxml"));
@@ -92,7 +98,6 @@ public class ReadMailController implements Initializable {
             loginStage.setScene(loginScene);
             loginStage.show();
             
-            //model.resetUser();
             Stage stage = (Stage) logoutButton.getScene().getWindow(); 
             stage.close();
         }catch(IOException notFound) {

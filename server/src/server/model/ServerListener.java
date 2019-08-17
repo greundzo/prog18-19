@@ -5,8 +5,6 @@
  */
 package server.model;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -26,8 +24,8 @@ public class ServerListener implements Runnable {
     private final Thread current;
     private Socket incoming;
     private ServerModel model;
-    private DataOutputStream out;
-    private DataInputStream in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private InputStream input;
     private OutputStream output;
     boolean shutdown = false;
@@ -59,6 +57,7 @@ public class ServerListener implements Runnable {
         }  
     }
     
+    @Override
     public void run() {
         
         try { 
@@ -69,7 +68,7 @@ public class ServerListener implements Runnable {
         
         while(true) {
             try {
-                in = new DataInputStream(incoming.getInputStream());
+                in = new ObjectInputStream(incoming.getInputStream());
                 model.invokeMethod(in.readUTF());
             } catch (IOException e) {
                 e.printStackTrace();

@@ -6,13 +6,9 @@
 package server.controller;
 
 import server.model.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -36,10 +32,8 @@ public class ServerController implements Initializable {
     private ServerSocket serverlink;
     private Socket socket;
     private ServerListener service;
-    private DataInputStream input;
-    private InputStream in;
-    private DataOutputStream output;
-    private OutputStream out;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
 
     @FXML
     private Button offButton;

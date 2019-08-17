@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ServerModel {
     private boolean working = false;
-    private ServerView view;
+    private final ServerView view = new ServerView();
     private ArrayList<String> users;
             
     public ServerModel(){
@@ -42,9 +42,12 @@ public class ServerModel {
         
         switch(line[1]) {
             case "in":
-                //view.update(line[0] + "has logged in");
+                view.update(line[0] + "has logged in");
             case "out":
-                //view.update(line[0] + "has logged out");
+                view.update(line[0] + "has logged out");
+            case "send":
+                //scrivi nei file
+                //view.refresh();
         }
     }
 }

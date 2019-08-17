@@ -5,12 +5,9 @@
  */
 package client.model;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
@@ -19,8 +16,9 @@ import java.net.Socket;
  */
 public class ClientModel {
     private static String userName;
-    private DataOutputStream out;
-    private DataInputStream in;
+    private Socket socket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     
     
     public ClientModel(String usr) {
@@ -43,15 +41,29 @@ public class ClientModel {
         userName = null;
     }
     
-    public boolean logRequest(Socket sock) {
+    public boolean logRequest(Socket s) {
+        socket = s;
         try {
-            out = new DataOutputStream(sock.getOutputStream());
-            out.writeUTF(getUser() + "," + "in");
+            out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeUTF(getUser() + ", in");
             out.close();
             return true;
         } catch (IOException e){
             e.printStackTrace();
         }   
+        return false;
+    }
+    
+    public boolean outRequest() {
+        try {
+            out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeUTF(getUser() + ", out");
+            out.close();
+            socket.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }
