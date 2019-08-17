@@ -66,9 +66,7 @@ public class ClientController implements Initializable {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
             model = new ClientModel(choiceUser.getValue());
-            //out = new DataOutputStream(clientSocket.getOutputStream());
-            //out.writeUTF(choiceUser.getValue());
-            //if(model.login()) {
+            model.logRequest(clientSocket);           
             loadClient();
             //} else {
             //      ghostUserLabel.setText("login failed");

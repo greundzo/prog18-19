@@ -6,9 +6,12 @@
 package client.model;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.Socket;
 
 /**
  *
@@ -16,6 +19,8 @@ import java.io.IOException;
  */
 public class ClientModel {
     private static String userName;
+    private DataOutputStream out;
+    private DataInputStream in;
     
     
     public ClientModel(String usr) {
@@ -38,8 +43,15 @@ public class ClientModel {
         userName = null;
     }
     
-    public boolean login() {
-        
+    public boolean logRequest(Socket sock) {
+        try {
+            out = new DataOutputStream(sock.getOutputStream());
+            out.writeUTF(getUser() + "," + "in");
+            out.close();
+            return true;
+        } catch (IOException e){
+            e.printStackTrace();
+        }   
         return false;
     }
 }

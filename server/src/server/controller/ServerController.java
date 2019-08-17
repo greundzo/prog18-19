@@ -5,9 +5,9 @@
  */
 package server.controller;
 
+import server.model.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import server.model.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -69,6 +69,11 @@ public class ServerController implements Initializable {
             e.printStackTrace();
         }
     }    
+    
+    @FXML
+    public void update(String urgent) {
+        logMsg(urgent);
+    }
     
     @FXML
     public boolean logMsg(String msg) {

@@ -1,15 +1,23 @@
 package server.model;
 
-import java.io.IOException;
-import java.net.*;
+import server.view.*;
 import java.util.ArrayList;
 
 public class ServerModel {
     private boolean working = false;
+    private ServerView view;
     private ArrayList<String> users;
             
     public ServerModel(){
     /*COMPLETARE COSTRUTTORE SE NECESSARIO*/    
+    }
+    
+    public ServerModel getInstance() {
+        if(this==null) {
+            return new ServerModel();
+        } else {
+            return this;
+        }
     }
     
     public void startStop() {
@@ -26,6 +34,17 @@ public class ServerModel {
         } else {
             users.add(usr);
             return true;
+        }
+    }
+    
+    public void invokeMethod(String toInvoke) {
+        String line[] = toInvoke.split(",");
+        
+        switch(line[1]) {
+            case "in":
+                //view.update(line[0] + "has logged in");
+            case "out":
+                //view.update(line[0] + "has logged out");
         }
     }
 }

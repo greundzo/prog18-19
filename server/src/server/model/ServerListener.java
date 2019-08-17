@@ -23,7 +23,7 @@ public class ServerListener implements Runnable {
     
     
     private final ServerSocket srv;
-    private Thread current;
+    private final Thread current;
     private Socket incoming;
     private ServerModel model;
     private DataOutputStream out;
@@ -35,7 +35,9 @@ public class ServerListener implements Runnable {
     
     public ServerListener(ServerSocket in) {
         srv = in;
+        model = model.getInstance();
         current = new Thread(this);
+        current.setName("ServerListener");
         current.setDaemon(true);
     }
     
@@ -44,12 +46,12 @@ public class ServerListener implements Runnable {
     }
     
     public void shutdown() {
-        //shutdown = !shutdown;
         cleanUp();
     }
     
     public void cleanUp() {
         try {
+            in.close();
             incoming.close();
             srv.close();
         } catch (IOException e) {
@@ -65,9 +67,14 @@ public class ServerListener implements Runnable {
             e.printStackTrace(); 
         }
         
-        while(true/*!shutdown*/) {
-            /*in = new DataInputStream(incoming.getInputStream());
-                String s = in.readUTF();
+        while(true) {
+            try {
+                in = new DataInputStream(incoming.getInputStream());
+                model.invokeMethod(in.readUTF());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }    
+               /* String s = in.readUTF();
                 model.checkUserLogged(s);*/
                 //ora dovrebbe avvisare la vista e fare l'update
         }             
