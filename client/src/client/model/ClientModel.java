@@ -20,7 +20,6 @@ public class ClientModel {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     
-    
     public ClientModel(String usr) {
         userName = usr;
     }

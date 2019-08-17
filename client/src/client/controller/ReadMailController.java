@@ -29,7 +29,7 @@ import javafx.stage.Stage;
  */
 public class ReadMailController implements Initializable {
     
-    private ClientModel model;
+    private ClientModel model; // = new ClientModel(getUser());
     
     @FXML
     private TitledPane mailList;
@@ -105,4 +105,11 @@ public class ReadMailController implements Initializable {
         }
     }
     
+    @FXML
+    public String getUser() {
+        Stage st = (Stage)logoutButton.getScene().getWindow();
+        String title = st.getTitle();
+        String line[] = title.split("-");
+        return line[1];
+    }
 }
