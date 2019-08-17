@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
  */
 public class ServerController implements Initializable {
 
-    private final ServerModel servermodel = new ServerModel();
+    private final ServerModel servermodel;
     private ServerSocket serverlink;
     private Socket socket;
     private ServerListener service;
@@ -47,6 +47,10 @@ public class ServerController implements Initializable {
     @FXML
     private AnchorPane serverAnchor;
 
+    public ServerController() {
+        servermodel = new ServerModel();
+    }
+    
     /**
      * Initializes the controller class.
      * @param url

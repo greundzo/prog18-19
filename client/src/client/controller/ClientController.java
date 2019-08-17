@@ -52,6 +52,10 @@ public class ClientController implements Initializable {
     @FXML
     private Label ghostUserLabel;
 
+    public ClientController() {
+        this.model = null;
+    }
+    
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,6 +86,7 @@ public class ClientController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
             ReadMailController readMail = loader.getController();
+            readMail.initModel(model); //problema di nullpointer da risolvere
             Parent rootSecond = (Parent) loader.load();
 
             Stage stageSecond = new Stage();

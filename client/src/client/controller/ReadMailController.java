@@ -6,7 +6,6 @@
 package client.controller;
 
 import client.model.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +28,7 @@ import javafx.stage.Stage;
  */
 public class ReadMailController implements Initializable {
     
-    private ClientModel model; // = new ClientModel(getUser());
+    private ClientModel model; 
     
     @FXML
     private TitledPane mailList;
@@ -49,6 +48,10 @@ public class ReadMailController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button logoutButton;
+
+    public ReadMailController() {
+        this.model = null;
+    }
 
     /**
      * Initializes the controller class.
@@ -80,8 +83,13 @@ public class ReadMailController implements Initializable {
 
     @FXML
     private void logoutAction(ActionEvent event) throws IOException {
-        //model.outRequest();
+        model.outRequest();
         backToLogin();
+    }
+    
+    @FXML
+    public void initModel(ClientModel clm) {
+        model = clm;
     }
     
     @FXML

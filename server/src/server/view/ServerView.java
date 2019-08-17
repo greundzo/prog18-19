@@ -27,9 +27,9 @@ public class ServerView extends Application {
             serverLoader.setLocation(this.getClass().getResource("../fxml/FXMLServer.fxml"));
             control = serverLoader.getController();
             
-            Parent root = serverLoader.load();
+            Parent root = (Parent) serverLoader.load();
+            
             Scene scene = new Scene(root);
-
             stage.setTitle("@DiMailServer");
             stage.setResizable(false);
             stage.setScene(scene);
@@ -47,7 +47,7 @@ public class ServerView extends Application {
     }
     
     public void update(String msg) {
-        //control.update(msg);
+        control.update(msg);
     }
     
 }

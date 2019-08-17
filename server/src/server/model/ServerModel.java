@@ -41,10 +41,13 @@ public class ServerModel {
         String line[] = toInvoke.split(",");
         
         switch(line[1]) {
-            case "in":
+            case "in": 
                 view.update(line[0] + "has logged in");
+                this.checkUserLogged(line[0]);
+                break;   
             case "out":
                 view.update(line[0] + "has logged out");
+                break;
             case "send":
                 //scrivi nei file
                 //view.refresh();
