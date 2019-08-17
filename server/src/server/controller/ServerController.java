@@ -35,7 +35,7 @@ public class ServerController implements Initializable {
     private final ServerModel servermodel = new ServerModel();
     private ServerSocket serverlink;
     private Socket socket;
-    private Thread service;
+    private ServerListener service;
     private DataInputStream input;
     private InputStream in;
     private DataOutputStream output;
@@ -61,11 +61,9 @@ public class ServerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            //servermodel.startStop();
             serverlink = new ServerSocket(8189);
             service = new ServerListener(serverlink);
-            service.setDaemon(true);
-            service.start();
+            service.startService();
             logMsg("Server Started");
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +80,8 @@ public class ServerController implements Initializable {
     @FXML
     private void offAction(ActionEvent event) {
         try {
-            service.join();
+            service.shutdown();
+            logMsg("Server Stopped");
         } catch (Exception e) {
             e.printStackTrace();
         }

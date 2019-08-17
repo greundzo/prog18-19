@@ -14,7 +14,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="offButton" layoutX="59.0" layoutY="167.0" mnemonicParsing="false" mouseTransparent="true" onAction="#offAction" pickOnBounds="false" text="Off" />
+            <Button fx:id="offButton" defaultButton="true" layoutX="59.0" layoutY="167.0" mnemonicParsing="false" onAction="#offAction" pickOnBounds="false" text="Off" />
             <TextArea fx:id="consolelog" editable="false" layoutX="202.0" layoutY="61.0" prefHeight="262.0" prefWidth="347.0" />
          </children>
       </AnchorPane>

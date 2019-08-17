@@ -19,10 +19,13 @@ import java.net.Socket;
  *
  * @author greundzo
  */
-public class ServerListener extends Thread {
-    private ServerModel model;
+public class ServerListener implements Runnable {
+    
+    
     private final ServerSocket srv;
+    private Thread current;
     private Socket incoming;
+    private ServerModel model;
     private DataOutputStream out;
     private DataInputStream in;
     private InputStream input;
@@ -32,29 +35,41 @@ public class ServerListener extends Thread {
     
     public ServerListener(ServerSocket in) {
         srv = in;
+        current = new Thread(this);
+        current.setDaemon(true);
+    }
+    
+    public void startService() {
+        current.start();
     }
     
     public void shutdown() {
-        shutdown = !shutdown;
+        //shutdown = !shutdown;
+        cleanUp();
+    }
+    
+    public void cleanUp() {
+        try {
+            incoming.close();
+            srv.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }  
     }
     
     public void run() {
-        while(!shutdown) {
-            try {
-                incoming = srv.accept();
-                /*in = new DataInputStream(incoming.getInputStream());
+        
+        try { 
+            incoming = srv.accept(); 
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        }
+        
+        while(true/*!shutdown*/) {
+            /*in = new DataInputStream(incoming.getInputStream());
                 String s = in.readUTF();
                 model.checkUserLogged(s);*/
                 //ora dovrebbe avvisare la vista e fare l'update
- 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            incoming.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }           
+        }             
     }    
 }    
