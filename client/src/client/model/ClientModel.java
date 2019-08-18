@@ -24,7 +24,7 @@ public class ClientModel {
         userName = usr;
     }
 
-    public static String getUser() {
+    public String getUser() {
         return userName;
     }
     
@@ -44,7 +44,7 @@ public class ClientModel {
         socket = s;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeUTF(getUser() + ", in");
+            out.writeUTF(this.getUser() + ", in");
             out.close();
             return true;
         } catch (IOException e){
@@ -56,7 +56,7 @@ public class ClientModel {
     public boolean outRequest() {
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeUTF(getUser() + ", out");
+            out.writeUTF(this.getUser() + ", out");
             out.close();
             socket.close();
             return true;

@@ -112,12 +112,4 @@ public class ReadMailController implements Initializable {
             System.out.println("READMAILCONTROLLER: IO ERROR");
         }
     }
-    
-    @FXML
-    public String getUser() {
-        Stage st = (Stage)logoutButton.getScene().getWindow();
-        String title = st.getTitle();
-        String line[] = title.split("-");
-        return line[1];
-    }
 }

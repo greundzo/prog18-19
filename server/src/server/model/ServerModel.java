@@ -1,15 +1,19 @@
 package server.model;
 
-import server.view.*;
+import server.controller.*;
 import java.util.ArrayList;
 
 public class ServerModel {
     private boolean working = false;
-    private final ServerView view = new ServerView();
+    private ServerController control;
     private ArrayList<String> users;
             
     public ServerModel(){
-    /*COMPLETARE COSTRUTTORE SE NECESSARIO*/    
+        control = null;
+    }
+    
+    public void setControl(ServerController s) {
+        control = s;
     }
     
     public ServerModel getInstance() {
@@ -42,15 +46,15 @@ public class ServerModel {
         
         switch(line[1]) {
             case "in": 
-                view.update(line[0] + "has logged in");
+                control.update(line[0] + "has logged in");
                 this.checkUserLogged(line[0]);
                 break;   
             case "out":
-                view.update(line[0] + "has logged out");
+                control.update(line[0] + "has logged out");
                 break;
             case "send":
                 //scrivi nei file
-                //view.refresh();
+                //control.refresh();
         }
     }
 }

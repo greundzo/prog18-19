@@ -86,6 +86,7 @@ public class ClientController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
             ReadMailController readMail = loader.getController();
+            System.out.println(model.getUser()); //il nullpointer è il controller
             readMail.initModel(model); //problema di nullpointer da risolvere
             Parent rootSecond = (Parent) loader.load();
 

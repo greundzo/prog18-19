@@ -18,14 +18,13 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ServerView extends Application {
-    public ServerController control;
     
     @Override
     public void start(Stage stage) throws Exception {
         try {                       
             FXMLLoader serverLoader = new FXMLLoader();
             serverLoader.setLocation(this.getClass().getResource("../fxml/FXMLServer.fxml"));
-            control = serverLoader.getController();
+            ServerController controller = serverLoader.getController();
             
             Parent root = (Parent) serverLoader.load();
             
@@ -45,9 +44,4 @@ public class ServerView extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-    public void update(String msg) {
-        control.update(msg);
-    }
-    
 }

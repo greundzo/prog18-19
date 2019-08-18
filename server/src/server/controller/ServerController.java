@@ -59,6 +59,7 @@ public class ServerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            servermodel.setControl(this);
             serverlink = new ServerSocket(8189);
             service = new ServerListener(serverlink);
             service.startService();
