@@ -59,6 +59,7 @@ public class ReadMailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        model = model.getModel(this.getName());
     }    
 
     @FXML
@@ -96,7 +97,7 @@ public class ReadMailController implements Initializable {
     public void backToLogin() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ReadMailController.class.getResource("../fxml/Login.fxml"));
+            loader.setLocation(this.getClass().getResource("../fxml/Login.fxml"));
             Parent loginRoot = (Parent) loader.load();
             
             Scene loginScene = new Scene(loginRoot);
@@ -111,5 +112,11 @@ public class ReadMailController implements Initializable {
         }catch(IOException notFound) {
             System.out.println("READMAILCONTROLLER: IO ERROR");
         }
+    }
+    
+    private String getName() {
+        //Stage st = (Stage) logoutButton.getScene().getWindow();
+        //return st.getTitle();
+        return ((Stage)logoutButton.getScene().getWindow()).getTitle();
     }
 }

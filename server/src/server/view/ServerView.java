@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class ServerView extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         try {                       
             FXMLLoader serverLoader = new FXMLLoader();
             serverLoader.setLocation(this.getClass().getResource("../fxml/FXMLServer.fxml"));

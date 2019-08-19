@@ -72,9 +72,6 @@ public class ClientController implements Initializable {
             model = new ClientModel(choiceUser.getValue());
             model.logRequest(clientSocket);           
             loadClient();
-            //} else {
-            //      ghostUserLabel.setText("login failed");
-            //}
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
         }
@@ -86,8 +83,7 @@ public class ClientController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
             ReadMailController readMail = loader.getController();
-            System.out.println(model.getUser()); //il nullpointer è il controller
-            readMail.initModel(model); //problema di nullpointer da risolvere
+            
             Parent rootSecond = (Parent) loader.load();
 
             Stage stageSecond = new Stage();

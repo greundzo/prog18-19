@@ -24,6 +24,14 @@ public class ClientModel {
         userName = usr;
     }
 
+    public ClientModel getModel(String name) {
+        if(this.getUser().equals(name)) {
+            return this;
+        } else {
+            return new ClientModel(name);
+        }
+    }
+    
     public String getUser() {
         return userName;
     }

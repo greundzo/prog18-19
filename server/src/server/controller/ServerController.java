@@ -50,12 +50,8 @@ public class ServerController implements Initializable {
     public ServerController() {
         servermodel = new ServerModel();
     }
-    
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
+
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
