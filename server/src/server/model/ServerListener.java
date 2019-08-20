@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ServerListener implements Runnable {
     private final ServerSocket srv;
     private final Thread current;
     private Socket incoming;
-    private ServerModel model;
+    private final ServerModel model;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private InputStream input;
@@ -44,6 +45,7 @@ public class ServerListener implements Runnable {
     }
     
     public void shutdown() {
+        shutdown = !shutdown;
         cleanUp();
     }
     
@@ -62,21 +64,24 @@ public class ServerListener implements Runnable {
         
         try { 
             incoming = srv.accept(); 
+            in = new ObjectInputStream(incoming.getInputStream());
         } catch (IOException e) { 
             e.printStackTrace(); 
         }
         
-        while(true) {
+        while(!shutdown) {
             try {
-                in = new ObjectInputStream(incoming.getInputStream());
-                //System.out.println(in.readUTF());
-                model.invokeMethod(in.readUTF());
-            } catch (IOException e) {
-                e.printStackTrace();
+                Object obj = in.readObject();
+                model.selectAction(obj);
+            } catch (Exception e) {
+                if(e instanceof IOException) {
+                    System.out.println("IO EX");
+                } else if (e instanceof SocketException) {
+                    e.printStackTrace();
+                } else if (e instanceof ClassNotFoundException) {
+                    e.printStackTrace();
+                }
             }    
-               /* String s = in.readUTF();
-                model.checkUserLogged(s);*/
-                //ora dovrebbe avvisare la vista e fare l'update
-        }             
-    }    
-}    
+        }    
+    }             
+}        

@@ -53,7 +53,6 @@ public class ClientModel {
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             out.writeUTF(this.getUser() + ", in");
-            out.close();
             return true;
         } catch (IOException e){
             e.printStackTrace();
@@ -63,7 +62,7 @@ public class ClientModel {
     
     public boolean outRequest() {
         try {
-            out = new ObjectOutputStream(socket.getOutputStream());
+            //out = new ObjectOutputStream(socket.getOutputStream());
             out.writeUTF(this.getUser() + ", out");
             out.close();
             socket.close();

@@ -37,8 +37,17 @@ public class ServerModel {
         }
     }
     
-    public void invokeMethod(String toInvoke) {
-        String line[] = toInvoke.split(",");
+    public void selectAction(Object obj) {
+        
+        if(obj instanceof String) {
+            String action = (String) obj; 
+            logAction(action);
+        }    
+    }
+    
+    public void logAction(String action) {
+        
+        String line[] = action.split(",");
         
         switch(line[1]) {
             case "in": 
@@ -48,9 +57,6 @@ public class ServerModel {
             case "out":
                 control.update(line[0] + "has logged out");
                 break;
-            case "send":
-                //scrivi nei file
-                //control.refresh();
         }
     }
 }
