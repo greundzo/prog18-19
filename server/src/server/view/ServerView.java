@@ -34,7 +34,8 @@ public class ServerView extends Application {
             stage.setScene(scene);
             stage.show();  
         }catch(IOException e) {
-            System.out.println("SERVER: FXML NOT FOUND");
+            //System.out.println("SERVER: FXML NOT FOUND");
+            e.printStackTrace();
         }    
     }
 

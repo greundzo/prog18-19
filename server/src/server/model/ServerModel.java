@@ -17,11 +17,7 @@ public class ServerModel {
     }
     
     public ServerModel getInstance() {
-        if(this==null) {
-            return new ServerModel();
-        } else {
-            return this;
-        }
+        return this;
     }
     
     public void startStop() {

@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
  */
 public class ServerController implements Initializable {
 
-    private final ServerModel servermodel;
+    private ServerModel servermodel;
     private ServerSocket serverlink;
     private Socket socket;
     private ServerListener service;
@@ -47,17 +47,14 @@ public class ServerController implements Initializable {
     @FXML
     private AnchorPane serverAnchor;
 
-    public ServerController() {
-        servermodel = new ServerModel();
-    }
-
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            servermodel = new ServerModel();
             servermodel.setControl(this);
             serverlink = new ServerSocket(8189);
-            service = new ServerListener(serverlink);
+            service = new ServerListener(serverlink, servermodel);
             service.startService();
             logMsg("Server Started");
         } catch (IOException e) {

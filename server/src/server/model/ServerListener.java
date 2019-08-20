@@ -31,9 +31,9 @@ public class ServerListener implements Runnable {
     boolean shutdown = false;
    
     
-    public ServerListener(ServerSocket in) {
+    public ServerListener(ServerSocket in, ServerModel mod) {
         srv = in;
-        model = model.getInstance();
+        model = mod;
         current = new Thread(this);
         current.setName("ServerListener");
         current.setDaemon(true);
@@ -69,6 +69,7 @@ public class ServerListener implements Runnable {
         while(true) {
             try {
                 in = new ObjectInputStream(incoming.getInputStream());
+                //System.out.println(in.readUTF());
                 model.invokeMethod(in.readUTF());
             } catch (IOException e) {
                 e.printStackTrace();

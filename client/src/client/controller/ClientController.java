@@ -51,10 +51,6 @@ public class ClientController implements Initializable {
     private Label label;
     @FXML
     private Label ghostUserLabel;
-
-    public ClientController() {
-        this.model = null;
-    }
     
     @FXML
     @Override
@@ -70,7 +66,7 @@ public class ClientController implements Initializable {
             String host = InetAddress.getLocalHost().getHostName();
             clientSocket = new Socket(host, 8189);
             model = new ClientModel(choiceUser.getValue());
-            model.logRequest(clientSocket);           
+            model.logRequest(clientSocket);         
             loadClient();
         } catch (IOException e) {
             ghostUserLabel.setText("SERVER OFFLINE");
@@ -82,7 +78,7 @@ public class ClientController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
-            ReadMailController readMail = loader.getController();
+            ReadMailController readmail = loader.getController();
             
             Parent rootSecond = (Parent) loader.load();
 
@@ -97,7 +93,7 @@ public class ClientController implements Initializable {
             stage.close();
 
         } catch (IOException e) {
-            System.out.println("Can't load window.");
+            e.printStackTrace();
         }
     }
 }

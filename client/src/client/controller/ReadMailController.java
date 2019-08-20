@@ -49,17 +49,12 @@ public class ReadMailController implements Initializable {
     @FXML
     private Button logoutButton;
 
-    public ReadMailController() {
-        this.model = null;
-    }
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        model = model.getModel(this.getName());
     }    
 
     @FXML
@@ -84,7 +79,7 @@ public class ReadMailController implements Initializable {
 
     @FXML
     private void logoutAction(ActionEvent event) throws IOException {
-        model.outRequest();
+        //model.outRequest();
         backToLogin();
     }
     
@@ -112,11 +107,5 @@ public class ReadMailController implements Initializable {
         }catch(IOException notFound) {
             System.out.println("READMAILCONTROLLER: IO ERROR");
         }
-    }
-    
-    private String getName() {
-        //Stage st = (Stage) logoutButton.getScene().getWindow();
-        //return st.getTitle();
-        return ((Stage)logoutButton.getScene().getWindow()).getTitle();
     }
 }
