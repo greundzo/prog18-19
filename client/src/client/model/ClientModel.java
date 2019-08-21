@@ -52,8 +52,9 @@ public class ClientModel {
         socket = s;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeUTF(this.getUser() + ", in");
-            return true;
+            Object obj = this.getUser() + ",in";
+            out.writeObject(obj);
+            return true; // deve tornare conferma del log o errore perché utente già dentro
         } catch (IOException e){
             e.printStackTrace();
         }   
@@ -62,8 +63,8 @@ public class ClientModel {
     
     public boolean outRequest() {
         try {
-            //out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeUTF(this.getUser() + ", out");
+            Object obj = this.getUser() + ",out";
+            out.writeObject(obj);
             out.close();
             socket.close();
             return true;

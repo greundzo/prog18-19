@@ -4,11 +4,11 @@ import server.controller.*;
 import java.util.ArrayList;
 
 public class ServerModel {
-    private boolean working = false;
+    
     private ServerController control;
-    private ArrayList<String> users;
+    private ArrayList<String> users = new ArrayList<>();
             
-    public ServerModel(){
+    public ServerModel() {
         control = null;
     }
     
@@ -18,14 +18,6 @@ public class ServerModel {
     
     public ServerModel getInstance() {
         return this;
-    }
-    
-    public void startStop() {
-        working = !working;
-    }
-    
-    public boolean checkConnection(){
-       return working;
     }
     
     public boolean checkUserLogged(String usr) {
@@ -51,11 +43,17 @@ public class ServerModel {
         
         switch(line[1]) {
             case "in": 
-                control.update(line[0] + "has logged in");
-                this.checkUserLogged(line[0]);
+                if(this.checkUserLogged(line[0])) {
+                    control.update(line[0] + " has logged in");
+                } else {
+                    //utente stampa che non può entrare
+                    //deve rientrare un false o un eccezione al client
+                }
                 break;   
             case "out":
-                control.update(line[0] + "has logged out");
+                System.out.println("SONO NEL LOGOUT");
+                users.remove(line[0]);
+                control.update(line[0] + " has logged out");
                 break;
         }
     }

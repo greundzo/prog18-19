@@ -69,7 +69,7 @@ public class ServerController implements Initializable {
     
     @FXML
     public boolean logMsg(String msg) {
-        String on = java.time.LocalDateTime.now() + " " + msg;
+        String on = java.time.LocalDateTime.now() + "  " + msg;
         consolelog.appendText(on + "\n");
         return true;
     }

@@ -5,6 +5,7 @@
  */
 package server.model;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -52,7 +53,7 @@ public class ServerListener implements Runnable {
     public void cleanUp() {
         try {
             in.close();
-            incoming.close();
+            //incoming.close(); //socket del client
             srv.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,13 +74,15 @@ public class ServerListener implements Runnable {
             try {
                 Object obj = in.readObject();
                 model.selectAction(obj);
-            } catch (Exception e) {
+            } catch (IOException | ClassNotFoundException e) {
                 if(e instanceof IOException) {
-                    System.out.println("IO EX");
-                } else if (e instanceof SocketException) {
                     e.printStackTrace();
                 } else if (e instanceof ClassNotFoundException) {
                     e.printStackTrace();
+                } else if (e instanceof EOFException) { //qui esplode se client muore prima di server
+                    model.logAction("Someone,out");
+                } else if (e instanceof SocketException) {
+                    
                 }
             }    
         }    
