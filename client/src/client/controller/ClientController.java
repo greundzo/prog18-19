@@ -34,7 +34,13 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ClientController implements Initializable {
-
+    
+    /**
+     * @param model è il nostro modello 
+     * @param clientSocket è il socket del nostro client
+     * @param output è uno stream di oggetti per comunicare con il server
+     * @param in e out sono altri stream
+     */
     private ClientModel model;
     private OutputStream output;
     private DataOutputStream out;
@@ -52,6 +58,9 @@ public class ClientController implements Initializable {
     @FXML
     private Label ghostUserLabel;
     
+    /**
+     * Inizializza il menù a tendina. 
+     */
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,7 +68,13 @@ public class ClientController implements Initializable {
         choiceUser.getItems().add("user2@di.unito.it");
         choiceUser.getItems().add("user3@di.unito.it");
     }
-        
+    
+    /**
+     * Gestisce il login.
+     * Per prima cosa viene creato un nuovo socket, assieme al modello.
+     * Viene invocato poi il metodo di login del modello: se non viene lanciata
+     * un'eccezione loadClient carica la prossima vista.
+     */    
     @FXML
     private void loginAction(ActionEvent event) {                     
         try {
@@ -72,12 +87,18 @@ public class ClientController implements Initializable {
             ghostUserLabel.setText("SERVER OFFLINE");
         }
     }
-
+    
+    /**
+     * Carica la prossima vista.
+     * L'oggetto controller viene collegato al modello (da sistemare).
+     * La finestra di login viene chiusa.
+     */
     @FXML
     public void loadClient() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
+            //ReadMailController readmail = new ReadMailController(model);
             ReadMailController readmail = loader.getController();
             
             Parent rootSecond = (Parent) loader.load();
@@ -92,7 +113,7 @@ public class ClientController implements Initializable {
             Stage stage = (Stage) button.getScene().getWindow();
             stage.close();
 
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             e.printStackTrace();
         }
     }

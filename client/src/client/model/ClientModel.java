@@ -24,6 +24,11 @@ public class ClientModel {
         userName = usr;
     }
 
+    /**
+     * Controllo se esiste un modello con userName = name.
+     * @param name
+     * @return il modello se esiste, altrimenti ne creo uno nuovo. 
+     */
     public ClientModel getModel(String name) {
         if(this.getUser().equals(name)) {
             return this;
@@ -48,6 +53,11 @@ public class ClientModel {
         userName = null;
     }
     
+    /**
+     * Crea uno stream e comunica al server che il client sta eseguendo il login.
+     * @param s è il socket generato dal controller durante il login.
+     * @return true se tutto è riuscito, messaggio di errore in caso contrario.
+     */
     public boolean logRequest(Socket s) {
         socket = s;
         try {
@@ -61,7 +71,12 @@ public class ClientModel {
         return false;
     }
     
-    public boolean outRequest() {
+    /**
+     * Comunica al server che il client sta eseguendo il logout, poi chiude lo stream.
+     * @return true se tutto è andato bene
+     * @throws IOException se qualcosa è andato storto
+     */
+    public boolean outRequest() throws IOException {
         try {
             Object obj = this.getUser() + ",out";
             out.writeObject(obj);
@@ -69,8 +84,7 @@ public class ClientModel {
             socket.close();
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         }
-        return false;
     }
 }

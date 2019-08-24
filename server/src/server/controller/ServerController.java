@@ -47,6 +47,10 @@ public class ServerController implements Initializable {
     @FXML
     private AnchorPane serverAnchor;
 
+    /**
+     * Crea il modello, la connessione ServerSocket ed un thread demone per gestire le connessioni.
+     * Il demone conosce il modello ed il ServerSocket.
+     */
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -62,6 +66,10 @@ public class ServerController implements Initializable {
         }
     }    
     
+    /**
+     * Display messaggio.
+     * @param urgent 
+     */
     @FXML
     public void update(String urgent) {
         logMsg(urgent);
@@ -74,6 +82,9 @@ public class ServerController implements Initializable {
         return true;
     }
 
+    /**
+     * Spegne il server invocando un metodo del demone. 
+     */
     @FXML
     private void offAction(ActionEvent event) {
         try {

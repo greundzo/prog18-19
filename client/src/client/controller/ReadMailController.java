@@ -49,6 +49,9 @@ public class ReadMailController implements Initializable {
     @FXML
     private Button logoutButton;
 
+    public ReadMailController() {
+        model = null;
+    }
     /**
      * Initializes the controller class.
      */
@@ -77,17 +80,25 @@ public class ReadMailController implements Initializable {
     private void deleteMailAction(ActionEvent event) {
     }
 
+    /**
+     * Gestisce il logout del client.
+     * Il metodo del modello outRequest comunica al server che il client
+     * sta uscendo. Il metodo backToLogin viene invocato.
+     */
     @FXML
-    private void logoutAction(ActionEvent event) throws IOException {
-        //model.outRequest();
-        backToLogin();
+    private void logoutAction(ActionEvent event) {
+        try {
+            model.outRequest();
+            backToLogin();
+        } catch (IOException | NullPointerException e) {
+            //e.printStackTrace();
+            backToLogin();
+        }    
     }
     
-    @FXML
-    public void initModel(ClientModel clm) {
-        model = clm;
-    }
-    
+    /**
+     * Chiude la finestra corrente e genera una nuova vista di login.
+     */
     @FXML
     public void backToLogin() {
         try {

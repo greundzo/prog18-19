@@ -19,6 +19,11 @@ import javafx.stage.Stage;
  */
 public class ClientLoginView extends Application {
     
+    /**
+     * 
+     * @param loginStage è lo stage in cui verrà caricato il documento fxml
+     * la grafica è impostata di maniera che le dimensioni non possano essere modificate
+     */
     @Override
     public void start(Stage loginStage) {
         try {

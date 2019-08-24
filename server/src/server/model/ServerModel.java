@@ -11,7 +11,10 @@ public class ServerModel {
     public ServerModel() {
         control = null;
     }
-    
+    /**
+     * Permette al model di comunicare con il controller.
+     * @param s è il riferimento del controller
+     */
     public void setControl(ServerController s) {
         control = s;
     }
@@ -20,6 +23,11 @@ public class ServerModel {
         return this;
     }
     
+    /**
+     * Tiene conto di quali utenti sono loggati.
+     * @param usr è il nome utente
+     * @return true se l'utente non aveva già effettuato il login
+     */
     public boolean checkUserLogged(String usr) {
         if (users.contains(usr)) {
             return false;
@@ -29,6 +37,10 @@ public class ServerModel {
         }
     }
     
+    /**
+     * In base all'istanza del parametro decide quale metodo eseguire.
+     * @param obj 
+     */
     public void selectAction(Object obj) {
         
         if(obj instanceof String) {
@@ -37,6 +49,11 @@ public class ServerModel {
         }    
     }
     
+    /**
+     * Comunica al controller se il client sta eseguendo il login o il logout.
+     * @param action viene diviso in due da split, la seconda parte determina se
+     * si parla di login o logout.
+     */
     public void logAction(String action) {
         
         String line[] = action.split(",");

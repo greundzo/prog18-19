@@ -5,15 +5,16 @@
  */
 package server.model;
 
-import java.io.EOFException;
+//import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+//import java.io.InputStream;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
+//import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.HashMap;
 
 /**
  *
@@ -26,10 +27,11 @@ public class ServerListener implements Runnable {
     private final Thread current;
     private Socket incoming;
     private final ServerModel model;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
-    private InputStream input;
-    private OutputStream output;
+    //private ObjectOutputStream out;
+    //private ObjectInputStream in;
+    //private InputStream input;
+    //private OutputStream output;
+    private final HashMap<ThreadServer, Integer> map = new HashMap<>();
     boolean shutdown = false;
    
     
@@ -50,10 +52,14 @@ public class ServerListener implements Runnable {
         cleanUp();
     }
     
+    /**
+     * Chiude tutti i ThreadServer invocando il loro metodo cleanAll, poi chiude i restanti socket e stream.
+     */
     public void cleanUp() {
         try {
-            in.close();
-            //incoming.close(); //socket del client
+            map.keySet().forEach((t) -> {
+                t.cleanAll();
+            });            
             srv.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,29 +68,20 @@ public class ServerListener implements Runnable {
     
     @Override
     public void run() {
+        int i = 1;
         
         try { 
-            incoming = srv.accept(); 
-            in = new ObjectInputStream(incoming.getInputStream());
-        } catch (IOException e) { 
-            e.printStackTrace(); 
-        }
-        
-        while(!shutdown) {
-            try {
-                Object obj = in.readObject();
-                model.selectAction(obj);
-            } catch (IOException | ClassNotFoundException e) {
-                if(e instanceof IOException) {
-                    e.printStackTrace();
-                } else if (e instanceof ClassNotFoundException) {
-                    e.printStackTrace();
-                } else if (e instanceof EOFException) { //qui esplode se client muore prima di server
-                    model.logAction("Someone,out");
-                } else if (e instanceof SocketException) {
-                    
-                }
-            }    
-        }    
-    }             
+            while (true) {
+                incoming = srv.accept();
+                ThreadServer thread = new ThreadServer(incoming, model);
+                map.put(thread, i);
+                thread.start();
+                i++;
+            }
+        } catch (SocketException e) { 
+            System.out.println("il socket si è chiuso");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }       
+    }    
 }        
