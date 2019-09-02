@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Observable;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -30,20 +31,18 @@ public class ClientModel extends Observable {
     }
     
     /**
-     *
      * @param user
-     * @return true se riesce a settare il nome
      */
-    public boolean setUser(String user) {
-        if(userName == null) {
-            userName = user;
-            return true;
-        }
-        return false;
+    public void setUser(String user) {
+        userName = user;
     }
     
-    public void resetUser() {
-        userName = null;
+     public void alert(String text) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(Alert.AlertType.WARNING.toString());
+        alert.setHeaderText(text);
+        alert.setContentText("");
+        alert.showAndWait();
     }
     
     public void request(Object rqs) throws IOException {

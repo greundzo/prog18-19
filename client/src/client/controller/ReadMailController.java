@@ -7,6 +7,7 @@ package client.controller;
 
 import client.model.*;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
@@ -32,7 +33,8 @@ import javafx.stage.Stage;
 public class ReadMailController implements Initializable, Observer {
     
     private ClientModel model; 
-    private Socket sock; 
+    private Socket socket; 
+    private ObjectOutputStream out;
     private String usr;
     
     @FXML
@@ -82,10 +84,20 @@ public class ReadMailController implements Initializable, Observer {
 
     @FXML
     private void forwardMailAction(ActionEvent event) {
+        try {
+            model.request("forward");
+        } catch (IOException e) {
+            model.alert("FORWARD FAILED");
+        }    
     }
 
     @FXML
     private void deleteMailAction(ActionEvent event) {
+        try {
+            model.request("delete"); //servirà un secondo parametro
+        } catch (IOException e) {
+            model.alert("DELETE FAILED");
+        }    
     }
  
     /**
@@ -99,7 +111,7 @@ public class ReadMailController implements Initializable, Observer {
             model.outRequest();
             backToLogin();
         } catch (IOException | NullPointerException e) {
-            backToLogin();
+            model.alert("LOGOUT FAILED");
         }    
     }
     

@@ -88,7 +88,7 @@ public class ClientController implements Initializable, Observer {
             model.logRequest();         
             loadClient();
         } catch (IOException e) {
-            alert(Alert.AlertType.WARNING,"SERVER OFFLINE");
+            model.alert("SERVER OFFLINE");
         }
     }
     
@@ -114,25 +114,18 @@ public class ClientController implements Initializable, Observer {
             stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
-            stageSecond.setOnCloseRequest(e -> { /*model.end();*/ Platform.exit(); System.exit(0);});
+            stageSecond.setOnCloseRequest(e -> { Platform.exit(); System.exit(0);});
             stageSecond.show();
             
-
             Stage stage = (Stage) button.getScene().getWindow();
             stage.close();
 
         } catch (NullPointerException | IOException e) {
-            e.printStackTrace();
+            model.alert("LOGIN ERROR");
         }
     }
     
-    public void alert(Alert.AlertType alertType, String text) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(alertType.toString());
-        alert.setHeaderText(text);
-        alert.setContentText("");
-        alert.showAndWait();
-    }
+   
     
     @Override
     public void update(Observable o, Object obj) {

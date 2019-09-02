@@ -48,6 +48,11 @@ public class ServerModel extends Observable {
                 setChanged();
                 notifyObservers(logout);
                 break;
+            case "new":
+            case "ans":
+            case "ansall":
+            case "forward":
+            case "delete":
         }
         
     }
