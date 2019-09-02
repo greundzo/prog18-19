@@ -22,7 +22,7 @@ public class ClientModel extends Observable {
     private ObjectInputStream in;
     
     public ClientModel() {
-        userName = null;
+        userName = null;     
     }
     
     public String getUser() {
@@ -46,38 +46,33 @@ public class ClientModel extends Observable {
         userName = null;
     }
     
-    /**
-     * Crea uno stream e comunica al server che il client sta eseguendo il login.
-     * @param s è il socket generato dal controller durante il login.
-     * @return true se tutto è riuscito, messaggio di errore in caso contrario.
-     */
-    public boolean logRequest(Socket s) {
-        socket = s;
+    public void request(Object rqs) throws IOException {
         try {
+            socket = new Socket("localhost", 8189);
             out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(this.getUser());
-            out.writeObject("in");
-            return true; // deve tornare conferma del log o errore perché utente già dentro
-        } catch (IOException e){
-            e.printStackTrace();
-        }   
-        return false;
+            out.flush();           
+            out.writeObject(rqs);
+            out.flush();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            throw new IOException();
+        }    
+    }
+    /**
+     * Crea uno stream e comunica al server che il client sta eseguendo il login.
+     * @throws java.io.IOException
+     */
+    public void logRequest() throws IOException {
+        request("in"); 
     }
     
     /**
      * Comunica al server che il client sta eseguendo il logout, poi chiude lo stream.
-     * @return true se tutto è andato bene
      * @throws IOException se qualcosa è andato storto
      */
-    public boolean outRequest() throws IOException {
-        try {
-            Object obj = this.getUser() + ",out";
-            out.writeObject(obj);
-            out.close();
-            socket.close();
-            return true;
-        } catch (IOException e) {
-            throw new IOException();
-        }
+    public void outRequest() throws IOException {
+        request("out");
     }
 }

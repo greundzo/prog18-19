@@ -68,9 +68,9 @@ public class ClientController implements Initializable, Observer {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        choiceUser.getItems().add("user1@di.unito.it");
-        choiceUser.getItems().add("user2@di.unito.it");
-        choiceUser.getItems().add("user3@di.unito.it");
+        choiceUser.getItems().add("nico@unito.it");
+        choiceUser.getItems().add("wally@unito.it");
+        choiceUser.getItems().add("ali@di.unito.it");
         model = new ClientModel();
         model.addObserver(this);
     }
@@ -84,10 +84,8 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private void loginAction(ActionEvent event) {                     
         try {
-            clientSocket = new Socket("localhost", 8189);
-            String usr = choiceUser.getValue();
-            model.setUser(usr);
-            model.logRequest(clientSocket);         
+            model.setUser(choiceUser.getValue());
+            model.logRequest();         
             loadClient();
         } catch (IOException e) {
             alert(Alert.AlertType.WARNING,"SERVER OFFLINE");
@@ -104,11 +102,13 @@ public class ClientController implements Initializable, Observer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
-            readmail = loader.getController();
-            readmail.init(model);
-            
+                       
             Parent rootSecond = (Parent) loader.load();
 
+            readmail = loader.getController();
+            model.addObserver(readmail);
+            readmail.getModel(model);
+            
             Stage stageSecond = new Stage();
 
             stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
@@ -116,6 +116,7 @@ public class ClientController implements Initializable, Observer {
             stageSecond.setResizable(false);
             stageSecond.setOnCloseRequest(e -> { /*model.end();*/ Platform.exit(); System.exit(0);});
             stageSecond.show();
+            
 
             Stage stage = (Stage) button.getScene().getWindow();
             stage.close();

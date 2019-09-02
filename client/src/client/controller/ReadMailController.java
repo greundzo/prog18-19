@@ -7,6 +7,7 @@ package client.controller;
 
 import client.model.*;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,6 +32,8 @@ import javafx.stage.Stage;
 public class ReadMailController implements Initializable, Observer {
     
     private ClientModel model; 
+    private Socket sock; 
+    private String usr;
     
     @FXML
     private TitledPane mailList;
@@ -54,14 +57,15 @@ public class ReadMailController implements Initializable, Observer {
     public ReadMailController() {
         model = null;
     }
+    
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) {        
+        
     }    
 
     @FXML
@@ -83,11 +87,7 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private void deleteMailAction(ActionEvent event) {
     }
-
-    public void init(ClientModel m) {
-        this.model = m;
-    }
-    
+ 
     /**
      * Gestisce il logout del client.
      * Il metodo del modello outRequest comunica al server che il client
@@ -99,7 +99,7 @@ public class ReadMailController implements Initializable, Observer {
             model.outRequest();
             backToLogin();
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
+            backToLogin();
         }    
     }
     
@@ -111,7 +111,10 @@ public class ReadMailController implements Initializable, Observer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/Login.fxml"));
+            
+            
             Parent loginRoot = (Parent) loader.load();
+            ClientController control = loader.getController();
             
             Scene loginScene = new Scene(loginRoot);
             
@@ -130,5 +133,9 @@ public class ReadMailController implements Initializable, Observer {
     @Override
     public void update(Observable obs, Object obj) {
         
+    }
+    
+    public void getModel(ClientModel m){
+        model = m;
     }
 }

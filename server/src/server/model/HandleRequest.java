@@ -23,6 +23,8 @@ public class HandleRequest implements Runnable {
     private final ServerSocket server;
     private final TextArea area;
     private final ServerModel model;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private String user;
     private String request;
     
@@ -34,18 +36,30 @@ public class HandleRequest implements Runnable {
     }
     
     @Override
-    public void run() {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            
+    public void run() {       
+        try {            
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+
             user = (String)in.readObject();
             request = (String)in.readObject();
-            
+
             model.logAction(user, request);
-            
+
         } catch (ClassNotFoundException | IOException e) {
-            Platform.runLater(() -> area.appendText("L'utente: " + user + " si è disconnesso\n"));
+    
+        } finally {
+            this.stop();
         }
+    }
+    
+    public void stop() {
+        try {
+            in.close();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            
+        }    
     }
 }

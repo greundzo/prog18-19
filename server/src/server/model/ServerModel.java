@@ -1,5 +1,6 @@
 package server.model;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -32,8 +33,9 @@ public class ServerModel extends Observable {
      * Comunica al controller se il client sta eseguendo il login o il logout.
      * @param usr nome utente
      * @param rqs tipo di richiesta
+     * @throws java.io.IOException
      */
-    public synchronized void logAction(String usr, String rqs) {
+    public synchronized void logAction(String usr, String rqs) throws IOException {
         
         switch(rqs) {
             case "in": 
@@ -47,6 +49,7 @@ public class ServerModel extends Observable {
                 notifyObservers(logout);
                 break;
         }
+        
     }
 }
 
