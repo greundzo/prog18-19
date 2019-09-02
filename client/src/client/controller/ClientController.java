@@ -10,19 +10,20 @@ import client.model.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
  *
  * @author greundzo
  */
-public class ClientController implements Initializable {
+public class ClientController implements Initializable, Observer {
     
     /**
      * @param model è il nostro modello 
@@ -42,6 +43,7 @@ public class ClientController implements Initializable {
      * @param in e out sono altri stream
      */
     private ClientModel model;
+    private ReadMailController readmail;
     private OutputStream output;
     private DataOutputStream out;
     private DataInputStream in;
@@ -60,6 +62,8 @@ public class ClientController implements Initializable {
     
     /**
      * Inizializza il menù a tendina. 
+     * @param url
+     * @param rb
      */
     @FXML
     @Override
@@ -67,6 +71,8 @@ public class ClientController implements Initializable {
         choiceUser.getItems().add("user1@di.unito.it");
         choiceUser.getItems().add("user2@di.unito.it");
         choiceUser.getItems().add("user3@di.unito.it");
+        model = new ClientModel();
+        model.addObserver(this);
     }
     
     /**
@@ -78,13 +84,13 @@ public class ClientController implements Initializable {
     @FXML
     private void loginAction(ActionEvent event) {                     
         try {
-            String host = InetAddress.getLocalHost().getHostName();
-            clientSocket = new Socket(host, 8189);
-            model = new ClientModel(choiceUser.getValue());
+            clientSocket = new Socket("localhost", 8189);
+            String usr = choiceUser.getValue();
+            model.setUser(usr);
             model.logRequest(clientSocket);         
             loadClient();
         } catch (IOException e) {
-            ghostUserLabel.setText("SERVER OFFLINE");
+            alert(Alert.AlertType.WARNING,"SERVER OFFLINE");
         }
     }
     
@@ -98,8 +104,8 @@ public class ClientController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/ReadMail.fxml"));
-            //ReadMailController readmail = new ReadMailController(model);
-            ReadMailController readmail = loader.getController();
+            readmail = loader.getController();
+            readmail.init(model);
             
             Parent rootSecond = (Parent) loader.load();
 
@@ -108,6 +114,7 @@ public class ClientController implements Initializable {
             stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
+            stageSecond.setOnCloseRequest(e -> { /*model.end();*/ Platform.exit(); System.exit(0);});
             stageSecond.show();
 
             Stage stage = (Stage) button.getScene().getWindow();
@@ -116,6 +123,19 @@ public class ClientController implements Initializable {
         } catch (NullPointerException | IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void alert(Alert.AlertType alertType, String text) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertType.toString());
+        alert.setHeaderText(text);
+        alert.setContentText("");
+        alert.showAndWait();
+    }
+    
+    @Override
+    public void update(Observable o, Object obj) {
+        
     }
 }
 

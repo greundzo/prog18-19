@@ -9,39 +9,32 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Observable;
 
 /**
  *
  * @author greundzo
  */
-public class ClientModel {
+public class ClientModel extends Observable {
     private static String userName;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     
-    public ClientModel(String usr) {
-        userName = usr;
-    }
-
-    /**
-     * Controllo se esiste un modello con userName = name.
-     * @param name
-     * @return il modello se esiste, altrimenti ne creo uno nuovo. 
-     */
-    public ClientModel getModel(String name) {
-        if(this.getUser().equals(name)) {
-            return this;
-        } else {
-            return new ClientModel(name);
-        }
+    public ClientModel() {
+        userName = null;
     }
     
     public String getUser() {
         return userName;
     }
     
-    public static boolean setUser(String user) {
+    /**
+     *
+     * @param user
+     * @return true se riesce a settare il nome
+     */
+    public boolean setUser(String user) {
         if(userName == null) {
             userName = user;
             return true;
@@ -62,8 +55,8 @@ public class ClientModel {
         socket = s;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            Object obj = this.getUser() + ",in";
-            out.writeObject(obj);
+            out.writeObject(this.getUser());
+            out.writeObject("in");
             return true; // deve tornare conferma del log o errore perché utente già dentro
         } catch (IOException e){
             e.printStackTrace();

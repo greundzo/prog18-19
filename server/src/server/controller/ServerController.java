@@ -12,26 +12,25 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
  *
  * @author greundzo
  */
-public class ServerController implements Initializable {
+public class ServerController implements Initializable, Observer {
 
     private ServerModel servermodel;
     private ServerSocket serverlink;
     private Socket socket;
-    private ServerListener service;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
@@ -41,45 +40,49 @@ public class ServerController implements Initializable {
     @FXML
     private TextArea consolelog;
 
-    @FXML
-    private Pane serverPane;
-
-    @FXML
-    private AnchorPane serverAnchor;
-
     /**
-     * Crea il modello, la connessione ServerSocket ed un thread demone per gestire le connessioni.
-     * Il demone conosce il modello ed il ServerSocket.
+     * Crea il modello, la connessione ServerSocket ed un thread per gestire le connessioni.
+     * Il thread ausiliario conosce il modello ed il ServerSocket.
+     * @param url
+     * @param rb
      */
-    @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            servermodel = new ServerModel();
-            servermodel.setControl(this);
-            serverlink = new ServerSocket(8189);
-            service = new ServerListener(serverlink, servermodel);
-            service.startService();
-            logMsg("Server Started");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        servermodel = new ServerModel();
+        servermodel.addObserver(this);
+        logMsg("Server started");
+        new Thread(() -> {
+            try {
+                serverlink = new ServerSocket(8189);
+                while (!serverlink.isClosed()) {
+                    socket = serverlink.accept();
+                    servermodel.launchHandle(socket, serverlink, consolelog, servermodel);
+                }
+            } catch (IOException e) {
+                
+            }
+        }).start();
     }    
     
+    public void setModel(ServerModel model) {
+        servermodel = model;
+    }
+    
     /**
-     * Display messaggio.
-     * @param urgent 
+     * Aggiorna il log della finestra.
      */
-    @FXML
-    public void update(String urgent) {
-        logMsg(urgent);
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg != null && arg instanceof String) {
+            String msg = (String) arg;
+            logMsg(msg);
+        }
     }
     
     @FXML
-    public boolean logMsg(String msg) {
+    public void logMsg(String msg) {
         String on = java.time.LocalDateTime.now() + "  " + msg;
         consolelog.appendText(on + "\n");
-        return true;
     }
 
     /**
@@ -88,10 +91,14 @@ public class ServerController implements Initializable {
     @FXML
     private void offAction(ActionEvent event) {
         try {
-            service.shutdown();
-            logMsg("Server Stopped");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            shutdown();
+        } catch (IOException e) {
+            
+        }    
+    }
+    
+    public void shutdown() throws IOException {
+        serverlink.close();
+        logMsg("Server off");
     }
 }    

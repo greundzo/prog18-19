@@ -1,76 +1,50 @@
 package server.model;
 
-import server.controller.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
+import javafx.scene.control.TextArea;
 
-public class ServerModel {
+/**
+ * 
+ * @author greundzo
+ */
+
+public class ServerModel extends Observable {
     
-    private ServerController control;
-    private ArrayList<String> users = new ArrayList<>();
+    private final HashMap<String, ArrayList<String>> emails;
+    private final HashMap<String, Boolean> accountRefresh;
+    private HandleRequest connected;
             
     public ServerModel() {
-        control = null;
-    }
-    /**
-     * Permette al model di comunicare con il controller.
-     * @param s è il riferimento del controller
-     */
-    public void setControl(ServerController s) {
-        control = s;
+        emails = new HashMap<>();
+        accountRefresh = new HashMap<>();
     }
     
-    public ServerModel getInstance() {
-        return this;
-    }
-    
-    /**
-     * Tiene conto di quali utenti sono loggati.
-     * @param usr è il nome utente
-     * @return true se l'utente non aveva già effettuato il login
-     */
-    public boolean checkUserLogged(String usr) {
-        if (users.contains(usr)) {
-            return false;
-        } else {
-            users.add(usr);
-            return true;
-        }
-    }
-    
-    /**
-     * In base all'istanza del parametro decide quale metodo eseguire.
-     * @param obj 
-     */
-    public void selectAction(Object obj) {
-        
-        if(obj instanceof String) {
-            String action = (String) obj; 
-            logAction(action);
-        }    
+    public void launchHandle(Socket s, ServerSocket srv, TextArea area, ServerModel m) {
+        connected = new HandleRequest(s, srv, area, this);
+        new Thread(connected).start();
     }
     
     /**
      * Comunica al controller se il client sta eseguendo il login o il logout.
-     * @param action viene diviso in due da split, la seconda parte determina se
-     * si parla di login o logout.
+     * @param usr nome utente
+     * @param rqs tipo di richiesta
      */
-    public void logAction(String action) {
+    public synchronized void logAction(String usr, String rqs) {
         
-        String line[] = action.split(",");
-        
-        switch(line[1]) {
+        switch(rqs) {
             case "in": 
-                if(this.checkUserLogged(line[0])) {
-                    control.update(line[0] + " has logged in");
-                } else {
-                    //utente stampa che non può entrare
-                    //deve rientrare un false o un eccezione al client
-                }
+                Object login = usr + " has logged in";
+                setChanged();
+                notifyObservers(login);
                 break;   
             case "out":
-                System.out.println("SONO NEL LOGOUT");
-                users.remove(line[0]);
-                control.update(line[0] + " has logged out");
+                Object logout = usr + " has logged out";
+                setChanged();
+                notifyObservers(logout);
                 break;
         }
     }

@@ -8,6 +8,8 @@ package client.controller;
 import client.model.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +28,7 @@ import javafx.stage.Stage;
  *
  * @author greundzo
  */
-public class ReadMailController implements Initializable {
+public class ReadMailController implements Initializable, Observer {
     
     private ClientModel model; 
     
@@ -54,6 +56,8 @@ public class ReadMailController implements Initializable {
     }
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,6 +84,10 @@ public class ReadMailController implements Initializable {
     private void deleteMailAction(ActionEvent event) {
     }
 
+    public void init(ClientModel m) {
+        this.model = m;
+    }
+    
     /**
      * Gestisce il logout del client.
      * Il metodo del modello outRequest comunica al server che il client
@@ -91,8 +99,7 @@ public class ReadMailController implements Initializable {
             model.outRequest();
             backToLogin();
         } catch (IOException | NullPointerException e) {
-            //e.printStackTrace();
-            backToLogin();
+            e.printStackTrace();
         }    
     }
     
@@ -118,5 +125,10 @@ public class ReadMailController implements Initializable {
         }catch(IOException notFound) {
             System.out.println("READMAILCONTROLLER: IO ERROR");
         }
+    }
+    
+    @Override
+    public void update(Observable obs, Object obj) {
+        
     }
 }
