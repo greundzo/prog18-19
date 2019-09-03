@@ -45,20 +45,30 @@ public class ClientModel extends Observable {
         alert.showAndWait();
     }
     
-    public void request(Object rqs) throws IOException {
-        try {
-            socket = new Socket("localhost", 8189);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(this.getUser());
-            out.flush();           
-            out.writeObject(rqs);
-            out.flush();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            throw new IOException();
-        }    
+    public void request(Object rqs) throws IOException {     
+        socket = new Socket("localhost", 8189);
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(this.getUser());
+        out.flush();           
+        out.writeObject(rqs);
+        out.flush();
+        out.close();
+        socket.close();      
     }
+    
+    public void request(Object rqs, Object obj) throws IOException {       
+        socket = new Socket("localhost", 8189);
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(this.getUser());
+        out.flush();           
+        out.writeObject(rqs);
+        out.flush();
+        out.writeObject(obj);
+        out.flush();
+        out.close();
+        socket.close();           
+    }
+    
     /**
      * Crea uno stream e comunica al server che il client sta eseguendo il login.
      * @throws java.io.IOException
