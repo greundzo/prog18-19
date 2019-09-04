@@ -33,9 +33,10 @@ public class ServerModel extends Observable {
      * Comunica al controller se il client sta eseguendo il login o il logout.
      * @param usr nome utente
      * @param rqs tipo di richiesta
+     * @param obj
      * @throws java.io.IOException
      */
-    public synchronized void logAction(String usr, String rqs) throws IOException {
+    public synchronized void logAction(String usr, String rqs, Object obj) throws IOException {
         
         switch(rqs) {
             case "in": 

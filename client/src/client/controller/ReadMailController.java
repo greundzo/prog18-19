@@ -85,7 +85,7 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private void forwardMailAction(ActionEvent event) {
         try {
-            model.request("forward"/*, email id*/);
+            model.request("forward" /*email id*/);
         } catch (IOException e) {
             model.alert("FORWARD FAILED");
         }    

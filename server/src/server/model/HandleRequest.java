@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
 /**
@@ -27,6 +26,7 @@ public class HandleRequest implements Runnable {
     private ObjectInputStream in;
     private String user;
     private String request;
+    private Object obj;
     
     public HandleRequest (Socket s, ServerSocket sr, TextArea ar, ServerModel m) {
         socket = s;
@@ -41,10 +41,11 @@ public class HandleRequest implements Runnable {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
-            user = (String)in.readObject();
-            request = (String)in.readObject();
+            user = (String) in.readObject();
+            request = (String) in.readObject();
+            obj = in.readObject();
 
-            model.logAction(user, request);
+            model.logAction(user, request, obj);
 
         } catch (ClassNotFoundException | IOException e) {
     
