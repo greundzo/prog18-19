@@ -84,9 +84,11 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private void loginAction(ActionEvent event) {                     
         try {
-            model.setUser(choiceUser.getValue());
-            model.logRequest();         
-            loadClient();
+            if(choiceUser.getValue() != null) {
+                model.setUser(choiceUser.getValue());
+                model.logRequest();         
+                loadClient();
+            }   
         } catch (IOException e) {
             model.alert("SERVER OFFLINE");
         }

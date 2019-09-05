@@ -5,12 +5,19 @@
  */
 package client.model;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import static jdk.nashorn.internal.parser.TokenType.EOF;
+import publics.Email;
 
 /**
  *
@@ -21,6 +28,8 @@ public class ClientModel extends Observable {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private ArrayList<Email> emails;
+    private ObservableList<Email> emList;
     
     public ClientModel() {
         userName = null;     
@@ -45,17 +54,6 @@ public class ClientModel extends Observable {
         alert.showAndWait();
     }
     
-    public void request(Object rqs) throws IOException {     
-        socket = new Socket("localhost", 8189);
-        out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(this.getUser());
-        out.flush();           
-        out.writeObject(rqs);
-        out.flush();
-        out.close();
-        socket.close();      
-    }
-    
     public void request(Object rqs, Object obj) throws IOException {       
         socket = new Socket("localhost", 8189);
         out = new ObjectOutputStream(socket.getOutputStream());
@@ -74,7 +72,7 @@ public class ClientModel extends Observable {
      * @throws java.io.IOException
      */
     public void logRequest() throws IOException {
-        request("in"); 
+        request("in", null); 
     }
     
     /**
@@ -82,6 +80,39 @@ public class ClientModel extends Observable {
      * @throws IOException se qualcosa è andato storto
      */
     public void outRequest() throws IOException {
-        request("out");
+        request("out", null);
+    }
+    
+    public void sendRequest(Object obj) throws IOException {
+        FileWriter wr = new FileWriter("../publics/db/" + userName + "Sent.txt");
+        Email email = (Email) obj;
+        String mail[] = {email.id(), email.from(), email.to(), email.subject(), email.txt(), email.date()};
+        writeMail(wr, mail);
+        request("new", obj);
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void setEmails(ArrayList<Email> ems) {
+        emails = ems;
+        if (emList == null) {
+            emList = FXCollections.observableArrayList(emails);
+        }    
+    }
+    
+    public ArrayList<Email> getMails() {
+        return emails;
+    }
+    
+    public ObservableList<Email> getObMails() {
+        return emList;
+    }
+    
+    public void writeMail(FileWriter wr, String a[]) throws IOException {
+        for (String a1 : a) {
+            wr.write(a1 + "§§");
+        }
+        wr.write(EOF + "\n");
+        wr.close();
     }
 }

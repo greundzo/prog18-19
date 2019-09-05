@@ -70,8 +70,17 @@ public class ReadMailController implements Initializable, Observer {
         
     }    
 
+    public void getModel(ClientModel m){
+        model = m;
+    }
+    
     @FXML
     private void newMailAction(ActionEvent event) {
+        try {
+            sendWidget();            
+        } catch (IOException e) {
+            model.alert("Internal error. (Code Error: 10141)");
+        }    
     }
 
     @FXML
@@ -85,7 +94,7 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private void forwardMailAction(ActionEvent event) {
         try {
-            model.request("forward" /*email id*/);
+            model.request("forward", null);
         } catch (IOException e) {
             model.alert("FORWARD FAILED");
         }    
@@ -94,7 +103,7 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private void deleteMailAction(ActionEvent event) {
         try {
-            model.request("delete"/*,email id*/); //servirà un secondo parametro
+            model.request("delete",null); //servirà un secondo parametro
         } catch (IOException e) {
             model.alert("DELETE FAILED");
         }    
@@ -111,7 +120,8 @@ public class ReadMailController implements Initializable, Observer {
             model.outRequest();
             backToLogin();
         } catch (IOException | NullPointerException e) {
-            model.alert("LOGOUT FAILED");
+            model.alert("Connection interrupted. (Code Error: 11010)");
+            backToLogin();
         }    
     }
     
@@ -123,8 +133,7 @@ public class ReadMailController implements Initializable, Observer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("../fxml/Login.fxml"));
-            
-            
+                        
             Parent loginRoot = (Parent) loader.load();
             ClientController control = loader.getController();
             
@@ -142,12 +151,35 @@ public class ReadMailController implements Initializable, Observer {
         }
     }
     
+    /**
+     *
+     * @throws IOException
+     */
+    @FXML
+    public void sendWidget() throws IOException {
+        try { 
+            FXMLLoader sendScene = new FXMLLoader();
+            sendScene.setLocation(this.getClass().getResource("../fxml/SendMail.fxml"));
+
+            Parent parent = (Parent) sendScene.load();
+
+            SendMailController control = sendScene.getController();        
+            model.addObserver(control);
+            control.getModel(model);
+
+            Scene scene2 = new Scene(parent);
+            Stage stage2 = new Stage();
+            stage2.setTitle("@DiMailService");
+            stage2.setScene(scene2);
+            stage2.show();
+            control.getStage();
+        } catch (IOException e) {
+            System.out.println("Errore caricamento invio mail.");
+        }    
+    }
+    
     @Override
     public void update(Observable obs, Object obj) {
         
-    }
-    
-    public void getModel(ClientModel m){
-        model = m;
-    }
+    }  
 }

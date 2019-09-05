@@ -1,5 +1,6 @@
 package server.model;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import javafx.scene.control.TextArea;
+import publics.Email;
 
 /**
  * 
@@ -37,7 +39,7 @@ public class ServerModel extends Observable {
      * @throws java.io.IOException
      */
     public synchronized void logAction(String usr, String rqs, Object obj) throws IOException {
-        
+         
         switch(rqs) {
             case "in": 
                 Object login = usr + " has logged in";
@@ -50,12 +52,19 @@ public class ServerModel extends Observable {
                 notifyObservers(logout);
                 break;
             case "new":
+                Email email = (Email) obj;
+                writeEmail(email, usr);
             case "ans":
             case "ansall":
             case "forward":
             case "delete":
         }
         
+    }
+    
+    public synchronized void writeEmail(Email em, String usr) throws IOException {
+        String to = em.to();
+        FileWriter wr = new FileWriter("../publics/db/" + usr + "Sent.txt");
     }
 }
 

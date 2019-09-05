@@ -35,4 +35,28 @@ public class Email implements Serializable {
         text = txt;
         date = java.time.LocalDateTime.now() + "";
     }
+    
+    public String id() {
+        return id;
+    }
+    
+    public String from() {
+        return from;
+    }
+    
+    public String to() {
+        return to;
+    }
+    
+    public String subject() {
+        return subject;
+    }
+    
+    public String txt() {
+        return text;
+    }
+    
+    public String date() {
+        return date;
+    }
 }
