@@ -21,7 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import publics.Email;
+import client.publics.Email;
+import javafx.scene.control.ChoiceBox;
 
 /**
  * FXML Controller class
@@ -44,7 +45,7 @@ public class SendMailController implements Initializable, Observer {
     @FXML
     private Button cursiveButton;
     @FXML
-    private TextField toLabel;
+    private ChoiceBox<String> toLabel;
     @FXML
     private TextField subLabel;
     @FXML
@@ -57,7 +58,9 @@ public class SendMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        toLabel.getItems().add("nico@unito.it");
+        toLabel.getItems().add("wally@unito.it");
+        toLabel.getItems().add("ali@unito.it");
     }
 
     public void getStage() {
@@ -102,7 +105,7 @@ public class SendMailController implements Initializable, Observer {
     
     @FXML
     private void send(ActionEvent event) {
-        Email email = new Email(model.getUser(), toLabel.getText(), subLabel.getText(), txtArea.getText());
+        Email email = new Email(model.getUser(), toLabel.getValue(), subLabel.getText(), txtArea.getText());
         try {
             model.sendRequest(email);
             stage.close();

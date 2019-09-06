@@ -5,7 +5,8 @@
  */
 package client.model;
 
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,7 +18,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import static jdk.nashorn.internal.parser.TokenType.EOF;
-import publics.Email;
+import client.publics.Email;
+import java.io.File;
+import java.io.PrintWriter;
 
 /**
  *
@@ -84,13 +87,20 @@ public class ClientModel extends Observable {
     }
     
     public void sendRequest(Object obj) throws IOException {
-        FileWriter wr = new FileWriter("../publics/db/" + userName + "Sent.txt");
-        Email email = (Email) obj;
-        String mail[] = {email.id(), email.from(), email.to(), email.subject(), email.txt(), email.date()};
-        writeMail(wr, mail);
-        request("new", obj);
-        setChanged();
-        notifyObservers();
+        try {
+            System.out.println(new File(".").getAbsolutePath());
+            FileWriter sent = new FileWriter("./publics/db/" + userName + "/" + "Sent.txt", true);
+            PrintWriter wr = new PrintWriter(new BufferedWriter(sent));
+            
+            Email email = (Email) obj;            
+            writeMail(wr, email);
+            
+            request("new", obj);
+            setChanged();
+            notifyObservers();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }        
     }
     
     public void setEmails(ArrayList<Email> ems) {
@@ -108,11 +118,13 @@ public class ClientModel extends Observable {
         return emList;
     }
     
-    public void writeMail(FileWriter wr, String a[]) throws IOException {
+    public void writeMail(PrintWriter wr, Email email) {
+        String a[] = {email.id(), email.from(), email.to(), email.subject(), email.txt(), email.date()};  
         for (String a1 : a) {
-            wr.write(a1 + "§§");
+            wr.print(a1 + "§§");
         }
-        wr.write(EOF + "\n");
-        wr.close();
+        wr.print("false" + "§§" + EOF);
+        wr.println();
+        wr.close();    
     }
 }

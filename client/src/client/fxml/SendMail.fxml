@@ -25,11 +25,11 @@
             <Button fx:id="goBackButton" layoutX="24.0" layoutY="339.0" mnemonicParsing="false" onAction="#goBackAction" text="Back" />
             <Label layoutX="24.0" layoutY="6.0" prefHeight="17.0" prefWidth="52.0" text="To:" />
             <Label layoutX="28.0" layoutY="50.0" prefHeight="17.0" prefWidth="59.0" text="Subject" />
-            <TextField fx:id="toLabel" layoutX="27.0" layoutY="23.0" prefHeight="25.0" prefWidth="200.0" />
-            <TextField fx:id="subLabel" layoutX="27.0" layoutY="71.0" prefHeight="25.0" prefWidth="346.0">
+            <TextField fx:id="subLabel" layoutX="25.0" layoutY="67.0" prefHeight="25.0" prefWidth="346.0">
                <font>
                   <Font name="Serif Regular" size="13.0" />
                </font></TextField>
+            <ChoiceBox fx:id="toLabel" layoutX="24.0" layoutY="23.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </children>

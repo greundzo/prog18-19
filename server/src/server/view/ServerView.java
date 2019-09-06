@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * @author wallahd
  * @author greundzo
  */
 public class ServerView extends Application {
@@ -34,7 +34,7 @@ public class ServerView extends Application {
         stage.setTitle("@DiMailServer");
         stage.setResizable(false);
         stage.setScene(scene);
-        stage.setOnCloseRequest(e -> { /*model.end;*/ Platform.exit(); System.exit(0);});
+        stage.setOnCloseRequest(e -> { Platform.exit(); System.exit(0); });
         stage.show();       
     }
 

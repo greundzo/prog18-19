@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package publics;
+package server.publics;
 
 import java.io.Serializable;
 
 /**
- *
+ * @author wallahd
  * @author greundzo
  */
 public class Email implements Serializable {
@@ -19,6 +19,7 @@ public class Email implements Serializable {
     private final String subject;
     private final String text;
     private final String date;
+    private boolean read;
     
     /**
      *
@@ -34,6 +35,7 @@ public class Email implements Serializable {
         subject = theSubject;
         text = txt;
         date = java.time.LocalDateTime.now() + "";
+        read = false;
     }
     
     public String id() {
@@ -58,5 +60,18 @@ public class Email implements Serializable {
     
     public String date() {
         return date;
+    }
+    
+    public boolean wasRead() {
+        return read;
+    }
+    
+    public void hasBeenRead() {
+        read = !read;
+    }
+    
+    public String[] getAll() {
+        String all[] = {id, from, to, subject, text, date};
+        return all;
     }
 }

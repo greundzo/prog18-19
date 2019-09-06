@@ -147,7 +147,7 @@ public class ReadMailController implements Initializable, Observer {
             Stage stage = (Stage) logoutButton.getScene().getWindow(); 
             stage.close();
         }catch(IOException notFound) {
-            System.out.println("READMAILCONTROLLER: IO ERROR");
+            model.alert("Internal error. (Code Error: 10141)");
         }
     }
     

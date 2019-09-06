@@ -1,8 +1,3 @@
-/**
- * @author Niccolò Alleyson 833974 
- * 
- * 
- */
 package client.view;
 
 import client.controller.*;
@@ -14,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * @author wallahd
  * @author greundzo
  */
 public class ClientLoginView extends Application {

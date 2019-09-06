@@ -1,14 +1,17 @@
 package server.model;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import javafx.scene.control.TextArea;
-import publics.Email;
+import static jdk.nashorn.internal.parser.TokenType.EOF;
+import server.publics.Email;
 
 /**
  * 
@@ -39,32 +42,59 @@ public class ServerModel extends Observable {
      * @throws java.io.IOException
      */
     public synchronized void logAction(String usr, String rqs, Object obj) throws IOException {
-         
-        switch(rqs) {
-            case "in": 
-                Object login = usr + " has logged in";
-                setChanged();
-                notifyObservers(login);
-                break;   
-            case "out":
-                Object logout = usr + " has logged out";
-                setChanged();
-                notifyObservers(logout);
-                break;
-            case "new":
-                Email email = (Email) obj;
-                writeEmail(email, usr);
-            case "ans":
-            case "ansall":
-            case "forward":
-            case "delete":
+        synchronized(usr) { 
+            switch(rqs) {
+                case "in": 
+                    Object login = usr + " has logged in";
+                    setChanged();
+                    notifyObservers(login);
+                    break;   
+                case "out":
+                    Object logout = usr + " has logged out";
+                    setChanged();
+                    notifyObservers(logout);
+                    break;
+                case "new":
+                    Email email = (Email) obj;
+                    writeEmail(email, usr);
+                    setChanged();
+                    notifyObservers(usr + "has sent an email");
+                case "ans":
+                case "ansall":
+                case "forward":
+                case "delete":
+            }
         }
-        
     }
     
-    public synchronized void writeEmail(Email em, String usr) throws IOException {
-        String to = em.to();
-        FileWriter wr = new FileWriter("../publics/db/" + usr + "Sent.txt");
+    public synchronized void writeEmail(Email em, String usr) {
+
+        String toWho = em.to();
+        
+        try {    
+            FileWriter sent = new FileWriter("../../publics/db/" + usr + "/Sent.txt");
+            FileWriter received = new FileWriter("../../publics/db/" + toWho + "/Received.txt");
+            
+            PrintWriter from = new PrintWriter(new BufferedWriter(sent));
+            PrintWriter toWhere = new PrintWriter(new BufferedWriter(received));
+            
+            String info[] = em.getAll();
+            for (String i1 : info) {
+                from.print(i1 + "§§");
+                toWhere.print(i1 + "§§");
+            }
+            
+            from.print("false" + "§§" + EOF);
+            from.println();
+            from.close();
+            
+            toWhere.print("false" + "§§" + EOF);
+            toWhere.println();
+            toWhere.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }    
     }
 }
 
