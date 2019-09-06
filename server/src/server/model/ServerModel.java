@@ -55,10 +55,12 @@ public class ServerModel extends Observable {
                 notifyObservers(logout);
                 break;
             case "new":
+                System.out.println("Utente ha mandato!");
                 Email email = (Email) obj;
                 writeEmail(email, usr);
                 setChanged();
                 notifyObservers(usr + "has sent an email");
+                break;
             case "ans":
             case "ansall":
             case "forward":
@@ -72,7 +74,8 @@ public class ServerModel extends Observable {
         String toWho = em.to();
         
         try {    
-            FileWriter sent = new FileWriter("/client/src/client/publics/db/" + usr + "/Sent.txt");
+            System.out.println("SOno dentro!");
+            FileWriter sent = new FileWriter("../publics/db/" + usr + "/Sent.txt");
             FileWriter received = new FileWriter("/client/src/client/publics/db/" + toWho + "/Received.txt");
             
             PrintWriter from = new PrintWriter(new BufferedWriter(sent));

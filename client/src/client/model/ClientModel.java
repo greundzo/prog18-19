@@ -5,9 +5,6 @@
  */
 package client.model;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,10 +14,7 @@ import java.util.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import static jdk.nashorn.internal.parser.TokenType.EOF;
 import client.publics.Email;
-import java.io.File;
-import java.io.PrintWriter;
 
 /**
  *
@@ -86,7 +80,7 @@ public class ClientModel extends Observable {
         request("out", null);
     }
     
-    public void sendRequest(Object obj) throws IOException {        
+    public void sendRequest(Object obj) throws IOException {   
         request("new", obj);        
     }
     
