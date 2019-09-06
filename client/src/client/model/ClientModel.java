@@ -86,21 +86,8 @@ public class ClientModel extends Observable {
         request("out", null);
     }
     
-    public void sendRequest(Object obj) throws IOException {
-        try {
-            System.out.println(new File(".").getAbsolutePath());
-            FileWriter sent = new FileWriter("./publics/db/" + userName + "/" + "Sent.txt", true);
-            PrintWriter wr = new PrintWriter(new BufferedWriter(sent));
-            
-            Email email = (Email) obj;            
-            writeMail(wr, email);
-            
-            request("new", obj);
-            setChanged();
-            notifyObservers();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }        
+    public void sendRequest(Object obj) throws IOException {        
+        request("new", obj);        
     }
     
     public void setEmails(ArrayList<Email> ems) {
@@ -118,13 +105,4 @@ public class ClientModel extends Observable {
         return emList;
     }
     
-    public void writeMail(PrintWriter wr, Email email) {
-        String a[] = {email.id(), email.from(), email.to(), email.subject(), email.txt(), email.date()};  
-        for (String a1 : a) {
-            wr.print(a1 + "§§");
-        }
-        wr.print("false" + "§§" + EOF);
-        wr.println();
-        wr.close();    
-    }
 }

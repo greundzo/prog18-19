@@ -42,29 +42,29 @@ public class ServerModel extends Observable {
      * @throws java.io.IOException
      */
     public synchronized void logAction(String usr, String rqs, Object obj) throws IOException {
-        synchronized(usr) { 
-            switch(rqs) {
-                case "in": 
-                    Object login = usr + " has logged in";
-                    setChanged();
-                    notifyObservers(login);
-                    break;   
-                case "out":
-                    Object logout = usr + " has logged out";
-                    setChanged();
-                    notifyObservers(logout);
-                    break;
-                case "new":
-                    Email email = (Email) obj;
-                    writeEmail(email, usr);
-                    setChanged();
-                    notifyObservers(usr + "has sent an email");
-                case "ans":
-                case "ansall":
-                case "forward":
-                case "delete":
-            }
+        
+        switch(rqs) {
+            case "in": 
+                Object login = usr + " has logged in";
+                setChanged();
+                notifyObservers(login);
+                break;   
+            case "out":
+                Object logout = usr + " has logged out";
+                setChanged();
+                notifyObservers(logout);
+                break;
+            case "new":
+                Email email = (Email) obj;
+                writeEmail(email, usr);
+                setChanged();
+                notifyObservers(usr + "has sent an email");
+            case "ans":
+            case "ansall":
+            case "forward":
+            case "delete":
         }
+        
     }
     
     public synchronized void writeEmail(Email em, String usr) {
@@ -72,8 +72,8 @@ public class ServerModel extends Observable {
         String toWho = em.to();
         
         try {    
-            FileWriter sent = new FileWriter("../../publics/db/" + usr + "/Sent.txt");
-            FileWriter received = new FileWriter("../../publics/db/" + toWho + "/Received.txt");
+            FileWriter sent = new FileWriter("/client/src/client/publics/db/" + usr + "/Sent.txt");
+            FileWriter received = new FileWriter("/client/src/client/publics/db/" + toWho + "/Received.txt");
             
             PrintWriter from = new PrintWriter(new BufferedWriter(sent));
             PrintWriter toWhere = new PrintWriter(new BufferedWriter(received));
