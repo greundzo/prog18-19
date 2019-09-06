@@ -53,15 +53,13 @@ public class ClientModel extends Observable {
     
     public void request(Object rqs, Object obj) throws IOException {       
         socket = new Socket("localhost", 8189);
+        //CreateRequest cr = new CreateRequest(this, this.getUser(), rqs, obj, socket);
+        //new Thread(cr).start();
         out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(this.getUser());
-        out.flush();           
+        out.writeObject(userName);         
         out.writeObject(rqs);
-        out.flush();
         out.writeObject(obj);
         out.flush();
-        out.close();
-        socket.close();           
     }
     
     /**

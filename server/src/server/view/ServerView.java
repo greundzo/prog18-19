@@ -26,9 +26,8 @@ public class ServerView extends Application {
         FXMLLoader serverLoader = new FXMLLoader();
         serverLoader.setLocation(this.getClass().getResource("../fxml/FXMLServer.fxml"));
         ServerController controller = serverLoader.getController();
-
         Parent root = (Parent) serverLoader.load();
-
+        
         
         Scene scene = new Scene(root);
         stage.setTitle("@DiMailServer");
