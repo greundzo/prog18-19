@@ -36,6 +36,7 @@ public class ReadMailController implements Initializable, Observer {
     private Socket socket; 
     private ObjectOutputStream out;
     private String usr;
+    private boolean sendstart = false;
     
     @FXML
     private TitledPane mailList;
@@ -76,10 +77,13 @@ public class ReadMailController implements Initializable, Observer {
     
     @FXML
     private void newMailAction(ActionEvent event) {
-        try {
-            sendWidget();            
-        } catch (IOException e) {
-            model.alert("Internal error. (Code Error: 10141)");
+        if (!sendstart) {
+            //sendstart = !sendstart;
+            try {
+                sendWidget();
+            } catch (IOException e) {
+                model.alert("Internal error. (Code Error: 10141)");
+            }
         }    
     }
 

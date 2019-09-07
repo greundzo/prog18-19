@@ -12,6 +12,7 @@ import java.util.Observable;
 import javafx.scene.control.TextArea;
 import static jdk.nashorn.internal.parser.TokenType.EOF;
 import electronicmail.publics.Email;
+import java.io.File;
 
 /**
  * 
@@ -55,9 +56,8 @@ public class ServerModel extends Observable {
                 notifyObservers(logout);
                 break;
             case "newmail":
-                System.out.println("Utente ha mandato!");
                 writeEmail(email, usr);
-                Object wrote = usr + "has sent an email";
+                Object wrote = usr + " has sent an email";
                 setChanged();
                 notifyObservers(wrote);
                 break;
@@ -74,8 +74,9 @@ public class ServerModel extends Observable {
         String toWho = em.to();
         
         try {    
-            System.out.println("SOno dentro!");
-            FileWriter sent = new FileWriter("/electronicmail/publics/db/" + usr + "/Sent.txt");
+            File file = new File(".");
+            System.out.println(file.getAbsolutePath());
+            FileWriter sent = new FileWriter("/publics/db/" + usr + "/" + "Sent.txt");
             FileWriter received = new FileWriter("/electronicmail/publics/db/" + toWho + "/Received.txt");
             
             PrintWriter from = new PrintWriter(new BufferedWriter(sent));
