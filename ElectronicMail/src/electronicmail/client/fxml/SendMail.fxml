@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="electronicmail.client.controller.SendMailController">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="13.0" prefHeight="378.0" prefWidth="396.0">
+         <children>
+            <Button fx:id="underButton" layoutX="29.0" layoutY="111.0" mnemonicParsing="false" onAction="#underText" style="-fx-underline: true;" text="abc" />
+            <TextArea fx:id="txtArea" layoutX="27.0" layoutY="141.0" prefHeight="189.0" prefWidth="346.0">
+               <font>
+                  <Font name="Serif Regular" size="13.0" />
+               </font></TextArea>
+            <Button fx:id="cursiveButton" layoutX="116.0" layoutY="110.0" mnemonicParsing="false" onAction="#cursiveText" style="-fx-font-style: italic;" text="I">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="boldButton" layoutX="77.0" layoutY="110.0" mnemonicParsing="false" onAction="#boldText" prefHeight="26.0" prefWidth="22.0" style="-fx-font-weight: bold;" text="B" />
+            <Button fx:id="sendButton" layoutX="323.0" layoutY="339.0" mnemonicParsing="false" onAction="#send" text="Send" />
+            <Button fx:id="goBackButton" layoutX="24.0" layoutY="339.0" mnemonicParsing="false" onAction="#goBackAction" text="Back" />
+            <Label layoutX="24.0" layoutY="6.0" prefHeight="17.0" prefWidth="52.0" text="To:" />
+            <Label layoutX="28.0" layoutY="50.0" prefHeight="17.0" prefWidth="59.0" text="Subject" />
+            <TextField fx:id="subLabel" layoutX="25.0" layoutY="67.0" prefHeight="25.0" prefWidth="346.0">
+               <font>
+                  <Font name="Serif Regular" size="13.0" />
+               </font></TextField>
+            <ChoiceBox fx:id="toLabel" layoutX="24.0" layoutY="23.0" prefWidth="150.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
