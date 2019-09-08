@@ -24,6 +24,7 @@ public class ServerModel extends Observable {
     private final HashMap<String, ArrayList<String>> emails;
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
+    private final String PATH = "./src/electronicmail/publics/db/";
             
     public ServerModel() {
         emails = new HashMap<>();
@@ -75,13 +76,13 @@ public class ServerModel extends Observable {
         
         try {    
             
-            File sentMails = new File("/electronicmail/publics/db/sent/" + usr + ".txt");
+            File sentMails = new File(PATH + "sent/" + usr + ".txt");
             
-            if (sentMails.exists()){
+            if (!sentMails.exists()){
                 sentMails.createNewFile();
             }
                                     
-            File recMails = new File("/electronicmails/publics/db/received/" + toWho + ".txt");
+            File recMails = new File(PATH + "received/" + toWho + ".txt");
             
             if (!recMails.exists()) {
                 recMails.createNewFile();
