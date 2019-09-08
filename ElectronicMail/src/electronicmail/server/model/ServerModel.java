@@ -74,15 +74,26 @@ public class ServerModel extends Observable {
         String toWho = em.to();
         
         try {    
-            File file = new File(".");
-            System.out.println(file.getAbsolutePath());
-            FileWriter sent = new FileWriter("/publics/db/" + usr + "/" + "Sent.txt");
-            FileWriter received = new FileWriter("/electronicmail/publics/db/" + toWho + "/Received.txt");
             
+            File sentMails = new File("/electronicmail/publics/db/sent/" + usr + ".txt");
+            
+            if (sentMails.exists()){
+                sentMails.createNewFile();
+            }
+                                    
+            File recMails = new File("/electronicmails/publics/db/received/" + toWho + ".txt");
+            
+            if (!recMails.exists()) {
+                recMails.createNewFile();
+            }
+            
+            FileWriter sent = new FileWriter(sentMails);
+            FileWriter received = new FileWriter(recMails);
             PrintWriter from = new PrintWriter(new BufferedWriter(sent));
             PrintWriter toWhere = new PrintWriter(new BufferedWriter(received));
             
             String info[] = em.getAll();
+            
             for (String i1 : info) {
                 from.write(i1 + "§§");
                 toWhere.write(i1 + "§§");

@@ -115,7 +115,7 @@ public class ClientController implements Initializable, Observer {
             stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
-            stageSecond.setOnCloseRequest(e -> { Platform.exit(); System.exit(0);});
+            stageSecond.setOnCloseRequest(e -> { try { model.outRequest(); } catch (IOException ex) {}; Platform.exit(); System.exit(0);});
             stageSecond.show();
             
             Stage stage = (Stage) button.getScene().getWindow();
