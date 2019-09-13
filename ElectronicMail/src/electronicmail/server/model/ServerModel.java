@@ -3,6 +3,7 @@ package electronicmail.server.model;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -70,9 +71,11 @@ public class ServerModel extends Observable {
         
     }
     
-    public synchronized void writeEmail(Email em, String usr) {
-
-        String toWho = em.to();
+    public synchronized void writeEmail(Email em, String usr) throws IOException {
+       
+        /*
+        
+        PARTE SCRITTA DA NICK 
         
         try {    
             
@@ -110,8 +113,46 @@ public class ServerModel extends Observable {
             
         } catch (IOException e) {
             e.printStackTrace();
-        }    
+        }*/    
     }
+    
+    // PARTE AGGIUNTA DA WALLY 
+    
+    public synchronized boolean sendMail(Email obj) throws FileNotFoundException, IOException {
+
+        if (!obj.getDestinatari().equals("user1@email.com") && !obj.getDestinatari().equals("user2@email.com") && !obj.getDestinatari().equals("user3@email.com")) {
+            return false;
+        }
+        
+        String[] splitted = obj.getDestinatari().split("@", 2);
+        String pathFile = "emails/" + splitted[0] + ".txt";
+
+        //Scrive lista con mittente e altri destinatari
+        String mittenti = obj.getMittente().get(0);
+        for (int i = 1; i < obj.getMittente().size(); i++) {
+            mittenti += "," + obj.getMittente().get(i);
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, true))) {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+            String formattedDate = dateFormat.format(obj.getDataInvio());
+            synchronized (LOCKID) {
+                maxId++;
+                obj.setIdEmail(String.valueOf(maxId));
+
+                bw.append(obj.getIdEmail() + "§§" + mittenti + "§§" + obj.getOggetto() + "§§" + obj.getTesto().replace("\n", "©") + "§§"
+                        + formattedDate + "§§" + obj.getDestinatari() + "\n");
+            }
+
+            bw.flush();
+            bw.close();
+        }
+        return true;
+
+    }
+
+
+ 
 }
 
 
