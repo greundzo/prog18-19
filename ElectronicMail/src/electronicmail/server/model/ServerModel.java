@@ -23,6 +23,11 @@ import java.text.SimpleDateFormat;
 
 public class ServerModel extends Observable {
     
+    
+    public static int maxId = 0; // Id massimo email presente nel server
+    public static final Object LOCKID = new Object(); // lock usato per accedere in mutua esclusione alla variabile maxId
+    //2 righe superiori aggiunte da wally
+    
     private final HashMap<String, ArrayList<String>> emails;
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
