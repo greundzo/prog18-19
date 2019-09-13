@@ -14,7 +14,7 @@ public class Emailv2 extends java.util.Observable implements Serializable{
     private Date date;
 
     public Emailv2(String id, ArrayList<String> from, String to, String subject, String text, Date date) {
-        this.idEmail = id;
+        this.id = id;
         this.from = from;
         this.to = to;
         this.subject = subject;
@@ -23,18 +23,18 @@ public class Emailv2 extends java.util.Observable implements Serializable{
     }
 
     public String getId() {
-        return idEmail;
+        return id;
     }
 
     public void setIdEmail(String id) {
         this.id = id;
     }
 
-    public ArrayList<String> getfrom() {
+    public ArrayList<String> getFrom() {
         return from;
     }
 
-    public void setfrom(ArrayList<String> from) {
+    public void setFrom(ArrayList<String> from) {
         this.from = from;
     }
 
@@ -42,37 +42,37 @@ public class Emailv2 extends java.util.Observable implements Serializable{
         return to;
     }
 
-    public void setDestinatarii(String to) {
+    public void setDestinatari(String to) {
         this.to = to;
     }
 
-    public String getsubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void setsubject(String subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    public String gettext() {
+    public String getText() {
         return text;
     }
 
-    public void settext(String text) {
+    public void setText(String text) {
         this.text = text;
     }
 
-    public Date getdate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setdate(Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     @Override
     public String toString(){
-        return(getfrom().get(0)+"\t" + getsubject()+"\t\t" + getdate());
+        return(getFrom().get(0)+"\t" + getSubject()+"\t\t" + getDate());
     }
 
 }

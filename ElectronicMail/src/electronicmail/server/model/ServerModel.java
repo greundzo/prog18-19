@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import static jdk.nashorn.internal.parser.TokenType.EOF;
 import electronicmail.publics.Email;
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 /**
  * 
@@ -125,22 +126,22 @@ public class ServerModel extends Observable {
         }
         
         String[] splitted = obj.getDestinatari().split("@", 2);
-        String pathFile = "emails/" + splitted[0] + ".txt";
+        String pathFile = "/electronicmail/publics/db/" + splitted[0] + ".txt";
 
         //Scrive lista con mittente e altri destinatari
-        String mittenti = obj.getMittente().get(0);
-        for (int i = 1; i < obj.getMittente().size(); i++) {
-            mittenti += "," + obj.getMittente().get(i);
+        String mittenti = obj.getFrom().get(0);
+        for (int i = 1; i < obj.getFrom().size(); i++) {
+            mittenti += "," + obj.getFrom().get(i);
         }
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, true))) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-            String formattedDate = dateFormat.format(obj.getDataInvio());
+            String formattedDate = dateFormat.format(obj.getDate());
             synchronized (LOCKID) {
                 maxId++;
                 obj.setIdEmail(String.valueOf(maxId));
 
-                bw.append(obj.getIdEmail() + "§§" + mittenti + "§§" + obj.getOggetto() + "§§" + obj.getTesto().replace("\n", "©") + "§§"
+                bw.append(obj.getId() + "§§" + mittenti + "§§" + obj.getSubject() + "§§" + obj.getText().replace("\n", "©") + "§§"
                         + formattedDate + "§§" + obj.getDestinatari() + "\n");
             }
 
