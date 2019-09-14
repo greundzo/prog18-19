@@ -25,13 +25,13 @@ public class ServerModel extends Observable {
     public static final Object LOCKID = new Object(); // lock usato per accedere in mutua esclusione alla variabile maxId
     //2 righe superiori aggiunte da wally
     
-    private final HashMap<String, ArrayList<String>> emails;
+    private final ArrayList<Email> emails;
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
     private final String PATH = "./src/electronicmail/publics/db/";
             
     public ServerModel() {
-        emails = new HashMap<>();
+        emails = new ArrayList<>();
         accountRefresh = new HashMap<>();
     }
     
@@ -47,7 +47,7 @@ public class ServerModel extends Observable {
      * @param email
      * @throws java.io.IOException
      */
-    public synchronized void logAction(String usr, String rqs, Email email) throws IOException {
+    public void logAction(String usr, String rqs, Email email) throws IOException {
         
         switch(rqs) {
             case "in": 
@@ -70,6 +70,8 @@ public class ServerModel extends Observable {
             case "ansall":
             case "forward":
             case "delete":
+            case "refresh":
+                break;
         }
         
     }
@@ -100,7 +102,10 @@ public class ServerModel extends Observable {
             
             String info[] = em.getAll();
             
-            writeflush(info, from, toWhere);
+            synchronized (LOCKID) {
+                writeflush(info, from, toWhere);
+            }
+            
             from.close();
             toWhere.close();
             

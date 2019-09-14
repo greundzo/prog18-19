@@ -109,6 +109,7 @@ public class ClientController implements Initializable, Observer {
             readmail = loader.getController();
             model.addObserver(readmail);
             readmail.getModel(model);
+            readmail.init();
             
             Stage stageSecond = new Stage();
 

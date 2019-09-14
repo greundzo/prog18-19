@@ -74,7 +74,20 @@ public class ReadMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
-        /*try {
+        
+        //split della mail
+        //generazione oggetto mail
+        //foreach mail -> model.emails.add -> model.observablelist.add
+        //display observablelist nella listview
+    }    
+
+    public void getModel(ClientModel m){
+        model = m;
+    }
+    
+    public void init() {
+        /*
+        try {
             File received = new File(PATH + "received/" + model.getUser() + ".txt");
             
             if(!received.exists()) {
@@ -93,15 +106,10 @@ public class ReadMailController implements Initializable, Observer {
             
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        //split della mail
-        //generazione oggetto mail
-        //foreach mail -> model.emails.add -> model.observablelist.add
-        //display observablelist nella listview*/
-    }    
-
-    public void getModel(ClientModel m){
-        model = m;
+        }*/
+        try {
+        model.refreshRequest();
+        } catch (IOException e) {}
     }
     
     @FXML

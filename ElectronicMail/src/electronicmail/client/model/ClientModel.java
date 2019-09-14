@@ -68,6 +68,10 @@ public class ClientModel extends Observable {
         request("in", null); 
     }
     
+    public void refreshRequest() throws IOException {
+        request("refresh", null);
+    }
+    
     /**
      * Comunica al server che il client sta eseguendo il logout, poi chiude lo stream.
      * @throws IOException se qualcosa è andato storto
