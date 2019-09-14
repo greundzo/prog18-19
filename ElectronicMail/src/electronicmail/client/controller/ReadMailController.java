@@ -7,10 +7,6 @@ package electronicmail.client.controller;
 
 import electronicmail.client.model.*;
 import electronicmail.publics.Email;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -18,6 +14,8 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,11 +23,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -44,11 +44,12 @@ public class ReadMailController implements Initializable, Observer {
     private String usr;
     private boolean sendstart = false;
     private final String PATH = "./src/electronicmail/publics/db/";
+    private ObservableList<Email> emails;
     
     @FXML
     private TitledPane mailList;
     @FXML
-    private ListView eList;
+    private ListView<Email> eList;
     @FXML
     private AnchorPane readPane;
     @FXML
@@ -77,7 +78,9 @@ public class ReadMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
-        
+        eList = new ListView<>();
+        emails = FXCollections.observableArrayList(new Email("franco", "gianni", "andiamo", "daidiocanemuoviti"));
+        eList.setItems(emails);
         //split della mail
         //generazione oggetto mail
         //foreach mail -> model.emails.add -> model.observablelist.add
@@ -89,30 +92,11 @@ public class ReadMailController implements Initializable, Observer {
     }
     
     public void init() {
-        /*
         try {
-            File received = new File(PATH + "received/" + model.getUser() + ".txt");
-            
-            if(!received.exists()) {
-                received.createNewFile();
-            }
-            
-            FileReader fl = new FileReader(received);           
-            BufferedReader bw = new BufferedReader(fl);
-            
-            while(bw.readLine()!= null) {
-                String line = bw.readLine();
-                String l[] = line.split("§§");
-                Email em = new Email(l[1], l[2], l[3], l[4]);
-                em.setDate(l[5]);
-            }
-            
+            model.refreshRequest();           
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-        try {
-            model.refreshRequest();
-        } catch (IOException e) {}
+        }
     }
     
     @FXML
@@ -224,6 +208,6 @@ public class ReadMailController implements Initializable, Observer {
     
     @Override
     public void update(Observable obs, Object obj) {
-        
+        eList.setItems((ObservableList<Email>) obj);
     }  
 }

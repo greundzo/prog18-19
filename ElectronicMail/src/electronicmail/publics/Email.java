@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author wallahd
  * @author greundzo
  */
-public class Email extends Object implements Serializable {
+public class Email extends java.util.Observable implements Serializable {
     
     private String id;
     private final String from;

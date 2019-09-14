@@ -88,7 +88,9 @@ public class ClientModel extends Observable {
         emails = ems;
         if (emList == null) {
             emList = FXCollections.observableArrayList(emails);
-        }    
+        }
+        setChanged();
+        notifyObservers(emList);
     }
     
     public ArrayList<Email> getMails() {
