@@ -110,7 +110,7 @@ public class SendMailController implements Initializable, Observer {
             model.sendRequest(email);
             stage.close();
         } catch (IOException e) {
-            model.alert("Send failed. (Code Error: 11100)");
+            model.alert("Connection interrupted. (Code Error: 11100)");
             stage.close();
         }    
     }

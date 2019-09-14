@@ -18,7 +18,7 @@ public class Email extends Object implements Serializable {
     private final String to;
     private final String subject;
     private final String text;
-    private final String date;
+    private String date;
     private boolean read;
     
     /**
@@ -29,7 +29,7 @@ public class Email extends Object implements Serializable {
      * @param txt
      */
     public Email(String fromWho, String toWho, String theSubject, String txt) {
-        id = java.time.LocalTime.now() + "";
+        id = null;
         from = fromWho;
         to = toWho;
         subject = theSubject;
@@ -73,5 +73,9 @@ public class Email extends Object implements Serializable {
     public String[] getAll() {
         String all[] = {id, from, to, subject, text, date};
         return all;
+    }
+    
+    public void setDate(String d) {
+        date = d;
     }
 }

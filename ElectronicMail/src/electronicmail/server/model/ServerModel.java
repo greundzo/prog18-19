@@ -3,8 +3,6 @@ package electronicmail.server.model;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import javafx.scene.control.TextArea;
 import static jdk.nashorn.internal.parser.TokenType.EOF;
 import electronicmail.publics.Email;
 import java.io.File;
-import java.text.SimpleDateFormat;
 
 /**
  * 

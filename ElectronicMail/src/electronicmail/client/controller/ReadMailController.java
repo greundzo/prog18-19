@@ -6,6 +6,11 @@
 package electronicmail.client.controller;
 
 import electronicmail.client.model.*;
+import electronicmail.publics.Email;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -37,6 +42,7 @@ public class ReadMailController implements Initializable, Observer {
     private ObjectOutputStream out;
     private String usr;
     private boolean sendstart = false;
+    private final String PATH = "./src/electronicmail/publics/db/";
     
     @FXML
     private TitledPane mailList;
@@ -67,8 +73,31 @@ public class ReadMailController implements Initializable, Observer {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
-        
+    public void initialize(URL url, ResourceBundle rb) {       
+        /*try {
+            File received = new File(PATH + "received/" + model.getUser() + ".txt");
+            
+            if(!received.exists()) {
+                received.createNewFile();
+            }
+            
+            FileReader fl = new FileReader(received);           
+            BufferedReader bw = new BufferedReader(fl);
+            
+            while(bw.readLine()!= null) {
+                String line = bw.readLine();
+                String l[] = line.split("§§");
+                Email em = new Email(l[1], l[2], l[3], l[4]);
+                em.setDate(l[5]);
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //split della mail
+        //generazione oggetto mail
+        //foreach mail -> model.emails.add -> model.observablelist.add
+        //display observablelist nella listview*/
     }    
 
     public void getModel(ClientModel m){
