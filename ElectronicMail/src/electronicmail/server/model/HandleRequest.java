@@ -46,12 +46,16 @@ public class HandleRequest implements Runnable {
             request = (String) in.readObject();
             email = (Email) in.readObject();
 
-            model.logAction(user, request, email);
+            model.logAction(user, request, email, socket);
 
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {
-            this.stop();
+            if (!request.equals("refresh")) {
+                this.stop();
+            } else {
+                this.stopstreams();
+            }
         }
     }
     
@@ -63,5 +67,14 @@ public class HandleRequest implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }    
+    }
+    
+    public void stopstreams() {
+        try {
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }   
     }
 }

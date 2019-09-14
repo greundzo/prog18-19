@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Email extends Object implements Serializable {
     
-    private final String id;
+    private String id;
     private final String from;
     private final String to;
     private final String subject;
@@ -40,6 +40,10 @@ public class Email extends Object implements Serializable {
     
     public String id() {
         return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
     }
     
     public String from() {
