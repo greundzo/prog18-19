@@ -89,6 +89,25 @@ public class ReadMailController implements Initializable, Observer {
     }
     
     public void init() {
+        
+       //PARTE AGGIUNTA DA WALLY SOLO QUELLA INFERIORE
+       
+       readArea.setVisible(true);
+       readArea.setDisable(false);
+       readArea.setText("MITTENTE: " + model.getUser.getMittente().get(0)
+                                     + "\n"
+                                     + "ALTRI DESTINATARI: "
+                                     + cc + "\n\n"
+                                     + "OGGETTO: " + newValue.getOggetto()
+                                     + "\n\n"
+                                     + newValue.getTesto());
+       } else {
+       eList.getSelectionModel().clearSelection();
+                    }
+       
+        
+        
+        
         /*
         try {
             File received = new File(PATH + "received/" + model.getUser() + ".txt");
