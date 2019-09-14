@@ -6,6 +6,8 @@
 package electronicmail.publics;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author wallahd
@@ -42,6 +44,10 @@ public class Email extends java.util.Observable implements Serializable {
         return id;
     }
     
+    public String getId() {
+        return id;
+    }
+    
     public void setId(String id) {
         this.id = id;
     }
@@ -50,7 +56,15 @@ public class Email extends java.util.Observable implements Serializable {
         return from;
     }
     
+    public String getFrom() {
+        return from;
+    }
+    
     public String to() {
+        return to;
+    }
+    
+    public String getTo() {
         return to;
     }
     
@@ -58,12 +72,28 @@ public class Email extends java.util.Observable implements Serializable {
         return subject;
     }
     
+    public String getSubject() {
+        return subject;
+    }
+    
     public String txt() {
         return text;
     }
     
+    public String getTxt() {
+        return text;
+    }
+    
+    public String getDate() {
+        return date;
+    }
+    
     public String date() {
         return date;
+    }
+    
+    public boolean getwasRead() {
+        return read;
     }
     
     public boolean wasRead() {
