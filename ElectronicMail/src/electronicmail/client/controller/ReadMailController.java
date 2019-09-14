@@ -81,6 +81,7 @@ public class ReadMailController implements Initializable, Observer {
         eList = new ListView<>();
         emails = FXCollections.observableArrayList(new Email("franco", "gianni", "andiamo", "daidiocanemuoviti"));
         eList.setItems(emails);
+        eList.setVisible(true);
         //split della mail
         //generazione oggetto mail
         //foreach mail -> model.emails.add -> model.observablelist.add
@@ -92,6 +93,26 @@ public class ReadMailController implements Initializable, Observer {
     }
     
     public void init() {
+
+        /*
+       //PARTE AGGIUNTA DA WALLY SOLO QUELLA INFERIORE
+       
+       readArea.setVisible(true);
+       readArea.setDisable(false);
+       readArea.setText("MITTENTE: " + model.getUser.getMittente().get(0)
+                                     + "\n"
+                                     + "ALTRI DESTINATARI: "
+                                     + cc + "\n\n"
+                                     + "OGGETTO: " + newValue.getOggetto()
+                                     + "\n\n"
+                                     + newValue.getTesto());
+       } else {
+       eList.getSelectionModel().clearSelection();
+                    }
+       
+        
+        */
+        
         try {
             model.refreshRequest();           
         } catch (IOException e) {
@@ -209,5 +230,6 @@ public class ReadMailController implements Initializable, Observer {
     @Override
     public void update(Observable obs, Object obj) {
         eList.setItems((ObservableList<Email>) obj);
+        eList.setVisible(true);
     }  
 }

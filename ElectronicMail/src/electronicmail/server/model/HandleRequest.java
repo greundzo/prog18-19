@@ -39,7 +39,7 @@ public class HandleRequest implements Runnable {
     @Override
     public void run() {       
         try {            
-            out = new ObjectOutputStream(socket.getOutputStream());
+            //out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
             user = (String) in.readObject();
@@ -47,15 +47,18 @@ public class HandleRequest implements Runnable {
             email = (Email) in.readObject();
 
             model.logAction(user, request, email, socket);
+            
+            if(request.equals("refresh")) {
+                out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(model.getEmails()); //RIGA DEL PROBLEMA
+                out.flush();
+                this.stop();
+            }
 
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {
-            if (!request.equals("refresh")) {
-                this.stop();
-            } else {
-                this.stopstreams();
-            }
+            
         }
     }
     

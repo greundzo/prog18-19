@@ -43,6 +43,10 @@ public class ServerModel extends Observable {
         new Thread(connected).start();
     }
     
+    public ArrayList<Email> getEmails() {
+        return emails;
+    }
+    
     /**
      * Comunica al controller se il client sta eseguendo il login o il logout.
      * @param usr nome utente
@@ -132,7 +136,7 @@ public class ServerModel extends Observable {
         synchronized (LOCKID) {
             try {
                 
-                ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
+                //ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
                 
                 File received = new File(PATH + "received/" + usr + ".txt");
                 
@@ -160,7 +164,7 @@ public class ServerModel extends Observable {
                     
                     emails.add(em);
                 }
-                
+                /*
                 new Thread(() -> {
                     try {                        
                         out.writeObject(emails);
@@ -175,9 +179,10 @@ public class ServerModel extends Observable {
                             e.printStackTrace();
                         }    
                     }   
-                }).start();
+                }).start();*/
                         
             } catch(IOException e) {
+                e.printStackTrace();
             }
         }
     }
