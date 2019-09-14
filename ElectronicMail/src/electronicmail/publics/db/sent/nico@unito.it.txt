@@ -1,1 +1,6 @@
-16:41:23.800§§nico@unito.it§§wally@unito.it§§prova 4§§oleee§§2019-09-08T16:41:23.801§§false§§eof
+12:02:19.581§§nico@unito.it§§wally@unito.it§§Risolto problema append§§Bastava mettere un flush.§§2019-09-14T12:02:19.583§§false§§eof
+12:03:43.866§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Oggi si lavora su visualizzazione
+delle email nella schermata principale.
+Va cambiato l'id per distinguerle meglio (l'ora
+di spedizione e ricevimento sono un parametro
+non consistente).§§2019-09-14T12:03:43.866§§false§§eof

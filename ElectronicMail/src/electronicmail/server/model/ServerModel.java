@@ -78,12 +78,11 @@ public class ServerModel extends Observable {
     }
     
     public synchronized void writeEmail(Email em, String usr) throws IOException {
-       
-        /*
-        
-        PARTE SCRITTA DA NICK 
+              
+        //PARTE SCRITTA DA NICK 
         
         try {    
+            String toWho = em.to();
             
             File sentMails = new File(PATH + "sent/" + usr + ".txt");
             
@@ -97,33 +96,32 @@ public class ServerModel extends Observable {
                 recMails.createNewFile();
             }
             
-            FileWriter sent = new FileWriter(sentMails);
-            FileWriter received = new FileWriter(recMails);
-            PrintWriter from = new PrintWriter(new BufferedWriter(sent));
-            PrintWriter toWhere = new PrintWriter(new BufferedWriter(received));
+            FileWriter sent = new FileWriter(sentMails, true);
+            FileWriter received = new FileWriter(recMails, true);
+            BufferedWriter from = new BufferedWriter(sent);
+            BufferedWriter toWhere = new BufferedWriter(received);
             
             String info[] = em.getAll();
             
-            for (String i1 : info) {
-                from.write(i1 + "§§");
-                toWhere.write(i1 + "§§");
-            }
-            
-            from.write("false" + "§§" + EOF);
-            from.println();
+            writeflush(info, from, toWhere);
             from.close();
-            
-            toWhere.write("false" + "§§" + EOF);
-            toWhere.println();
             toWhere.close();
             
         } catch (IOException e) {
             e.printStackTrace();
-        }*/    
+        }   
+    }
+    
+    public void writeflush(String a[], BufferedWriter from, BufferedWriter to) throws IOException {
+        from.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
+        from.flush();
+        
+        to.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
+        to.flush();
     }
     
     // PARTE AGGIUNTA DA WALLY 
-    
+    /*
     public synchronized boolean sendMail(Email obj) throws FileNotFoundException, IOException {
 
         if (!obj.getDestinatari().equals("user1@email.com") && !obj.getDestinatari().equals("user2@email.com") && !obj.getDestinatari().equals("user3@email.com")) {
@@ -155,7 +153,7 @@ public class ServerModel extends Observable {
         }
         return true;
 
-    }
+    }*/
 
 
  
