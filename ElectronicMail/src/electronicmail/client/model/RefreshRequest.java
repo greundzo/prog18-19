@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class RefreshRequest implements Runnable {
     
-    private ClientModel model;
+    private final ClientModel model;
     private final String user;
     private final String request;
     private final Email object;
@@ -37,7 +37,7 @@ public class RefreshRequest implements Runnable {
     @Override
     public void run() {
         try {
-            sendRequest();
+            sendData();
             in = new ObjectInputStream(socket.getInputStream());
             Object ems = in.readObject();
             model.setEmails((ArrayList<Email>) ems);
@@ -51,13 +51,14 @@ public class RefreshRequest implements Runnable {
     public void stop() {
         try {
             out.close();
+            in.close();
             socket.close();
         } catch (IOException e) {
             
         }    
     }
     
-    public void sendRequest() throws IOException {
+    public void sendData() throws IOException {
         out = new ObjectOutputStream(socket.getOutputStream());
         out.writeObject(user);
         out.flush();

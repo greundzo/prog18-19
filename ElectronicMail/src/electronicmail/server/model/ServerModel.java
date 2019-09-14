@@ -11,7 +11,10 @@ import java.util.Observable;
 import javafx.scene.control.TextArea;
 import static jdk.nashorn.internal.parser.TokenType.EOF;
 import electronicmail.publics.Email;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.ObjectOutputStream;
 
 /**
  * 
@@ -45,9 +48,10 @@ public class ServerModel extends Observable {
      * @param usr nome utente
      * @param rqs tipo di richiesta
      * @param email
+     * @param s
      * @throws java.io.IOException
      */
-    public void logAction(String usr, String rqs, Email email) throws IOException {
+    public void logAction(String usr, String rqs, Email email, Socket s) throws IOException {
         
         switch(rqs) {
             case "in": 
@@ -71,6 +75,7 @@ public class ServerModel extends Observable {
             case "forward":
             case "delete":
             case "refresh":
+                refresh(usr, s);
                 break;
         }
         
@@ -121,43 +126,61 @@ public class ServerModel extends Observable {
         to.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
         to.flush();
     }
-    
-    // PARTE AGGIUNTA DA WALLY 
-    /*
-    public synchronized boolean sendMail(Email obj) throws FileNotFoundException, IOException {
 
-        if (!obj.getDestinatari().equals("user1@email.com") && !obj.getDestinatari().equals("user2@email.com") && !obj.getDestinatari().equals("user3@email.com")) {
-            return false;
-        }
-        
-        String[] splitted = obj.getDestinatari().split("@", 2);
-        String pathFile = "/electronicmail/publics/db/" + splitted[0] + ".txt";
-
-        //Scrive lista con mittente e altri destinatari
-        String mittenti = obj.getFrom().get(0);
-        for (int i = 1; i < obj.getFrom().size(); i++) {
-            mittenti += "," + obj.getFrom().get(i);
-        }
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, true))) {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-            String formattedDate = dateFormat.format(obj.getDate());
-            synchronized (LOCKID) {
-                maxId++;
-                obj.setIdEmail(String.valueOf(maxId));
-
-                bw.append(obj.getId() + "§§" + mittenti + "§§" + obj.getSubject() + "§§" + obj.getText().replace("\n", "©") + "§§"
-                        + formattedDate + "§§" + obj.getDestinatari() + "\n");
+    public void refresh(String usr, Socket sock) {
+             
+        synchronized (LOCKID) {
+            try {
+                
+                ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
+                
+                File received = new File(PATH + "received/" + usr + ".txt");
+                
+                if (!received.exists()) {
+                    received.createNewFile();
+                }
+                
+                FileReader fr = new FileReader(received);
+                BufferedReader br = new BufferedReader(fr);
+                
+                String ln;
+                
+                while((ln = br.readLine()) != null) {
+                    
+                    String line[] = ln.split("§§");
+             
+                    Email em = new Email(line[1], line[2], line[3], line[4]);
+                    
+                    em.setId(line[0]);
+                    em.setDate(line[5]);
+                    
+                    if ("true".equals(line[6])) {
+                        em.hasBeenRead();
+                    }
+                    
+                    emails.add(em);
+                }
+                
+                new Thread(() -> {
+                    try {                        
+                        out.writeObject(emails);
+                        out.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            out.close();
+                            sock.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }    
+                    }   
+                }).start();
+                        
+            } catch(IOException e) {
             }
-
-            bw.flush();
-            bw.close();
         }
-        return true;
-
-    }*/
-
-
+    }
  
 }
 

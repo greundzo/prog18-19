@@ -130,7 +130,7 @@ public class ReadMailController implements Initializable, Observer {
             e.printStackTrace();
         }*/
         try {
-        model.refreshRequest();
+            model.refreshRequest();
         } catch (IOException e) {}
     }
     
