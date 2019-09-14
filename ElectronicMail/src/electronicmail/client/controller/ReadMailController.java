@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -46,6 +47,8 @@ public class ReadMailController implements Initializable, Observer {
     
     @FXML
     private TitledPane mailList;
+    @FXML
+    private ListView eList;
     @FXML
     private AnchorPane readPane;
     @FXML
