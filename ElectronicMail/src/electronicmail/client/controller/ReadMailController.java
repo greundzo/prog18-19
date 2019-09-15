@@ -99,13 +99,13 @@ public class ReadMailController implements Initializable, Observer {
        
        readArea.setVisible(true);
        readArea.setDisable(false);
-       readArea.setText("MITTENTE: " + model.getUser.getMittente().get(0)
+       readArea.setText("MITTENTE: " + model.getUser().getFrom()
                                      + "\n"
                                      + "ALTRI DESTINATARI: "
-                                     + cc + "\n\n"
-                                     + "OGGETTO: " + newValue.getOggetto()
+                                     + Ln + "\n\n"
+                                     + "OGGETTO: " + getSubjec()
                                      + "\n\n"
-                                     + newValue.getTesto());
+                                     + getTxt());
        } else {
        eList.getSelectionModel().clearSelection();
                     }
