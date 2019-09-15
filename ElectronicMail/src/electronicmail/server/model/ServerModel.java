@@ -28,7 +28,8 @@ public class ServerModel extends Observable {
     public static final Object LOCKID = new Object(); // lock usato per accedere in mutua esclusione alla variabile maxId
     //2 righe superiori aggiunte da wally
     
-    private final ArrayList<Email> emails;
+    private ArrayList<Email> emails;
+    private HashMap<String, ArrayList<Email>> usersMails; 
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
     private final String PATH = "./src/electronicmail/publics/db/";
@@ -43,8 +44,8 @@ public class ServerModel extends Observable {
         new Thread(connected).start();
     }
     
-    public ArrayList<Email> getEmails() {
-        return emails;
+    public ArrayList<Email> getEmails(String usr) {
+        return usersMails.get(usr);
     }
     
     /**
@@ -52,10 +53,9 @@ public class ServerModel extends Observable {
      * @param usr nome utente
      * @param rqs tipo di richiesta
      * @param email
-     * @param s
      * @throws java.io.IOException
      */
-    public void logAction(String usr, String rqs, Email email, Socket s) throws IOException {
+    public void logAction(String usr, String rqs, Email email) throws IOException {
         
         switch(rqs) {
             case "in": 
@@ -79,7 +79,7 @@ public class ServerModel extends Observable {
             case "forward":
             case "delete":
             case "refresh":
-                refresh(usr, s);
+                refresh(usr);
                 break;
         }
         
@@ -131,12 +131,10 @@ public class ServerModel extends Observable {
         to.flush();
     }
 
-    public void refresh(String usr, Socket sock) {
+    public void refresh(String usr) {
              
         synchronized (LOCKID) {
             try {
-                
-                //ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
                 
                 File received = new File(PATH + "received/" + usr + ".txt");
                 
@@ -163,7 +161,12 @@ public class ServerModel extends Observable {
                     }
                     
                     emails.add(em);
+                    
+                    System.out.println("IO ho finito.");
                 }
+                
+                usersMails.put(usr, emails);
+                
                 /*
                 new Thread(() -> {
                     try {                        
@@ -174,12 +177,11 @@ public class ServerModel extends Observable {
                     } finally {
                         try {
                             out.close();
-                            sock.close();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }    
                     }   
-                }).start();*/
+                }).start(); */
                         
             } catch(IOException e) {
                 e.printStackTrace();

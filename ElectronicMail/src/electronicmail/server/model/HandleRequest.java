@@ -28,6 +28,7 @@ public class HandleRequest implements Runnable {
     private String user;
     private String request;
     private Email email;
+    private Socket clsocket;
     
     public HandleRequest (Socket s, ServerSocket sr, TextArea ar, ServerModel m) {
         socket = s;
@@ -39,26 +40,19 @@ public class HandleRequest implements Runnable {
     @Override
     public void run() {       
         try {            
-            //out = new ObjectOutputStream(socket.getOutputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
             user = (String) in.readObject();
             request = (String) in.readObject();
             email = (Email) in.readObject();
-
-            model.logAction(user, request, email, socket);
             
-            if(request.equals("refresh")) {
-                out = new ObjectOutputStream(socket.getOutputStream());
-                out.writeObject(model.getEmails()); //RIGA DEL PROBLEMA
-                out.flush();
-                this.stop();
-            }
+            model.logAction(user, request, email);
 
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (ClassNotFoundException | IOException e) {            
             e.printStackTrace();
         } finally {
-            
+            this.stop();
         }
     }
     
@@ -72,12 +66,4 @@ public class HandleRequest implements Runnable {
         }    
     }
     
-    public void stopstreams() {
-        try {
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }   
-    }
 }

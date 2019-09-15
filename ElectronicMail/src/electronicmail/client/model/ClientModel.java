@@ -54,9 +54,14 @@ public class ClientModel extends Observable {
     
     public void request(String rqs, Email obj) throws IOException {
         socket = new Socket("localhost", 8189);
-        new Thread(() -> {                    
-            CreateRequest cr = new CreateRequest(this, userName, rqs, obj, socket);
-            new Thread(cr).start();
+        new Thread(() -> {
+            if(rqs.equals("refresh")){
+                RefreshRequest rq = new RefreshRequest(this, userName, rqs, obj, socket);
+                new Thread(rq).start();
+            } else {
+                CreateRequest cr = new CreateRequest(this, userName, rqs, obj, socket);
+                new Thread(cr).start();
+            }    
         }).start();
     }
     
