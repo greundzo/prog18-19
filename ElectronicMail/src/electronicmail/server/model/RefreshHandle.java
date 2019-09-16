@@ -12,56 +12,49 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javafx.scene.control.TextArea;
 import electronicmail.publics.Email;
-
 /**
  *
  * @author greundzo
  */
-public class HandleRequest implements Runnable {
-    
+public class RefreshHandle implements Runnable {
     private final Socket socket;
     private final ServerSocket server;
     private final TextArea area;
     private final ServerModel model;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private String user;
-    private String request;
-    private Email email;
+    private final String user;
+    private final String request;
+    private final Email email;
     private Socket clsocket;
     
-    public HandleRequest (Socket s, ServerSocket sr, TextArea ar, ServerModel m) {
+    public RefreshHandle(Socket s, ServerSocket sr, TextArea ar, ServerModel m, String usr, String rqs, Email em) {
         socket = s;
         server = sr;
         area = ar;
         model = m;
+        user = usr;
+        request = rqs;
+        email = em;
     }
     
     @Override
-    public void run() {       
-        try {            
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-
-            user = (String) in.readObject();
-            request = (String) in.readObject();
-            email = (Email) in.readObject();
+    public void run() {
+        try {
+            model.logAction(user, request, email);
             
-            if (request.equals("refresh")) {
-                new Thread(() -> {
-                    Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email);
-                }).start();
-            } else {
-                model.logAction(user, request, email);
-                this.stop();
-            }
-
-        } catch (ClassNotFoundException | IOException e) {            
+            out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(model.getEmails(user));
+            out.flush();
+            
+        } catch (IOException e) {
             e.printStackTrace();
-        } 
+        } finally {
+            this.stop();
+        }
     }
     
-    public void stop() {
+     public void stop() {
         try {
             in.close();
             out.close();
@@ -70,5 +63,4 @@ public class HandleRequest implements Runnable {
             e.printStackTrace();
         }    
     }
-    
 }

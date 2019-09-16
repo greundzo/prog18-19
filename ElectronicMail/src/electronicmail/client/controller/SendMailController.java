@@ -99,7 +99,8 @@ public class SendMailController implements Initializable, Observer {
     }
     
     @FXML
-    private void goBackAction(ActionEvent event) {       
+    private void goBackAction(ActionEvent event) {    
+        model.reverseWidget();
         stage.close();
     }
     
@@ -108,6 +109,7 @@ public class SendMailController implements Initializable, Observer {
         Email email = new Email(model.getUser(), toLabel.getValue(), subLabel.getText(), txtArea.getText());
         try {
             model.sendRequest(email);
+            model.reverseWidget();
             stage.close();
         } catch (IOException e) {
             model.alert("Connection interrupted. (Code Error: 11100)");

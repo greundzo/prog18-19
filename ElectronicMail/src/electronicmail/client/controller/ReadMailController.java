@@ -122,8 +122,8 @@ public class ReadMailController implements Initializable, Observer {
     
     @FXML
     private void newMailAction(ActionEvent event) {
-        if (!sendstart) {
-            //sendstart = !sendstart;
+        if (!model.getWidget()) {
+            model.reverseWidget();
             try {
                 sendWidget();
             } catch (IOException e) {
@@ -223,7 +223,7 @@ public class ReadMailController implements Initializable, Observer {
             stage2.show();
             control.getStage();
         } catch (IOException e) {
-            System.out.println("Errore caricamento invio mail.");
+            model.alert("Internal error. (Code Error: 10141)");
         }    
     }
     

@@ -47,8 +47,8 @@ public class RefreshRequest implements Runnable {
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Io sono qui 4");
-            this.stop();
+            //System.out.println("Io sono qui 4");
+            //this.stop();
         }   
     }
     
@@ -69,8 +69,6 @@ public class RefreshRequest implements Runnable {
         out.writeObject(request);
         out.flush();
         out.writeObject(object);
-        out.flush();
-        out.writeObject(socket);
         out.flush();
     }
 }

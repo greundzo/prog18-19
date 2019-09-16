@@ -23,6 +23,7 @@ import electronicmail.publics.Email;
  */
 public class ClientModel extends Observable {
     private static String userName;
+    private boolean widget;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -30,7 +31,8 @@ public class ClientModel extends Observable {
     private ObservableList<Email> emList;
     
     public ClientModel() {
-        userName = null;     
+        userName = null;  
+        widget = false;
     }
     
     public String getUser() {
@@ -42,6 +44,14 @@ public class ClientModel extends Observable {
      */
     public void setUser(String user) {
         userName = user;
+    }
+    
+    public boolean getWidget() {
+        return widget;
+    }
+    
+    public void reverseWidget() {
+        widget = !widget;
     }
     
      public void alert(String text) {

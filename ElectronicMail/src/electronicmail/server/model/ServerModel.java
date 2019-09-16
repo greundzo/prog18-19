@@ -36,9 +36,17 @@ public class ServerModel extends Observable {
             
     public ServerModel() {
         emails = new ArrayList<>();
+        usersMails = new HashMap<>();
         accountRefresh = new HashMap<>();
     }
     
+    /**
+     * Lancia un thread ausiliario per gestire la connessione
+     * @param s socket da collegare al client
+     * @param srv serversocket
+     * @param area textarea per l'update della vista
+     * @param m il modello del server
+     */
     public void launchHandle(Socket s, ServerSocket srv, TextArea area, ServerModel m) {
         connected = new HandleRequest(s, srv, area, this);
         new Thread(connected).start();
@@ -80,14 +88,20 @@ public class ServerModel extends Observable {
             case "delete":
             case "refresh":
                 refresh(usr);
+                setChanged();
+                notifyObservers(usr + "has refreshed");
                 break;
         }
         
     }
     
+    /**
+     *
+     * @param em email da scrivere nei file
+     * @param usr nome utente di chi sta mandando l'email
+     * @throws IOException se non riesce a scrivere
+     */
     public synchronized void writeEmail(Email em, String usr) throws IOException {
-              
-        //PARTE SCRITTA DA NICK 
         
         try {    
             String toWho = em.to();
@@ -119,10 +133,16 @@ public class ServerModel extends Observable {
             toWhere.close();
             
         } catch (IOException e) {
-            e.printStackTrace();
         }   
     }
     
+    /**
+     *
+     * @param a campi dell'email 
+     * @param from mittente
+     * @param to destinatario
+     * @throws IOException
+     */
     public void writeflush(String a[], BufferedWriter from, BufferedWriter to) throws IOException {
         from.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
         from.flush();
