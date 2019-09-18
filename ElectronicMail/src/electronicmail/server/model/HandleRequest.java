@@ -7,7 +7,6 @@ package electronicmail.server.model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javafx.scene.control.TextArea;
@@ -23,7 +22,6 @@ public class HandleRequest implements Runnable {
     private final ServerSocket server;
     private final TextArea area;
     private final ServerModel model;
-    private ObjectOutputStream out;
     private ObjectInputStream in;
     private String user;
     private String request;
@@ -40,7 +38,6 @@ public class HandleRequest implements Runnable {
     @Override
     public void run() {       
         try {            
-            out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
             user = (String) in.readObject();
@@ -48,8 +45,10 @@ public class HandleRequest implements Runnable {
             email = (Email) in.readObject();
             
             if (request.equals("refresh")) {
+                System.out.println("Handle normale");
                 new Thread(() -> {
-                    Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email);
+                    Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email, in);
+                    new Thread(fresh).start();
                 }).start();
             } else {
                 model.logAction(user, request, email);
@@ -64,7 +63,6 @@ public class HandleRequest implements Runnable {
     public void stop() {
         try {
             in.close();
-            out.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

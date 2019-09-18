@@ -37,18 +37,19 @@ public class RefreshRequest implements Runnable {
     @Override
     public void run() {
         try {
-            sendData();
-            in = new ObjectInputStream(socket.getInputStream());
-            
-            Object ems = in.readObject();
-            model.setEmails((ArrayList<Email>) ems);
-            System.out.println("IO sono qui 3");
-           
-        } catch (ClassNotFoundException | IOException e) {
+            sendData();          
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            //System.out.println("Io sono qui 4");
-            //this.stop();
+            try {
+                in = new ObjectInputStream(socket.getInputStream());            
+                Object ems = in.readObject();
+                model.setEmails((ArrayList<Email>) ems);
+                this.stop();
+                System.out.println("IO sono qui 3");
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            }
         }   
     }
     

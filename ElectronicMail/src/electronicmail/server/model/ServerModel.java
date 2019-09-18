@@ -89,7 +89,7 @@ public class ServerModel extends Observable {
             case "refresh":
                 refresh(usr);
                 setChanged();
-                notifyObservers(usr + "has refreshed");
+                notifyObservers(usr + " has refreshed");
                 break;
         }
         
