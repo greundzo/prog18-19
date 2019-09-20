@@ -108,15 +108,14 @@ public class ServerModel extends Observable {
         
         try {            
             ArrayList<String> whos = em.getTo();
-            String[] a = {};
+            String a = whos.get(0);
             
-            for(int i = 0; i < whos.size(); i++) {
-                a[i] = whos.get(i);
-            }
+            String toS[] = a.split(";"); // splitto e trovo tutti i destinatari
             
             String inf = em.toString();
-            String[] support = inf.split(",");
-            String info[] = {support[0], Arrays.toString(a), support[1], support[2], support[3]};
+            String[] support = inf.split(","); //splitto e ho tutti i campi
+            
+            String info[] = {support[0], a, support[1], support[2], support[3]}; // unisco le stringhe
             
             File sentMails = new File(PATH + "sent/" + usr + ".txt");
             
@@ -131,7 +130,7 @@ public class ServerModel extends Observable {
                 writeflush(info, from);
             }
             
-            for (String to : a) {
+            for (String to : toS) {
                 File recMails = new File(PATH + "received/" + to + ".txt");
                 
                 if (!recMails.exists()) {
