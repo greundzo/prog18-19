@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
 /**
  * 
@@ -33,6 +34,8 @@ public class ServerModel extends Observable {
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
     private final String PATH = "./src/electronicmail/publics/db/";
+    private BufferedWriter from;
+    private BufferedWriter toWhere;
             
     public ServerModel() {
         emails = new ArrayList<>();
@@ -103,34 +106,48 @@ public class ServerModel extends Observable {
      */
     public synchronized void writeEmail(Email em, String usr) throws IOException {
         
-        try {    
-            String toWho = em.to();
+        try {            
+            ArrayList<String> whos = em.getTo();
+            String[] a = {};
+            
+            for(int i = 0; i < whos.size(); i++) {
+                a[i] = whos.get(i);
+            }
+            
+            String inf = em.toString();
+            String[] support = inf.split(",");
+            String info[] = {support[0], Arrays.toString(a), support[1], support[2], support[3]};
             
             File sentMails = new File(PATH + "sent/" + usr + ".txt");
             
             if (!sentMails.exists()){
                 sentMails.createNewFile();
             }
-                                    
-            File recMails = new File(PATH + "received/" + toWho + ".txt");
-            
-            if (!recMails.exists()) {
-                recMails.createNewFile();
-            }
             
             FileWriter sent = new FileWriter(sentMails, true);
-            FileWriter received = new FileWriter(recMails, true);
-            BufferedWriter from = new BufferedWriter(sent);
-            BufferedWriter toWhere = new BufferedWriter(received);
+            from = new BufferedWriter(sent);
             
-            String info[] = em.getAll();
-            
-            synchronized (LOCKID) {
-                writeflush(info, from, toWhere);
+            synchronized(LOCKID) {
+                writeflush(info, from);
             }
             
-            from.close();
-            toWhere.close();
+            for (String to : a) {
+                File recMails = new File(PATH + "received/" + to + ".txt");
+                
+                if (!recMails.exists()) {
+                    recMails.createNewFile();
+                }
+                
+                FileWriter received = new FileWriter(recMails, true);
+                       
+                toWhere = new BufferedWriter(received);
+                  
+                synchronized (LOCKID) {
+                    writeflush(info, toWhere);
+                }
+            }
+                from.close();
+                toWhere.close();
             
         } catch (IOException e) {
         }   
@@ -138,17 +155,13 @@ public class ServerModel extends Observable {
     
     /**
      *
-     * @param a campi dell'email 
-     * @param from mittente
-     * @param to destinatario
+     * @param a campi dell'email
+     * @param buff
      * @throws IOException
      */
-    public void writeflush(String a[], BufferedWriter from, BufferedWriter to) throws IOException {
-        from.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
-        from.flush();
-        
-        to.append(a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
-        to.flush();
+    public void writeflush(String a[], BufferedWriter buff) throws IOException {
+        buff.append(maxId++ + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
+        buff.flush();
     }
 
     public void refresh(String usr) {
@@ -170,8 +183,10 @@ public class ServerModel extends Observable {
                 while((ln = br.readLine()) != null) {
                     
                     String line[] = ln.split("§§");
+                    ArrayList<String>to = new ArrayList<>();
+                    to.add(line[2]);
              
-                    Email em = new Email(line[1], line[2], line[3], line[4]);
+                    Email em = new Email(line[1], to, line[3], line[4]);
                     
                     em.setId(line[0]);
                     em.setDate(line[5]);

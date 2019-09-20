@@ -22,6 +22,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import electronicmail.publics.Email;
+import java.util.ArrayList;
 import javafx.scene.control.ChoiceBox;
 
 /**
@@ -45,7 +46,7 @@ public class SendMailController implements Initializable, Observer {
     @FXML
     private Button cursiveButton;
     @FXML
-    private ChoiceBox<String> toLabel;
+    private TextField toLabel;
     @FXML
     private TextField subLabel;
     @FXML
@@ -58,9 +59,7 @@ public class SendMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        toLabel.getItems().add("nico@unito.it");
-        toLabel.getItems().add("wally@unito.it");
-        toLabel.getItems().add("ali@unito.it");
+       
     }
 
     public void getStage() {
@@ -106,7 +105,14 @@ public class SendMailController implements Initializable, Observer {
     
     @FXML
     private void send(ActionEvent event) {
-        Email email = new Email(model.getUser(), toLabel.getValue(), subLabel.getText(), txtArea.getText());
+        ArrayList<String> arr = new ArrayList<>();
+        
+        String k[] = toLabel.getText().split(";");
+        for(int i = 0; i < k.length; i++) {
+            arr.add(k[i]);
+        }
+        
+        Email email = new Email(model.getUser(), arr, subLabel.getText(), txtArea.getText());
         try {
             model.sendRequest(email);
             model.reverseWidget();

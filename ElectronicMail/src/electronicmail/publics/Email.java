@@ -1,113 +1,94 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package electronicmail.publics;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- * @author wallahd
- * @author greundzo
+ * @author Bollattino Matteo (mat 847576)
+ * @author Boggio Gianluca (mat 765042)
+ * @author Calo' Ramiro (mat 835678)
+ * @author Carena Alessandro (mat 817103)
  */
-public class Email extends java.util.Observable implements Serializable {
+
+public class Email extends java.util.Observable implements Serializable{
     
     private String id;
-    private final String from;
-    private final String to;
-    private final String subject;
-    private final String text;
+    private ArrayList<String> to;
+    private String from;
+    private String subject;
+    private String text;
     private String date;
     private boolean read;
-    
-    /**
-     *
-     * @param fromWho
-     * @param toWho
-     * @param theSubject
-     * @param txt
-     */
-    public Email(String fromWho, String toWho, String theSubject, String txt) {
-        id = null;
-        from = fromWho;
-        to = toWho;
-        subject = theSubject;
-        text = txt;
-        date = java.time.LocalDateTime.now() + "";
-        read = false;
+
+    public Email(String from, ArrayList<String> to, String subject, String text) {
+        this.id = null;
+        this.to = to;
+        this.from = from;
+        this.subject = subject;
+        this.text = text;
+        this.date = java.time.LocalDateTime.now() + "";
+        this.read = false;
     }
-    
-    public String id() {
-        return id;
-    }
-    
+
     public String getId() {
         return id;
     }
-    
+
     public void setId(String id) {
         this.id = id;
     }
-    
-    public String from() {
-        return from;
+
+    public ArrayList<String> getTo() {
+        return to;
     }
-    
+
+    public void setTo(ArrayList<String> to) {
+        this.to = to;
+    }
+
     public String getFrom() {
         return from;
     }
-    
-    public String to() {
-        return to;
+
+    public void setFrom(String from) {
+        this.from = from;
     }
-    
-    public String getTo() {
-        return to;
-    }
-    
-    public String subject() {
-        return subject;
-    }
-    
+
     public String getSubject() {
         return subject;
     }
-    
-    public String txt() {
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getText() {
         return text;
     }
-    
-    public String getTxt() {
-        return text;
+
+    public void setText(String text) {
+        this.text = text;
     }
-    
+
     public String getDate() {
         return date;
     }
-    
-    public String date() {
-        return date;
+
+    public void setDate(String date) {
+        this.date = date;
     }
     
-    public boolean getwasRead() {
+    public boolean hasBeenRead() {
         return read;
     }
     
-    public boolean wasRead() {
-        return read;
-    }
-    
-    public void hasBeenRead() {
+    public void setRead() {
         read = !read;
     }
     
-    public String[] getAll() {
-        String all[] = {id, from, to, subject, text, date};
-        return all;
+    @Override
+    public String toString() {
+        return getFrom() + "," + getSubject() + "," + getText() + "," + getDate();
     }
     
-    public void setDate(String d) {
-        date = d;
-    }
 }

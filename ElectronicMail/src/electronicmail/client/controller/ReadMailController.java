@@ -49,7 +49,7 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private TitledPane mailList;
     @FXML
-    private ListView<Email> eList;
+    private ListView eList;
     @FXML
     private AnchorPane readPane;
     @FXML
@@ -78,10 +78,7 @@ public class ReadMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
-        eList = new ListView<>();
-        emails = FXCollections.observableArrayList(new Email("franco", "gianni", "andiamo", "daidiocanemuoviti"));
-        eList.setItems(emails);
-        eList.setVisible(true);
+       
         //split della mail
         //generazione oggetto mail
         //foreach mail -> model.emails.add -> model.observablelist.add
