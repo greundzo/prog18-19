@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,7 +80,13 @@ public class ReadMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {       
-       
+       eList.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Email>() {
+                @Override
+                public void changed(ObservableValue<? extends Email> ov, Email old_val, Email new_val) {
+                    readMailContent(new_val);
+            }
+        });
         //split della mail
         //generazione oggetto mail
         //foreach mail -> model.emails.add -> model.observablelist.add
@@ -90,31 +98,22 @@ public class ReadMailController implements Initializable, Observer {
     }
     
     public void init() {
-
-        /*
-       //PARTE AGGIUNTA DA WALLY SOLO QUELLA INFERIORE
-       
-       readArea.setVisible(true);
-       readArea.setDisable(false);
-       readArea.setText("MITTENTE: " + model.getUser().getFrom()
-                                     + "\n"
-                                     + "ALTRI DESTINATARI: "
-                                     + Ln + "\n\n"
-                                     + "OGGETTO: " + getSubjec()
-                                     + "\n\n"
-                                     + getTxt());
-       } else {
-       eList.getSelectionModel().clearSelection();
-                    }
-       
-        
-        */
-        
         try {
             model.refreshRequest();           
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void readMailContent(Email email) {
+        readArea.setVisible(true);
+        readArea.setDisable(false);
+        readArea.setText(
+                "DATA:" + email.getDate() + "\n" +
+                "MITTENTE: " + email.getFrom() + "\n" +
+                "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
+                "OGGETTO: " + email.getSubject() + "\n\n" +
+                "TESTO: " + "\n" + email.getText());
     }
     
     @FXML
