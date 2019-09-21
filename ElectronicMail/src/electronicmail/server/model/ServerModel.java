@@ -159,7 +159,7 @@ public class ServerModel extends Observable {
      * @throws IOException
      */
     public void writeflush(String a[], BufferedWriter buff) throws IOException {
-        buff.append(maxId++ + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + a[5] + "§§" + "false" + "§§" + EOF + "\n");
+        buff.append(maxId++ + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + "false" + "§§" + EOF + "\n");
         buff.flush();
     }
 

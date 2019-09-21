@@ -24,8 +24,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -53,7 +53,7 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private AnchorPane rootPane;
     @FXML
-    private ChoiceBox<String> choiceUser;
+    private TextField choiceUser;
     @FXML
     private Label label;
     @FXML
@@ -67,9 +67,6 @@ public class ClientController implements Initializable, Observer {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        choiceUser.getItems().add("nico@unito.it");
-        choiceUser.getItems().add("wally@unito.it");
-        choiceUser.getItems().add("ali@di.unito.it");
         model = new ClientModel();
         model.addObserver(this);
     }
@@ -83,8 +80,8 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private void loginAction(ActionEvent event) {                     
         try {
-            if(choiceUser.getValue() != null) {
-                model.setUser(choiceUser.getValue());
+            if(choiceUser.getText() != null) {
+                model.setUser(choiceUser.getText());
                 model.logRequest();         
                 loadClient();
             }   
@@ -113,7 +110,7 @@ public class ClientController implements Initializable, Observer {
             
             Stage stageSecond = new Stage();
 
-            stageSecond.setTitle("@DiMailService - " + choiceUser.getValue());
+            stageSecond.setTitle("@DiMailService - " + choiceUser.getText());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
             stageSecond.setOnCloseRequest(e -> { try { model.outRequest(); } catch (IOException ex) {}; Platform.exit(); System.exit(0);});
