@@ -1,11 +1,1 @@
-12:02:19.581§§nico@unito.it§§wally@unito.it§§Risolto problema append§§Bastava mettere un flush.§§2019-09-14T12:02:19.583§§false§§eof
-12:03:43.866§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Oggi si lavora su visualizzazione
-delle email nella schermata principale.
-Va cambiato l'id per distinguerle meglio (l'ora
-di spedizione e ricevimento sono un parametro
-non consistente).§§2019-09-14T12:03:43.866§§false§§eof
-null§§nico@unito.it§§wally@unito.it§§Cose da fare§§metodo initialize da sistemare. forse è meglio pensare ad un metodo init, ora vediamo.§§2019-09-14T13:12:05.944§§false§§eof
-null§§nico@unito.it§§wally@unito.it§§ciao§§bacon§§2019-09-15T17:02:19.251§§false§§eof
-null§§nico@unito.it§§ali@unito.it§§uè§§hstcdukj§§2019-09-16T16:21:25.580§§false§§eof
-0§§nico@unito.it§§ali@unito.it§§ciao§§ciao§§2019-09-21T19:04:27.456§§false§§eof
-2§§nico@unito.it§§ali@unito.it§§prova send multiplo§§prova§§2019-09-21T19:05:39.140§§false§§eof
+0§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni§§ bravi ragazzi!§§false§§eof

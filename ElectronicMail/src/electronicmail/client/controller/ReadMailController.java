@@ -79,8 +79,10 @@ public class ReadMailController implements Initializable, Observer {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
-       eList.getSelectionModel().selectedItemProperty().addListener(
+    public void initialize(URL url, ResourceBundle rb) {
+        readArea.setWrapText(true);
+        
+        eList.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<Email>() {
                 @Override
                 public void changed(ObservableValue<? extends Email> ov, Email old_val, Email new_val) {
@@ -109,7 +111,7 @@ public class ReadMailController implements Initializable, Observer {
         readArea.setVisible(true);
         readArea.setDisable(false);
         readArea.setText(
-                "DATA:" + email.getDate() + "\n" +
+                "DATA: " + email.getDate() + "\n" +
                 "MITTENTE: " + email.getFrom() + "\n" +
                 "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
                 "OGGETTO: " + email.getSubject() + "\n\n" +
@@ -225,6 +227,7 @@ public class ReadMailController implements Initializable, Observer {
     
     @Override
     public void update(Observable obs, Object obj) {
+        eList.getItems().clear();
         eList.setItems((ObservableList<Email>) obj);
         eList.setVisible(true);
     }  

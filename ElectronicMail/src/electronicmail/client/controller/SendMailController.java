@@ -23,7 +23,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import electronicmail.publics.Email;
 import java.util.ArrayList;
-import javafx.scene.control.ChoiceBox;
 
 /**
  * FXML Controller class
@@ -59,7 +58,7 @@ public class SendMailController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+       txtArea.setWrapText(true);
     }
 
     public void getStage() {
