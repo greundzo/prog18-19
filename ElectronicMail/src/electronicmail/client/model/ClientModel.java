@@ -29,31 +29,31 @@ public class ClientModel extends Observable {
     private ObjectInputStream in;
     private ArrayList<Email> emails;
     private ObservableList<Email> emList;
-    
+
     public ClientModel() {
-        userName = null;  
+        userName = null;
         widget = false;
     }
-    
+
     public String getUser() {
         return userName;
     }
-    
+
     /**
      * @param user
      */
     public void setUser(String user) {
         userName = user;
     }
-    
+
     public boolean getWidget() {
         return widget;
     }
-    
+
     public void reverseWidget() {
         widget = !widget;
     }
-    
+
      public void alert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(Alert.AlertType.WARNING.toString());
@@ -61,7 +61,7 @@ public class ClientModel extends Observable {
         alert.setContentText("");
         alert.showAndWait();
     }
-    
+
     public void request(String rqs, Email obj) throws IOException {
         socket = new Socket("localhost", 8189);
         new Thread(() -> {
@@ -71,26 +71,26 @@ public class ClientModel extends Observable {
             } else {
                 CreateRequest cr = new CreateRequest(this, userName, rqs, obj, socket);
                 new Thread(cr).start();
-            }    
+            }
         }).start();
     }
-    
+
     /**
      * Crea uno stream e comunica al server che il client sta eseguendo il login.
      * @throws java.io.IOException
      */
     public void logRequest() throws IOException {
-        request("in", null); 
+        request("in", null);
     }
-    
+
     public void refreshRequest() throws IOException {
         request("refresh", null);
     }
-    
+
     public void deleteRequest(Email em) throws IOException {
         request("delete", em);
     }
-    
+
     /**
      * Comunica al server che il client sta eseguendo il logout, poi chiude lo stream.
      * @throws IOException se qualcosa è andato storto
@@ -98,26 +98,24 @@ public class ClientModel extends Observable {
     public void outRequest() throws IOException {
         request("out", null);
     }
-    
-    public void sendRequest(Email obj) throws IOException {   
-        request("newmail", obj);        
+
+    public void sendRequest(Email obj) throws IOException {
+        request("newmail", obj);
     }
-    
+
     public void setEmails(ArrayList<Email> ems) {
         emails = ems;
         if (emList == null) {
             emList = FXCollections.observableArrayList(emails);
         }
-        setChanged();
-        notifyObservers(emList);
     }
-    
+
     public ArrayList<Email> getMails() {
         return emails;
     }
-    
+
     public ObservableList<Email> getObMails() {
         return emList;
     }
-    
+
 }

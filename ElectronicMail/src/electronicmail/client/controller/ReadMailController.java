@@ -34,11 +34,11 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ReadMailController implements Initializable, Observer {
-    
-    private ClientModel model; 
+
+    private ClientModel model;
     private ObservableList<Email> emails;
     private Email currentEmail;
-    
+
     @FXML
     private TitledPane mailList;
     @FXML
@@ -63,7 +63,7 @@ public class ReadMailController implements Initializable, Observer {
     public ReadMailController() {
         model = null;
     }
-    
+
     /**
      * Initializes the controller class.
      * @param url
@@ -73,7 +73,11 @@ public class ReadMailController implements Initializable, Observer {
     @SuppressWarnings("Convert2Lambda")
     public void initialize(URL url, ResourceBundle rb) {
         readArea.setWrapText(true);
-        
+
+        new Thread(() -> {
+            new RefreshMails(model, eList);
+        }).start();
+
         eList.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<Email>() {
                 @Override
@@ -85,19 +89,19 @@ public class ReadMailController implements Initializable, Observer {
         //generazione oggetto mail
         //foreach mail -> model.emails.add -> model.observablelist.add
         //display observablelist nella listview
-    }    
+    }
 
     public void getModel(ClientModel m){
         model = m;
     }
-    
-    public void init() {
+
+    /*public void init() {
         try {
-            model.refreshRequest();           
+            model.refreshRequest();
         } catch (IOException e) {
         }
-    }
-    
+    }*/
+
     public void readMailContent(Email email) {
         currentEmail = email;
         readArea.setVisible(true);
@@ -109,7 +113,7 @@ public class ReadMailController implements Initializable, Observer {
                 "OGGETTO: " + email.getSubject() + "\n\n" +
                 "TESTO: " + "\n" + email.getText());
     }
-    
+
     @FXML
     private void newMailAction(ActionEvent event) {
         if (!model.getWidget()) {
@@ -119,7 +123,7 @@ public class ReadMailController implements Initializable, Observer {
             } catch (IOException e) {
                 model.alert("Internal error. (Code Error: 10141)");
             }
-        }    
+        }
     }
 
     @FXML
@@ -146,24 +150,20 @@ public class ReadMailController implements Initializable, Observer {
     private void forwardMailAction(ActionEvent event) {
         try {
             sendWidget("forward");
-            //model.request("forward", currentEmail);
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10144)");
-        }    
+        }
     }
 
     @FXML
     private void deleteMailAction(ActionEvent event) {
         try {
             model.deleteRequest(currentEmail);
-            readArea.clear();
-            eList.getItems().remove(currentEmail);
-            eList.refresh();            
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10128)");
-        }    
+        }
     }
- 
+
     /**
      * Gestisce il logout del client.
      * Il metodo del modello outRequest comunica al server che il client
@@ -178,9 +178,9 @@ public class ReadMailController implements Initializable, Observer {
         } catch (IOException | NullPointerException e) {
             model.alert("Connection interrupted. (Code Error: 11010)");
             backToLogin();
-        }    
+        }
     }
-    
+
     /**
      * Chiude la finestra corrente e genera una nuova vista di login.
      */
@@ -189,24 +189,24 @@ public class ReadMailController implements Initializable, Observer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("/electronicmail/client/fxml/Login.fxml"));
-                        
+
             Parent loginRoot = (Parent) loader.load();
             ClientController control = loader.getController();
-            
+
             Scene loginScene = new Scene(loginRoot);
-            
+
             Stage loginStage = new Stage();
             loginStage.setTitle("@DiMailService");
             loginStage.setScene(loginScene);
             loginStage.show();
-            
-            Stage stage = (Stage) logoutButton.getScene().getWindow(); 
+
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.close();
         }catch(IOException notFound) {
             model.alert("Internal error. (Code Error: 10141)");
         }
     }
-    
+
     /**
      *
      * @param action
@@ -214,13 +214,13 @@ public class ReadMailController implements Initializable, Observer {
      */
     @FXML
     public void sendWidget(String action) throws IOException {
-        try { 
+        try {
             FXMLLoader sendScene = new FXMLLoader();
             sendScene.setLocation(this.getClass().getResource("/electronicmail/client/fxml/SendMail.fxml"));
 
             Parent parent = (Parent) sendScene.load();
 
-            SendMailController control = sendScene.getController();        
+            SendMailController control = sendScene.getController();
             model.addObserver(control);
             control.getModel(model);
 
@@ -230,19 +230,19 @@ public class ReadMailController implements Initializable, Observer {
             stage2.setScene(scene2);
             stage2.show();
             control.getStage();
-            
+
             if(action!=null) {
                 control.setParamethers(action, currentEmail);
             }
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10141)");
-        }    
+        }
     }
-    
+
     @Override
     public void update(Observable obs, Object obj) {
-        eList.getItems().clear();
+        /*eList.getItems().clear();
         eList.setItems((ObservableList<Email>) obj);
-        eList.setVisible(true);
-    }  
+        eList.setVisible(true);*/
+    }
 }

@@ -34,9 +34,9 @@ import javafx.stage.Stage;
  * @author greundzo
  */
 public class ClientController implements Initializable, Observer {
-    
+
     /**
-     * @param model è il nostro modello 
+     * @param model è il nostro modello
      * @param clientSocket è il socket del nostro client
      * @param output è uno stream di oggetti per comunicare con il server
      * @param in e out sono altri stream
@@ -58,9 +58,9 @@ public class ClientController implements Initializable, Observer {
     private Label label;
     @FXML
     private Label ghostUserLabel;
-    
+
     /**
-     * Inizializza il menù a tendina. 
+     * Inizializza il menù a tendina.
      * @param url
      * @param rb
      */
@@ -70,26 +70,26 @@ public class ClientController implements Initializable, Observer {
         model = new ClientModel();
         model.addObserver(this);
     }
-    
+
     /**
      * Gestisce il login.
      * Per prima cosa viene creato un nuovo socket, assieme al modello.
      * Viene invocato poi il metodo di login del modello: se non viene lanciata
      * un'eccezione loadClient carica la prossima vista.
-     */    
+     */
     @FXML
-    private void loginAction(ActionEvent event) {                     
+    private void loginAction(ActionEvent event) {
         try {
             if(choiceUser.getText() != null) {
                 model.setUser(choiceUser.getText());
-                model.logRequest();         
+                model.logRequest();
                 loadClient();
-            }   
+            }
         } catch (IOException e) {
             model.alert("SERVER OFFLINE");
         }
     }
-    
+
     /**
      * Carica la prossima vista.
      * L'oggetto controller viene collegato al modello (da sistemare).
@@ -100,14 +100,14 @@ public class ClientController implements Initializable, Observer {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("/electronicmail/client/fxml/ReadMail.fxml"));
-                       
+
             Parent rootSecond = (Parent) loader.load();
 
             readmail = loader.getController();
             model.addObserver(readmail);
             readmail.getModel(model);
-            readmail.init();
-            
+            //readmail.init();
+
             Stage stageSecond = new Stage();
 
             stageSecond.setTitle("@DiMailService - " + choiceUser.getText());
@@ -115,7 +115,7 @@ public class ClientController implements Initializable, Observer {
             stageSecond.setResizable(false);
             stageSecond.setOnCloseRequest(e -> { try { model.outRequest(); } catch (IOException ex) {}; Platform.exit(); System.exit(0);});
             stageSecond.show();
-            
+
             Stage stage = (Stage) button.getScene().getWindow();
             stage.close();
 
@@ -123,13 +123,11 @@ public class ClientController implements Initializable, Observer {
             model.alert("LOGIN ERROR");
         }
     }
-    
-   
-    
+
+
+
     @Override
     public void update(Observable o, Object obj) {
-        
+
     }
 }
-
-
