@@ -8,15 +8,12 @@ package electronicmail.client.controller;
 import electronicmail.client.model.*;
 import electronicmail.publics.Email;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,13 +22,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -41,11 +36,6 @@ import javafx.util.Callback;
 public class ReadMailController implements Initializable, Observer {
     
     private ClientModel model; 
-    private Socket socket; 
-    private ObjectOutputStream out;
-    private String usr;
-    private boolean sendstart = false;
-    private final String PATH = "./src/electronicmail/publics/db/";
     private ObservableList<Email> emails;
     
     @FXML
@@ -79,6 +69,7 @@ public class ReadMailController implements Initializable, Observer {
      * @param rb
      */
     @Override
+    @SuppressWarnings("Convert2Lambda")
     public void initialize(URL url, ResourceBundle rb) {
         readArea.setWrapText(true);
         
@@ -103,7 +94,6 @@ public class ReadMailController implements Initializable, Observer {
         try {
             model.refreshRequest();           
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -165,6 +155,7 @@ public class ReadMailController implements Initializable, Observer {
     private void logoutAction(ActionEvent event) {
         try {
             model.outRequest();
+            eList.getItems().clear();
             backToLogin();
         } catch (IOException | NullPointerException e) {
             model.alert("Connection interrupted. (Code Error: 11010)");

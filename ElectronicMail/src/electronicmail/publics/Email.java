@@ -2,7 +2,6 @@ package electronicmail.publics;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import javafx.beans.value.ObservableValue;
 
 /**
  * @author Bollattino Matteo (mat 847576)
@@ -89,7 +88,7 @@ public class Email extends java.util.Observable implements Serializable{
     
     @Override
     public String toString() {
-        return getFrom() + "," + getSubject() + "," + getText() + "," + getDate();
+        return getFrom() + "§" + getSubject() + "§" + getText() + "§" + getDate();
     }
       
 }

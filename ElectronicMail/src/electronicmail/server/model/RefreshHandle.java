@@ -22,11 +22,10 @@ public class RefreshHandle implements Runnable {
     private final TextArea area;
     private final ServerModel model;
     private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private final ObjectInputStream in;
     private final String user;
     private final String request;
     private final Email email;
-    private Socket clsocket;
     
     public RefreshHandle(Socket s, ServerSocket sr, TextArea ar, ServerModel m, String usr, String rqs, Email em, ObjectInputStream inp) {
         socket = s;
@@ -43,18 +42,14 @@ public class RefreshHandle implements Runnable {
     public void run() {
         try {
             model.logAction(user, request, email); 
-            System.out.println("HAndle: sono qui");
         } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             try {
                 out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(model.getEmails(user));
                 out.flush();
-                System.out.println("Handle: sono qui 2");
                 this.stop();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
             }    
         }
     }
@@ -65,7 +60,6 @@ public class RefreshHandle implements Runnable {
             out.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }    
     }
 }

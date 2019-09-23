@@ -14,8 +14,6 @@ import electronicmail.publics.Email;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
 
 /**
  * 
@@ -30,7 +28,7 @@ public class ServerModel extends Observable {
     //2 righe superiori aggiunte da wally
     
     private ArrayList<Email> emails;
-    private HashMap<String, ArrayList<Email>> usersMails; 
+    private final HashMap<String, ArrayList<Email>> usersMails; 
     private final HashMap<String, Boolean> accountRefresh;
     private HandleRequest connected;
     private final String PATH = "./src/electronicmail/publics/db/";
@@ -113,7 +111,7 @@ public class ServerModel extends Observable {
             String toS[] = a.split(";"); // splitto e trovo tutti i destinatari
             
             String inf = em.toString();
-            String[] support = inf.split(","); //splitto e ho tutti i campi
+            String[] support = inf.split("§"); //splitto e ho tutti i campi
             
             String info[] = {support[0], a, support[1], support[2], support[3]}; // unisco le stringhe
             
@@ -167,7 +165,7 @@ public class ServerModel extends Observable {
              
         synchronized (LOCKID) {
             try {
-                
+                emails = new ArrayList<>();
                 File received = new File(PATH + "received/" + usr + ".txt");
                 
                 if (!received.exists()) {
@@ -195,28 +193,9 @@ public class ServerModel extends Observable {
                     }
                     
                     emails.add(em);
-                    
-                    System.out.println("IO ho finito.");
-                }
+                }                
+                usersMails.put(usr, emails);    
                 
-                usersMails.put(usr, emails);
-                
-                /*
-                new Thread(() -> {
-                    try {                        
-                        out.writeObject(emails);
-                        out.flush();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            out.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }    
-                    }   
-                }).start(); */
-                        
             } catch(IOException e) {
                 e.printStackTrace();
             }

@@ -105,11 +105,7 @@ public class SendMailController implements Initializable, Observer {
     @FXML
     private void send(ActionEvent event) {
         ArrayList<String> arr = new ArrayList<>();
-        
-        String k[] = toLabel.getText().split(";");
-        for(int i = 0; i < k.length; i++) {
-            arr.add(k[i]);
-        }
+        arr.add(toLabel.getText());
         
         Email email = new Email(model.getUser(), arr, subLabel.getText(), txtArea.getText());
         try {

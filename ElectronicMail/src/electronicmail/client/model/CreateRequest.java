@@ -41,7 +41,6 @@ public class CreateRequest implements Runnable {
             out.writeObject(object);
             out.flush();            
         } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             this.stop();
         }   

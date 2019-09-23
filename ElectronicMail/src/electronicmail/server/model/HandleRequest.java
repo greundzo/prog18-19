@@ -26,7 +26,6 @@ public class HandleRequest implements Runnable {
     private String user;
     private String request;
     private Email email;
-    private Socket clsocket;
     
     public HandleRequest (Socket s, ServerSocket sr, TextArea ar, ServerModel m) {
         socket = s;
@@ -45,7 +44,6 @@ public class HandleRequest implements Runnable {
             email = (Email) in.readObject();
             
             if (request.equals("refresh")) {
-                System.out.println("Handle normale");
                 new Thread(() -> {
                     Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email, in);
                     new Thread(fresh).start();
@@ -56,7 +54,6 @@ public class HandleRequest implements Runnable {
             }
 
         } catch (ClassNotFoundException | IOException e) {            
-            e.printStackTrace();
         } 
     }
     
@@ -65,7 +62,6 @@ public class HandleRequest implements Runnable {
             in.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }    
     }
     

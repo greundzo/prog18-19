@@ -39,16 +39,13 @@ public class RefreshRequest implements Runnable {
         try {
             sendData();          
         } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             try {
                 in = new ObjectInputStream(socket.getInputStream());            
                 Object ems = in.readObject();
                 model.setEmails((ArrayList<Email>) ems);
                 this.stop();
-                System.out.println("IO sono qui 3");
             } catch (ClassNotFoundException | IOException e) {
-                e.printStackTrace();
             }
         }   
     }
@@ -59,7 +56,6 @@ public class RefreshRequest implements Runnable {
             in.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }    
     }
     

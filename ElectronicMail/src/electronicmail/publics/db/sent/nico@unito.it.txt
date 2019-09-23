@@ -1,1 +1,6 @@
-0§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni§§ bravi ragazzi!§§false§§eof
+0§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni, bravi ragazzi!§§2019-09-23T10:00:57.906§§false§§eof
+0§§nico@unito.it§§ali@unito.it§§Ciao§§Ciao come va?§§2019-09-23T10:00:57.906§§false§§eof
+0§§nico@unito.it§§carlo@unito.it§§sas§§oggi ci mettiamo e finiamo§§2019-09-23T10:00:57.906§§false§§eof
+0§§nico@unito.it§§carlo@unito.it§§avanzamento§§abbiamo quasi finito§§ siate contenti :)§§false§§eof
+0§§nico@unito.it§§wally@unito.it§§hola§§we, allora?§§2019-09-23T10:25:21.051§§false§§eof
+0§§nico@unito.it§§carlo@unito.it;ali@unito.it§§prova send multiplo§§prova uno due, tre§§2019-09-23T10:31:47.993§§false§§eof
