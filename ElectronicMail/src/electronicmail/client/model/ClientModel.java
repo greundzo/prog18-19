@@ -87,6 +87,10 @@ public class ClientModel extends Observable {
         request("refresh", null);
     }
     
+    public void setReadRequest(Email em) throws IOException {
+        request("read", em);
+    }
+    
     /**
      * Comunica al server che il client sta eseguendo il logout, poi chiude lo stream.
      * @throws IOException se qualcosa è andato storto

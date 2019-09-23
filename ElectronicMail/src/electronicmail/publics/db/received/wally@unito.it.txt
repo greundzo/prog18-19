@@ -1,2 +1,2 @@
-1§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni bravi ragazzi!§§2019-09-23T10:00:57.906§§false§§eof
+0§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni bravi ragazzi!§§2019-09-23T10:00:57.906§§false§§eof
 1§§nico@unito.it§§wally@unito.it§§hola§§we, allora?§§2019-09-23T10:25:21.051§§false§§eof

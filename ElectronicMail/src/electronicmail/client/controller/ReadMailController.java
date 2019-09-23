@@ -106,6 +106,12 @@ public class ReadMailController implements Initializable, Observer {
                 "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
                 "OGGETTO: " + email.getSubject() + "\n\n" +
                 "TESTO: " + "\n" + email.getText());
+        email.setRead();
+        try {
+            model.setReadRequest(email);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     @FXML

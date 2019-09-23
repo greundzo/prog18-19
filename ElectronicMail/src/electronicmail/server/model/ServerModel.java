@@ -14,6 +14,8 @@ import electronicmail.publics.Email;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -82,6 +84,9 @@ public class ServerModel extends Observable {
                 Object wrote = usr + " has sent an email";
                 setChanged();
                 notifyObservers(wrote);
+                break;
+            case "read":
+                setRead(usr, email);
                 break;
             case "ans":
             case "ansall":
@@ -199,6 +204,16 @@ public class ServerModel extends Observable {
             } catch(IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    public void setRead(String usr, Email em) {
+        File received = new File(PATH + "received/" + usr + ".txt");
+        try {
+            FileWriter wr = new FileWriter(received);
+            BufferedWriter br = new BufferedWriter(wr);
+        } catch (IOException ex) {
+            
         }
     }
  
