@@ -87,8 +87,8 @@ public class ClientModel extends Observable {
         request("refresh", null);
     }
     
-    public void setReadRequest(Email em) throws IOException {
-        request("read", em);
+    public void deleteRequest(Email em) throws IOException {
+        request("delete", em);
     }
     
     /**

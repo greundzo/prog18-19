@@ -118,6 +118,15 @@ public class SendMailController implements Initializable, Observer {
         }    
     }
     
+    public void setParamethers(String action, Email email) {
+        switch(action) {
+            case "forward": 
+                subLabel.setText(email.getSubject());
+                txtArea.setText(email.getText());
+                break;
+        }
+    }
+    
     @Override
     public void update(Observable o, Object obj) {
         

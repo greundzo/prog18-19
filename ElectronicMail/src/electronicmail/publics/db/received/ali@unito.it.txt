@@ -1,2 +1,1 @@
-0§§nico@unito.it§§ali@unito.it§§Ciao§§Ciao come va?§§2019-09-23T10:00:57.906§§false§§eof
-1§§nico@unito.it§§carlo@unito.it;ali@unito.it§§prova send multiplo§§prova uno due, tre§§2019-09-23T10:31:47.993§§false§§eof
+4§§nico@unito.it§§wally@unito.it;ali@unito.it§§3§§vbnk§§2019-09-23T19:09:16.487§§eof

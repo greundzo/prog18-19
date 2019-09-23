@@ -14,8 +14,6 @@ import electronicmail.publics.Email;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * 
@@ -85,13 +83,14 @@ public class ServerModel extends Observable {
                 setChanged();
                 notifyObservers(wrote);
                 break;
-            case "read":
-                setRead(usr, email);
-                break;
             case "ans":
             case "ansall":
             case "forward":
             case "delete":
+                deleteEmail(usr, email);
+                setChanged();
+                notifyObservers(usr + " has deleted an email");
+                break;
             case "refresh":
                 refresh(usr);
                 setChanged();
@@ -162,7 +161,7 @@ public class ServerModel extends Observable {
      * @throws IOException
      */
     public void writeflush(String a[], BufferedWriter buff) throws IOException {
-        buff.append(maxId++ + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + "false" + "§§" + EOF + "\n");
+        buff.append(maxId++ + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
         buff.flush();
     }
 
@@ -193,9 +192,6 @@ public class ServerModel extends Observable {
                     em.setId(line[0]);
                     em.setDate(line[5]);
                     
-                    if ("true".equals(line[6])) {
-                        em.hasBeenRead();
-                    }
                     
                     emails.add(em);
                 }                
@@ -207,13 +203,52 @@ public class ServerModel extends Observable {
         }
     }
     
-    public void setRead(String usr, Email em) {
-        File received = new File(PATH + "received/" + usr + ".txt");
+    public synchronized void deleteEmail(String usr, Email em) {       
+        //File temp = new File(PATH + "received/" + "temp.txt");
+        
         try {
-            FileWriter wr = new FileWriter(received);
-            BufferedWriter br = new BufferedWriter(wr);
-        } catch (IOException ex) {
+            String id = em.getId();
+            File received = new File(PATH + "received/" + usr + ".txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(received));
+            BufferedReader br = new BufferedReader(new FileReader(received)); 
+            String ln;
+            String save = "";
             
+            while((ln = br.readLine()) != null) {
+                System.out.println(ln);
+                String[] line = ln.split("§§");
+                if (!line[0].equals(id)) {
+                    save = save.concat(ln);
+                }
+                
+            }
+            br.close();
+            
+            bw.write(save);
+            bw.flush();
+            bw.close();
+        
+       /* try {
+            temp.createNewFile();
+            BufferedReader br = new BufferedReader(new FileReader(received));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
+            
+            String ln;
+            while ((ln = br.readLine()) != null) {
+                String[] line = ln.split("§§");
+                if (!line[0].equals(em.getId())) {
+                    bw.append(ln);
+                    bw.flush();
+                }
+            }
+            br.close();
+            bw.close();
+            
+            boolean renameTo = temp.renameTo(received);
+            received.delete();*/
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
  

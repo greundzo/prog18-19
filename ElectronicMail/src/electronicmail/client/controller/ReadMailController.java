@@ -37,6 +37,7 @@ public class ReadMailController implements Initializable, Observer {
     
     private ClientModel model; 
     private ObservableList<Email> emails;
+    private Email currentEmail;
     
     @FXML
     private TitledPane mailList;
@@ -98,6 +99,7 @@ public class ReadMailController implements Initializable, Observer {
     }
     
     public void readMailContent(Email email) {
+        currentEmail = email;
         readArea.setVisible(true);
         readArea.setDisable(false);
         readArea.setText(
@@ -106,12 +108,6 @@ public class ReadMailController implements Initializable, Observer {
                 "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
                 "OGGETTO: " + email.getSubject() + "\n\n" +
                 "TESTO: " + "\n" + email.getText());
-        email.setRead();
-        try {
-            model.setReadRequest(email);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
     
     @FXML
@@ -119,7 +115,7 @@ public class ReadMailController implements Initializable, Observer {
         if (!model.getWidget()) {
             model.reverseWidget();
             try {
-                sendWidget();
+                sendWidget(null);
             } catch (IOException e) {
                 model.alert("Internal error. (Code Error: 10141)");
             }
@@ -137,18 +133,22 @@ public class ReadMailController implements Initializable, Observer {
     @FXML
     private void forwardMailAction(ActionEvent event) {
         try {
-            model.request("forward", null);
+            sendWidget("forward");
+            //model.request("forward", currentEmail);
         } catch (IOException e) {
-            model.alert("FORWARD FAILED");
+            model.alert("Internal error. (Code Error: 10144)");
         }    
     }
 
     @FXML
     private void deleteMailAction(ActionEvent event) {
         try {
-            model.request("delete",null); //servirà un secondo parametro
+            model.deleteRequest(currentEmail);
+            readArea.clear();
+            eList.getItems().remove(currentEmail);
+            eList.refresh();            
         } catch (IOException e) {
-            model.alert("DELETE FAILED");
+            model.alert("Internal error. (Code Error: 10128)");
         }    
     }
  
@@ -197,10 +197,11 @@ public class ReadMailController implements Initializable, Observer {
     
     /**
      *
+     * @param action
      * @throws IOException
      */
     @FXML
-    public void sendWidget() throws IOException {
+    public void sendWidget(String action) throws IOException {
         try { 
             FXMLLoader sendScene = new FXMLLoader();
             sendScene.setLocation(this.getClass().getResource("/electronicmail/client/fxml/SendMail.fxml"));
@@ -217,6 +218,10 @@ public class ReadMailController implements Initializable, Observer {
             stage2.setScene(scene2);
             stage2.show();
             control.getStage();
+            
+            if(action!=null) {
+                control.setParamethers(action, currentEmail);
+            }
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10141)");
         }    

@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * @author Bollattino Matteo (mat 847576)
- * @author Boggio Gianluca (mat 765042)
- * @author Calo' Ramiro (mat 835678)
- * @author Carena Alessandro (mat 817103)
+ * @author greundzo
+ * @author beduinofbarriera
  */
 
 public class Email extends java.util.Observable implements Serializable{
@@ -18,7 +16,6 @@ public class Email extends java.util.Observable implements Serializable{
     private String subject;
     private String text;
     private String date;
-    private boolean read;
 
     public Email(String from, ArrayList<String> to, String subject, String text) {
         this.id = null;
@@ -27,7 +24,6 @@ public class Email extends java.util.Observable implements Serializable{
         this.subject = subject;
         this.text = text;
         this.date = java.time.LocalDateTime.now() + "";
-        this.read = false;
     }
 
     public String getId() {
@@ -76,14 +72,6 @@ public class Email extends java.util.Observable implements Serializable{
 
     public void setDate(String date) {
         this.date = date;
-    }
-    
-    public boolean hasBeenRead() {
-        return read;
-    }
-    
-    public void setRead() {
-        read = !read;
     }
     
     @Override
