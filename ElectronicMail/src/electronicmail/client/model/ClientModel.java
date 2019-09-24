@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import electronicmail.publics.Email;
+import java.util.Collections;
 
 
 /**
@@ -105,9 +106,6 @@ public class ClientModel extends Observable {
 
     public void setEmails(ArrayList<Email> ems) {
         emails = ems;
-        if (emList == null) {
-            emList = FXCollections.observableArrayList(emails);
-        }
     }
 
     public ArrayList<Email> getMails() {
@@ -115,6 +113,9 @@ public class ClientModel extends Observable {
     }
 
     public ObservableList<Email> getObMails() {
+        Collections.reverse(emails);
+        emList = FXCollections.observableArrayList();
+        emList.setAll(emails);
         return emList;
     }
 

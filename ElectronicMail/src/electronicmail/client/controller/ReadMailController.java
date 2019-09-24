@@ -74,35 +74,25 @@ public class ReadMailController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         readArea.setWrapText(true);
 
-        new Thread(() -> {
-            new RefreshMails(model, eList);
-        }).start();
-
         eList.getSelectionModel().selectedItemProperty().addListener(
             new ChangeListener<Email>() {
                 @Override
                 public void changed(ObservableValue<? extends Email> ov, Email old_val, Email new_val) {
-                    readMailContent(new_val);
+                    try { readMailContent(new_val); } catch (NullPointerException e) {}                       
             }
         });
-        //split della mail
-        //generazione oggetto mail
-        //foreach mail -> model.emails.add -> model.observablelist.add
-        //display observablelist nella listview
     }
 
     public void getModel(ClientModel m){
         model = m;
     }
 
-    /*public void init() {
-        try {
-            model.refreshRequest();
-        } catch (IOException e) {
-        }
-    }*/
+    public void init() {
+        RefreshMails r = new RefreshMails(model, eList, readArea);
+        new Thread(r).start();
+    }
 
-    public void readMailContent(Email email) {
+    public void readMailContent(Email email) throws NullPointerException {
         currentEmail = email;
         readArea.setVisible(true);
         readArea.setDisable(false);
@@ -112,6 +102,7 @@ public class ReadMailController implements Initializable, Observer {
                 "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
                 "OGGETTO: " + email.getSubject() + "\n\n" +
                 "TESTO: " + "\n" + email.getText());
+          
     }
 
     @FXML

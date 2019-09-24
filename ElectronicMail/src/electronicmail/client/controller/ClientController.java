@@ -106,14 +106,14 @@ public class ClientController implements Initializable, Observer {
             readmail = loader.getController();
             model.addObserver(readmail);
             readmail.getModel(model);
-            //readmail.init();
+            readmail.init();
 
             Stage stageSecond = new Stage();
 
             stageSecond.setTitle("@DiMailService - " + choiceUser.getText());
             stageSecond.setScene(new Scene(rootSecond));
             stageSecond.setResizable(false);
-            stageSecond.setOnCloseRequest(e -> { try { model.outRequest(); } catch (IOException ex) {}; Platform.exit(); System.exit(0);});
+            stageSecond.setOnCloseRequest(e -> { try { model.outRequest(); } catch (IOException ex) {} Platform.exit(); System.exit(0);});
             stageSecond.show();
 
             Stage stage = (Stage) button.getScene().getWindow();
