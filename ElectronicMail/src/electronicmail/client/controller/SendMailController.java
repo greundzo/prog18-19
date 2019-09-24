@@ -136,9 +136,7 @@ public class SendMailController implements Initializable, Observer {
                 }
                 */
                 subLabel.setText("Re:" + email.getSubject());
-                toLabel.setText(email.getFrom()+ email.getTo(/*remove user*/));
-                
-                
+                toLabel.setText(email.getFrom() + email.getTo().remove(model.getUser()));                
                 break;           
                 
         }

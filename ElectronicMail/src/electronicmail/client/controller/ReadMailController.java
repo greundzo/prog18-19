@@ -9,6 +9,7 @@ import electronicmail.client.model.*;
 import electronicmail.publics.Email;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,10 +98,12 @@ public class ReadMailController implements Initializable, Observer {
         currentEmail = email;
         readArea.setVisible(true);
         readArea.setDisable(false);
+        ArrayList<String> arr = new ArrayList(email.getTo());
+        arr.remove(model.getUser());
         readArea.setText(
                 "DATA: " + email.getDate() + "\n" +
                 "MITTENTE: " + email.getFrom() + "\n" +
-                "ALTRI DESTINATARI: " + email.getTo().toString() + "\n\n" +
+                "ALTRI DESTINATARI: " + arr.toString() + "\n\n" +
                 "OGGETTO: " + email.getSubject() + "\n\n" +
                 "TESTO: " + "\n" + email.getText());
           
@@ -150,6 +154,7 @@ public class ReadMailController implements Initializable, Observer {
     private void deleteMailAction(ActionEvent event) {
         try {
             model.deleteRequest(currentEmail);
+            readArea.clear();
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10128)");
         }

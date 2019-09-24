@@ -2,8 +2,9 @@ package electronicmail.client.model;
 
 import electronicmail.publics.Email;
 import java.io.IOException;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
@@ -11,7 +12,10 @@ public class RefreshMails implements Runnable {
 
     private final Object LOCK;
     private final ClientModel model;
+    private boolean newMail;
+    @FXML
     private final ListView eList;
+    @FXML
     private final TextArea readArea;
 
     public RefreshMails(ClientModel mod, ListView list, TextArea rAr) {
@@ -31,26 +35,43 @@ public class RefreshMails implements Runnable {
     public void run() {
         try {
             model.refreshRequest();
-            Thread.sleep(500);
+            Thread.sleep(100);
             ObservableList<Email> oldMails = model.getObMails();
-            frameRefresh(oldMails);
+            eList.setItems(oldMails);
+            eList.refresh();
+            eList.setVisible(true); 
             
             while(true)  {
                 Thread.sleep(1000);
                 synchronized (LOCK) {
                     model.refreshRequest();
                     ObservableList<Email> refreshed = model.getObMails();
-                    if(refreshed.size() > oldMails.size()) {
-                        frameRefresh(refreshed);
-                        model.alert("New mail received!");
-                        oldMails.addAll(refreshed);
-                    } else {
-                        readArea.clear();
-                        frameRefresh(refreshed);
-                        oldMails.addAll(refreshed);
-                    }
+                    if (refreshed.size() != oldMails.size()) {
+                        newMail = true;
+                        if(refreshed.size() > oldMails.size()) {
+                            Platform.runLater( () -> {
+                                eList.setItems(refreshed);
+                                eList.refresh();
+                                eList.setVisible(true);
+                                if (newMail = true) {
+                                    model.alert("New mail received!");
+                                    newMail = !newMail; 
+                                }    
+                                oldMails.addAll(refreshed);
+                            });
+                        } else 
+                            if (refreshed.size() < oldMails.size()) {
+                            Platform.runLater( () -> {
+                                readArea.clear();
+                                eList.setItems(refreshed);
+                                eList.refresh();
+                                eList.setVisible(true);
+                                oldMails.addAll(refreshed);
+                            });
+                        }
+                    }    
                 }
             }
-        } catch (IOException | InterruptedException e) {}
+        } catch (IOException | IllegalStateException | InterruptedException e) {}
     }
 }

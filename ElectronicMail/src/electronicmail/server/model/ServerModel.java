@@ -64,7 +64,7 @@ public class ServerModel extends Observable {
      * @param email
      * @throws java.io.IOException
      */
-    public void logAction(String usr, String rqs, Email email) throws IOException {
+    public synchronized void logAction(String usr, String rqs, Email email) throws IOException {
         
         switch(rqs) {
             case "in": 
@@ -93,8 +93,6 @@ public class ServerModel extends Observable {
                 break;
             case "refresh":
                 refresh(usr);
-                setChanged();
-                notifyObservers(usr + " has refreshed");
                 break;
         }
         
