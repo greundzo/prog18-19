@@ -119,10 +119,22 @@ public class ReadMailController implements Initializable, Observer {
 
     @FXML
     private void ansMailAction(ActionEvent event) {
+        try{
+            sendWidget("reply");
+        }
+        catch(IOException e){
+            model.alert("Internal error. (Code Error: 10155)");
+        }
     }
 
     @FXML
     private void ansToAllAction(ActionEvent event) {
+        try{
+            sendWidget("reply all");
+        }
+        catch(IOException e){
+            model.alert("Internal error. (Code Error: 10152)");
+        }
     }
 
     @FXML

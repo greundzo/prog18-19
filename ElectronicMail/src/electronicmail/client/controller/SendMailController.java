@@ -124,6 +124,23 @@ public class SendMailController implements Initializable, Observer {
                 subLabel.setText(email.getSubject());
                 txtArea.setText(email.getText());
                 break;
+            case "reply":
+                subLabel.setText("Re:" + email.getSubject());
+                toLabel.setText(email.getFrom());
+                break;
+            case "reply all":
+                /*    MODO ALTERNATIVO DI FARLO ma credo che quello sotto possa funzionare 
+                String mittenti = email.getFrom().get(0);
+                for (int i = 1; i < email.getFrom().size(); i++) {
+                mittenti += "," + emails.getFrom().get(i);
+                }
+                */
+                subLabel.setText("Re:" + email.getSubject());
+                toLabel.setText(email.getFrom()+ email.getTo(/*remove user*/));
+                
+                
+                break;           
+                
         }
     }
     
