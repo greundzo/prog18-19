@@ -202,48 +202,26 @@ public class ServerModel extends Observable {
     }
     
     public synchronized void deleteEmail(String usr, Email em) {       
-        //File temp = new File(PATH + "received/" + "temp.txt");
         
         try {
-            String id = em.getId();
+            File temp = new File(PATH + "received/" + "temp.txt");
             File received = new File(PATH + "received/" + usr + ".txt");
-            BufferedWriter bw = new BufferedWriter(new FileWriter(received));
-            BufferedReader br = new BufferedReader(new FileReader(received)); 
-            String ln;
-            String save = "";
-            
-            while((ln = br.readLine()) != null) {
-                System.out.println(ln);
-                String[] line = ln.split("§§");
-                if (!line[0].equals(id)) {
-                    save = save.concat(ln);
-                }
-                
-            }
-            br.close();
-            
-            bw.write(save);
-            bw.flush();
-            bw.close();
-        
-       /* try {
             temp.createNewFile();
             BufferedReader br = new BufferedReader(new FileReader(received));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(temp, true));
             
             String ln;
             while ((ln = br.readLine()) != null) {
                 String[] line = ln.split("§§");
                 if (!line[0].equals(em.getId())) {
                     bw.append(ln);
-                    bw.flush();
                 }
             }
             br.close();
-            bw.close();
+            bw.close();           
             
+            received.delete();
             boolean renameTo = temp.renameTo(received);
-            received.delete();*/
             
         } catch (IOException ex) {
             ex.printStackTrace();

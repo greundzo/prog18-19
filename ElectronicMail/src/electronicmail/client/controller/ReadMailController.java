@@ -123,40 +123,58 @@ public class ReadMailController implements Initializable, Observer {
 
     @FXML
     private void ansMailAction(ActionEvent event) {
-        try{
-            sendWidget("reply");
-        }
-        catch(IOException e){
-            model.alert("Internal error. (Code Error: 10155)");
+        if (!model.getWidget()) {
+            model.reverseWidget();
+            try{
+                if (currentEmail != null) {
+                    sendWidget("reply");
+                }
+            } catch(IOException e){
+                model.alert("Internal error. (Code Error: 10155)");
+            }
         }
     }
 
     @FXML
     private void ansToAllAction(ActionEvent event) {
-        try{
-            sendWidget("reply all");
-        }
-        catch(IOException e){
-            model.alert("Internal error. (Code Error: 10152)");
+        if (!model.getWidget()) {
+            model.reverseWidget();
+            try{
+                if (currentEmail != null) {
+                    sendWidget("reply all");
+                }
+            } catch(IOException e){
+                model.alert("Internal error. (Code Error: 10152)");
+            }
         }
     }
 
     @FXML
     private void forwardMailAction(ActionEvent event) {
-        try {
-            sendWidget("forward");
-        } catch (IOException e) {
-            model.alert("Internal error. (Code Error: 10144)");
+        if (!model.getWidget()) {
+            model.reverseWidget();
+            try {
+                if (currentEmail != null) {
+                    sendWidget("forward");
+                }
+            } catch (IOException e) {
+                model.alert("Internal error. (Code Error: 10144)");
+            }
         }
     }
 
     @FXML
     private void deleteMailAction(ActionEvent event) {
-        try {
-            model.deleteRequest(currentEmail);
-            readArea.clear();
-        } catch (IOException e) {
-            model.alert("Internal error. (Code Error: 10128)");
+        if (!model.getWidget()) {
+            model.reverseWidget();
+            try {
+                if (currentEmail != null) {
+                    model.deleteRequest(currentEmail);
+                    readArea.clear();
+                }
+            } catch (IOException e) {
+                model.alert("Internal error. (Code Error: 10128)");
+            } 
         }
     }
 

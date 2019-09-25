@@ -46,30 +46,29 @@ public class RefreshMails implements Runnable {
                 synchronized (LOCK) {
                     model.refreshRequest();
                     ObservableList<Email> refreshed = model.getObMails();
-                    if (refreshed.size() != oldMails.size()) {
-                        newMail = true;
-                        if(refreshed.size() > oldMails.size()) {
-                            Platform.runLater( () -> {
-                                eList.setItems(refreshed);
-                                eList.refresh();
-                                eList.setVisible(true);
-                                if (newMail = true) {
-                                    model.alert("New mail received!");
-                                    newMail = !newMail; 
-                                }    
-                                oldMails.addAll(refreshed);
-                            });
-                        } else 
-                            if (refreshed.size() < oldMails.size()) {
-                            Platform.runLater( () -> {
-                                readArea.clear();
-                                eList.setItems(refreshed);
-                                eList.refresh();
-                                eList.setVisible(true);
-                                oldMails.addAll(refreshed);
-                            });
-                        }
-                    }    
+
+                    if(refreshed.size() > oldMails.size()) {
+                        Platform.runLater( () -> {
+                            newMail = true;
+                            eList.setItems(refreshed);
+                            eList.refresh();
+                            eList.setVisible(true);
+                            if (newMail == true) {
+                                model.alert("New mail received!");
+                                newMail = !newMail; 
+                            }    
+                            oldMails.addAll(refreshed);
+                        });
+                    } else 
+                        if (refreshed.size() < oldMails.size()) {
+                        Platform.runLater( () -> {
+                            readArea.clear();
+                            eList.setItems(refreshed);
+                            eList.refresh();
+                            eList.setVisible(true);
+                            oldMails.addAll(refreshed);
+                        });
+                    }                       
                 }
             }
         } catch (IOException | IllegalStateException | InterruptedException e) {}
