@@ -29,7 +29,7 @@ public class ServerModel extends Observable {
     
     private ArrayList<Email> emails;
     private final HashMap<String, ArrayList<Email>> usersMails; 
-    private final HashMap<String, Boolean> accountRefresh;
+    private final HashMap<String, Integer> accountMaxId;
     private HandleRequest connected;
     private final String PATH = "./src/electronicmail/publics/db/";
     private BufferedWriter from;
@@ -38,7 +38,7 @@ public class ServerModel extends Observable {
     public ServerModel() {
         emails = new ArrayList<>();
         usersMails = new HashMap<>();
-        accountRefresh = new HashMap<>();
+        accountMaxId = new HashMap<>();
     }
     
     /**
@@ -128,7 +128,7 @@ public class ServerModel extends Observable {
             from = new BufferedWriter(sent);
             
             synchronized(LOCKID) {
-                writeflush(info, from);
+                writeflush(info, from, usr);
             }
             
             for (String to : toS) {
@@ -143,7 +143,7 @@ public class ServerModel extends Observable {
                 toWhere = new BufferedWriter(received);
                   
                 synchronized (LOCKID) {
-                    writeflush(info, toWhere);
+                    writeflush(info, toWhere, to);
                 }
             }
                 from.close();
@@ -157,10 +157,17 @@ public class ServerModel extends Observable {
      *
      * @param a campi dell'email
      * @param buff
+     * @param usr
      * @throws IOException
      */
-    public void writeflush(String a[], BufferedWriter buff) throws IOException {
-        buff.append(maxId++ + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
+    public void writeflush(String a[], BufferedWriter buff, String usr) throws IOException {
+        if (accountMaxId.get(usr) != null) {
+            maxId = accountMaxId.get(usr);
+        } else {
+            maxId = 0;
+        }
+        buff.append(++maxId + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
+        accountMaxId.put(usr, maxId);
         //buff.flush();
     }
 
@@ -178,7 +185,7 @@ public class ServerModel extends Observable {
                 FileReader fr = new FileReader(received);
                 BufferedReader br = new BufferedReader(fr);
                 
-                String ln;
+                String ln;                
                 
                 while((ln = br.readLine()) != null) {
                     
@@ -186,6 +193,10 @@ public class ServerModel extends Observable {
                     ArrayList<String>to = new ArrayList<>();
                     to.add(line[2]);
              
+                    if (Integer.parseInt(line[0]) > maxId) {
+                        maxId = Integer.parseInt(line[0]);
+                    }
+                    
                     Email em = new Email(line[1], to, line[3], line[4]);
                     
                     em.setId(line[0]);
@@ -193,8 +204,10 @@ public class ServerModel extends Observable {
                     
                     
                     emails.add(em);
+                    
                 }                
                 usersMails.put(usr, emails);    
+                accountMaxId.put(usr, maxId);
                 
             } catch(IOException e) {
                 e.printStackTrace();
@@ -215,7 +228,7 @@ public class ServerModel extends Observable {
             while ((ln = br.readLine()) != null) {
                 String[] line = ln.split("§§");
                 if (!line[0].equals(em.getId())) {
-                    bw.append(ln);
+                    bw.append(ln + "\n");
                     //bw.flush();
                 }
             }

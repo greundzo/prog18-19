@@ -60,7 +60,7 @@ public class RefreshMails implements Runnable {
                                 }    
                                 oldMails.clear();
                                 oldMails.addAll(refreshed);
-                                System.out.println(refreshed.size() + "AND" + oldMails.size());
+                                //System.out.println(refreshed.size() + "AND" + oldMails.size());
                             });
                         } else 
                             if (refreshed.size() < oldMails.size()) {

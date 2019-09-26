@@ -1,50 +1,6 @@
-0§§nico@unito.it§§wally@unito.it§§Avanzamento lavori§§Il progetto procede bene. Siamo riusciti a fare si che l'area di testo vada a capo automaticamente quando il testo eccede le dimensioni, bravi ragazzi!§§2019-09-23T10:00:57.906§§false§§eof
-1§§nico@unito.it§§ali@unito.it§§Ciao§§Ciao come va?§§2019-09-23T10:00:57.906§§false§§eof
-2§§nico@unito.it§§carlo@unito.it§§sas§§oggi ci mettiamo e finiamo§§2019-09-23T10:00:57.906§§false§§eof
-3§§nico@unito.it§§carlo@unito.it§§avanzamento§§abbiamo quasi finito§§ siate contenti :)§§false§§eof
-4§§nico@unito.it§§wally@unito.it§§hola§§we, allora?§§2019-09-23T10:25:21.051§§false§§eof
-5§§nico@unito.it§§carlo@unito.it;ali@unito.it§§prova send multiplo§§prova uno due, tre§§2019-09-23T10:31:47.993§§false§§eof
-0§§nico@unito.it§§ali@unito.it;wally@unito.it;carlo@unito.it§§prova delete§§aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa§§2019-09-23T18:09:59.535§§eof
-0§§nico@unito.it§§wally@unito.it;ali@unito.it;carlo@unito.it§§elimina1§§dfghj§§2019-09-23T18:22:30.273§§eof
-4§§nico@unito.it§§wally@unito.it;ali@unito.it;carlo@unito.it§§elimina2§§sdfgjl§§2019-09-23T18:22:39.883§§eof
-8§§nico@unito.it§§wally@unito.it;ali@unito.it;carlo@unito.it§§elimina3§§gdgfgf§§2019-09-23T18:22:48.227§§eof
-12§§nico@unito.it§§wally@unito.it;ali@unito.it;carlo@unito.it§§elimina4§§gbeynsrhsnt§§2019-09-23T18:22:56.980§§eof
-0§§nico@unito.it§§ali@unito.it;wally@unito.it§§elimina5§§dfbsb§§2019-09-23T18:27:47.705§§eof
-3§§nico@unito.it§§ali@unito.it;wally@unito.it§§elimina6§§svterybty§§2019-09-23T18:27:55.423§§eof
-0§§nico@unito.it§§wally@unito.it§§elimina1§§fshgsbrt§§2019-09-23T18:34:30.749§§eof
-2§§nico@unito.it§§wally@unito.it§§elimina2§§bhsdhns§§2019-09-23T18:34:37.772§§eof
-4§§nico@unito.it§§wally@unito.it§§elimina3§§avwrtbte§§2019-09-23T18:34:45.511§§eof
-6§§nico@unito.it§§wally@unito.it§§elimina4§§VWTYYRUNRN§§2019-09-23T18:35:05.814§§eof
-8§§nico@unito.it§§wally@unito.it§§elimina1§§1§§2019-09-23T18:36:28.867§§eof
-10§§nico@unito.it§§wally@unito.it§§2§§2§§2019-09-23T18:36:33.689§§eof
-12§§nico@unito.it§§wally@unito.it§§3§§3§§2019-09-23T18:36:38.441§§eof
-14§§nico@unito.it§§wally@unito.it§§4§§4§§2019-09-23T18:36:43.383§§eof
-0§§nico@unito.it§§ali@unito.it§§1§§1§§2019-09-23T18:57:01.291§§eof
-2§§nico@unito.it§§ali@unito.it§§2§§2§§2019-09-23T18:57:07.571§§eof
-4§§nico@unito.it§§ali@unito.it§§3§§3§§2019-09-23T18:57:11.975§§eof
-6§§nico@unito.it§§ali@unito.it§§4§§4§§2019-09-23T18:57:17.311§§eof
-8§§nico@unito.it§§ali@unito.it§§5§§5§§2019-09-23T18:57:22.871§§eof
-10§§nico@unito.it§§ali@unito.it§§6§§6§§2019-09-23T18:57:27.959§§eof
-0§§nico@unito.it§§ali@unito.it§§1§§1§§2019-09-23T19:00:39.946§§eof
-2§§nico@unito.it§§ali@unito.it§§2§§2§§2019-09-23T19:00:45.123§§eof
-0§§nico@unito.it§§ali@unito.it§§1§§1§§2019-09-23T19:05:55.714§§eof
-2§§nico@unito.it§§ali@unito.it§§2§§2§§2019-09-23T19:06:00.073§§eof
-0§§nico@unito.it§§wally@unito.it§§1§§diocan§§2019-09-23T19:08:56.381§§eof
-2§§nico@unito.it§§wally@unito.it;ali@unito.it§§3§§vbnk§§2019-09-23T19:09:16.487§§eof
-0§§nico@unito.it§§wally@unito.it§§bella§§yo§§2019-09-24T21:25:09.736§§eof
-2§§nico@unito.it§§wally@unito.it;ali@unito.it§§refr graph§§yoyoyo§§2019-09-24T21:25:53.601§§eof
-0§§nico@unito.it§§carlo@unito.it§§ciao carlo§§bella§§2019-09-24T22:03:29.480§§eof
-0§§nico@unito.it§§ali@unito.it;wally@unito.it§§ciao§§yo§§2019-09-25T15:50:36.553§§eof
-3§§nico@unito.it§§ali@unito.it§§ciao1§§yo§§2019-09-25T15:50:47.450§§eof
-5§§nico@unito.it§§wally@unito.it§§we§§yo§§2019-09-25T15:50:57.808§§eof
-7§§nico@unito.it§§nico@unito.it§§ciao2§§ehi§§2019-09-25T15:51:07.003§§eof
-9§§nico@unito.it§§nico@unito.it§§yo§§yo§§2019-09-25T15:51:28.782§§eof
-11§§nico@unito.it§§carlo@unito.it;ali@unito.it;wally@unito.it;cavia@mail.com§§prova send mult3§§ciao ciao ciao§§2019-09-25T15:55:14.565§§eof
-0§§nico@unito.it§§nico@unito.it§§Ciao§§yo§§2019-09-26T16:27:43.117§§eof
-0§§nico@unito.it§§nico@unito.it§§ciao§§ciao§§2019-09-26T16:49:47.548§§eof
-0§§nico@unito.it§§wally@unito.it§§yobro§§yobro§§2019-09-26T16:55:16.004§§eof
-2§§nico@unito.it§§nico@unito.it§§yobro§§yobro§§2019-09-26T16:55:27.951§§eof
-0§§nico@unito.it§§carlo@unito.it§§yoyo§§yoyo§§2019-09-26T17:12:34.300§§eof
-4§§nico@unito.it§§carlo@unito.it§§Re:ciao nico§§ciao carlo§§2019-09-26T17:15:27.039§§eof
-0§§nico@unito.it§§nico@unito.it§§provame§§provameee§§2019-09-26T17:28:56.589§§eof
-0§§nico@unito.it§§carlo@unito.it§§Re:progetto§§si domani lo finiamo§§2019-09-26T17:31:51.973§§eof
+0§§nico@unito.it§§ali@unito.it;waly@unito.it;carlo@unito.it§§send multiplo§§yoooooo§§2019-09-26T18:23:16.442§§eof
+1§§nico@unito.it§§ali@unito.it§§id2§§ciao§§2019-09-26T18:23:47.840§§eof
+3§§nico@unito.it§§ali@unito.it§§ciao§§yo§§2019-09-26T18:23:55.051§§eof
+2§§nico@unito.it§§carlo@unito.it§§ciao§§come va§§2019-09-26T18:29:38.194§§eof
+4§§nico@unito.it§§carlo@unito.it§§Re:Re:ciao§§non male. finito sas?§§2019-09-26T18:30:39.077§§eof
+5§§nico@unito.it§§carlo@unito.it§§Re:Re:Re:Re:ciao§§lunedì orale, speriamo bene§§2019-09-26T18:38:40.873§§eof
