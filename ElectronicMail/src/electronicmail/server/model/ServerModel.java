@@ -86,6 +86,7 @@ public class ServerModel extends Observable {
             case "ans":
             case "ansall":
             case "forward":
+                
             case "delete":
                 deleteEmail(usr, email);
                 setChanged();

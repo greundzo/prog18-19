@@ -7,6 +7,8 @@ package electronicmail.client.controller;
 
 import electronicmail.client.model.*;
 import electronicmail.publics.Email;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,11 +26,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import java.util.regex.*;  
+
 
 /**
  * FXML Controller class
@@ -259,4 +268,27 @@ public class ReadMailController implements Initializable, Observer {
         eList.setItems((ObservableList<Email>) obj);
         eList.setVisible(true);*/
     }
+    
+    // --------------metodo per display oggetto e mittente cella nella list ------------
+    private void updateCell() {
+        eList.setCellFactory(param -> new ListCell<Email>() {
+             {
+                @Override
+                protected void updateItem(Email email, boolean empty) {
+                    super.updateItem(email, empty);
+                    
+                    if (empty || email == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        HBox hbox = new HBox(10); 
+                        String prev = "Sender: " + email.getTo() + "\nObject: " +
+                                (email.getSubject().length() > 15? email.getSubject().substring(0, 20) + "..." : email.getSubject());
+                        setGraphic(hbox);
+                    }
+                }
+            };
+        });
+    }
+
 }

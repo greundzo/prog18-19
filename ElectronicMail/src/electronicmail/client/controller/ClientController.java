@@ -80,11 +80,14 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private void loginAction(ActionEvent event) {
         try {
-            if(choiceUser.getText() != null) {
+            if(choiceUser.getText() != null /*&& useremailCheck()== true SCOMMENTALO SE VA BENE IL CONTROLLO */ ) {
                 model.setUser(choiceUser.getText());
                 model.logRequest();
                 loadClient();
             }
+            else
+            {model.alert("INVALID EMAIL");}
+        
         } catch (IOException e) {
             model.alert("SERVER OFFLINE");
         }

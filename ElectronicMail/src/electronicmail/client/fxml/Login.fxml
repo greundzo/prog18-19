@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?fxml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -14,5 +15,10 @@
         <Label fx:id="label" layoutX="197.0" layoutY="161.0" minHeight="16" minWidth="69" />
       <Label fx:id="ghostUserLabel" layoutX="96.0" layoutY="162.0" prefHeight="15.0" prefWidth="129.0" textFill="#e41010" />
       <TextField fx:id="choiceUser" layoutX="75.0" layoutY="75.0" />
+      <Label layoutX="117.0" layoutY="30.0" text="Login" textAlignment="CENTER" textFill="#464141">
+         <font>
+            <Font name="Arial Bold Italic" size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
