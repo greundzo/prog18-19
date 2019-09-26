@@ -216,6 +216,7 @@ public class ServerModel extends Observable {
                 String[] line = ln.split("§§");
                 if (!line[0].equals(em.getId())) {
                     bw.append(ln);
+                    //bw.flush();
                 }
             }
             br.close();

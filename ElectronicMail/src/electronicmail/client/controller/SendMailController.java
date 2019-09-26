@@ -17,9 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import electronicmail.publics.Email;
 import java.util.ArrayList;
@@ -33,15 +30,9 @@ public class SendMailController implements Initializable, Observer {
 
     private ClientModel model;
     private Stage stage;
-    private boolean bold = false, italic = false, underlined = false;
+
     @FXML
     private Button goBackButton;
-    @FXML
-    private Button sendButton;
-    @FXML
-    private Button boldButton;
-    @FXML
-    private Button underButton;
     @FXML
     private Button cursiveButton;
     @FXML
@@ -67,33 +58,6 @@ public class SendMailController implements Initializable, Observer {
     
     public void getModel(ClientModel m) {
         model = m;
-    }
-
-    @FXML
-    public void underText(ActionEvent event) {
-        
-    }
-    
-    @FXML
-    public void boldText(ActionEvent event) {
-        if (!bold) {
-            txtArea.setFont(Font.font("Serif", FontWeight.BOLD, 13));
-            bold = !bold;
-        } else {
-            txtArea.setFont(Font.font("Serif", FontWeight.NORMAL, 13));
-            bold = !bold;
-        }  
-    }
-    
-    @FXML
-    public void cursiveText(ActionEvent event) {
-        if (!italic) {
-            txtArea.setFont(Font.font("Serif", FontPosture.ITALIC, 13));
-            italic = !italic;
-        } else {
-            txtArea.setFont(Font.font("Serif", FontPosture.REGULAR, 13));
-            italic = !italic;
-        }    
     }
     
     @FXML
@@ -129,12 +93,6 @@ public class SendMailController implements Initializable, Observer {
                 toLabel.setText(email.getFrom());
                 break;
             case "reply all":
-                /*    MODO ALTERNATIVO DI FARLO ma credo che quello sotto possa funzionare 
-                String mittenti = email.getFrom().get(0);
-                for (int i = 1; i < email.getFrom().size(); i++) {
-                mittenti += "," + emails.getFrom().get(i);
-                }
-                */
                 subLabel.setText("Re:" + email.getSubject());
                 toLabel.setText(email.getFrom() + email.getTo().remove(model.getUser()));                
                 break;           

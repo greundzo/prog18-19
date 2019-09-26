@@ -7,8 +7,6 @@ package electronicmail.client.controller;
 
 import electronicmail.client.model.*;
 import electronicmail.publics.Email;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,12 +28,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import java.util.regex.*;  
 
 
 /**
@@ -92,6 +86,25 @@ public class ReadMailController implements Initializable, Observer {
                     try { readMailContent(new_val); } catch (NullPointerException e) {}                       
             }
         });
+        
+        eList.setCellFactory(param -> new ListCell<Email>() {             
+            @Override
+            protected void updateItem(Email email, boolean empty) {
+                super.updateItem(email, empty);
+
+                if (empty || email == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    HBox hbox = new HBox(10); 
+                    String prev = "From: " + email.getTo().toString() + "\nSubject: " +
+                            (email.getSubject().length() > 15? email.getSubject().substring(0, 20) + "..." : email.getSubject());
+                    Label lab = new Label(prev);
+                    hbox.getChildren().addAll(lab);
+                    setGraphic(hbox);
+                }
+            }
+        });
     }
 
     public void getModel(ClientModel m){
@@ -126,6 +139,7 @@ public class ReadMailController implements Initializable, Observer {
                 sendWidget(null);
             } catch (IOException e) {
                 model.alert("Internal error. (Code Error: 10141)");
+                e.printStackTrace();
             }
         }
     }
@@ -180,6 +194,7 @@ public class ReadMailController implements Initializable, Observer {
                 if (currentEmail != null) {
                     model.deleteRequest(currentEmail);
                     readArea.clear();
+                    //updateCell();
                 }
             } catch (IOException e) {
                 model.alert("Internal error. (Code Error: 10128)");
@@ -259,36 +274,17 @@ public class ReadMailController implements Initializable, Observer {
             }
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10141)");
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void update(Observable obs, Object obj) {
-        /*eList.getItems().clear();
-        eList.setItems((ObservableList<Email>) obj);
-        eList.setVisible(true);*/
-    }
+    public void update(Observable obs, Object obj) {}
     
     // --------------metodo per display oggetto e mittente cella nella list ------------
     private void updateCell() {
-        eList.setCellFactory(param -> new ListCell<Email>() {
-             {
-                @Override
-                protected void updateItem(Email email, boolean empty) {
-                    super.updateItem(email, empty);
-                    
-                    if (empty || email == null) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        HBox hbox = new HBox(10); 
-                        String prev = "Sender: " + email.getTo() + "\nObject: " +
-                                (email.getSubject().length() > 15? email.getSubject().substring(0, 20) + "..." : email.getSubject());
-                        setGraphic(hbox);
-                    }
-                }
-            };
-        });
+        
     }
-
 }
+
+

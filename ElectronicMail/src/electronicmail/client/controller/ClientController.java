@@ -80,7 +80,7 @@ public class ClientController implements Initializable, Observer {
     @FXML
     private void loginAction(ActionEvent event) {
         try {
-            if(choiceUser.getText() != null /*&& useremailCheck()== true SCOMMENTALO SE VA BENE IL CONTROLLO */ ) {
+            if(choiceUser.getText() != null && model.userEmailCheck(choiceUser.getText())) {
                 model.setUser(choiceUser.getText());
                 model.logRequest();
                 loadClient();

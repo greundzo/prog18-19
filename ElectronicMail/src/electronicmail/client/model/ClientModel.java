@@ -16,7 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import electronicmail.publics.Email;
 import java.util.Collections;
-import java.util.regex.*;  
+import java.util.regex.Matcher;  
+import java.util.regex.Pattern;
 
 
 
@@ -115,22 +116,18 @@ public class ClientModel extends Observable {
     }
 
     public ObservableList<Email> getObMails() {
-        Collections.reverse(emails);
-        emList = FXCollections.observableArrayList();
-        emList.setAll(emails);
+        if (emails != null) {
+            Collections.reverse(emails);
+            emList = FXCollections.observableArrayList();
+            emList.setAll(emails);
+        }    
         return emList;
     }
-    public boolean useremailCheck(String user){
-        
+    
+    public boolean userEmailCheck(String user){       
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(regex);
-        user = //passagli la stringa e dovrebbe funzionare 
-        
+        Pattern pattern = Pattern.compile(regex);       
         Matcher matcher = pattern.matcher(user);
-        if( matcher.matches()){
-            return true;
-        }
-        else 
-            return false;                               
+        return matcher.matches();                               
     }
 }

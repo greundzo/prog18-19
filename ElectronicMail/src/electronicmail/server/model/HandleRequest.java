@@ -44,10 +44,8 @@ public class HandleRequest implements Runnable {
             email = (Email) in.readObject();
             
             if (request.equals("refresh")) {
-                //new Thread(() -> {
-                    Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email, in);
-                    new Thread(fresh).start();
-                //}).start();
+                Runnable fresh = new RefreshHandle(socket, server, area, model, user, request, email, in);
+                new Thread(fresh).start();
             } else {
                 model.logAction(user, request, email);
                 this.stop();
