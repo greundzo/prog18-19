@@ -161,7 +161,7 @@ public class ServerModel extends Observable {
      */
     public void writeflush(String a[], BufferedWriter buff) throws IOException {
         buff.append(maxId++ + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
-        buff.flush();
+        //buff.flush();
     }
 
     public void refresh(String usr) {

@@ -97,8 +97,8 @@ public class ReadMailController implements Initializable, Observer {
                     setGraphic(null);
                 } else {
                     HBox hbox = new HBox(10); 
-                    String prev = "From: " + email.getTo().toString() + "\nSubject: " +
-                            (email.getSubject().length() > 15? email.getSubject().substring(0, 20) + "..." : email.getSubject());
+                    String prev = "From: " + (email.getFrom().length() > 15 ? email.getFrom().substring(0,10) + "..." : email.getFrom()) + "\nSubject: " +
+                            (email.getSubject().length() > 15 ? email.getSubject().substring(0, 10) + "..." : email.getSubject());
                     Label lab = new Label(prev);
                     hbox.getChildren().addAll(lab);
                     setGraphic(hbox);
