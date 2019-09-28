@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import electronicmail.publics.Email;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * FXML Controller class
@@ -94,10 +95,30 @@ public class SendMailController implements Initializable, Observer {
                 break;
             case "reply all":
                 subLabel.setText("Re:" + email.getSubject());
-                toLabel.setText(email.getFrom() + email.getTo().remove(model.getUser()));                
-                break;           
+                /*
+                Object all[] = email.getTo().toArray();
+                ArrayList<String> to = new ArrayList<>();
                 
+                for (Object a : all) {
+                    String me = (String)a;
+                    if(!me.equals(model.getUser())) {
+                        to.add(me);
+                    }
+                }                
+                String formatted = formatString(to);
+                */
+                toLabel.setText(email.getFrom() + ";" + email.getTo().toString().replace(",", ";").replace("[", "").replace("]", "") );                
+                break;                                     
         }
+    }
+    
+    public String formatString(ArrayList<String> myArrayList) {
+        String formattedString = myArrayList.toString()
+        .replace(",", ";")  //remove the commas
+        .replace("[", "")  //remove the right bracket
+        .replace("]", "")  //remove the left bracket
+        .trim(); 
+        return formattedString;//remove trailing spaces from partially initialized arrays
     }
     
     @Override

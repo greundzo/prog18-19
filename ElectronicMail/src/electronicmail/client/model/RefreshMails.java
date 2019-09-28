@@ -54,10 +54,10 @@ public class RefreshMails implements Runnable {
                                 eList.setItems(refreshed);
                                 eList.refresh();
                                 eList.setVisible(true);
-                                if (newMail == true) {
+                                /*if (newMail == true) {
                                     model.alert("New mail received!");
                                     newMail = !newMail; 
-                                }    
+                                } */   
                                 oldMails.clear();
                                 oldMails.addAll(refreshed);
                                 //System.out.println(refreshed.size() + "AND" + oldMails.size());
@@ -76,6 +76,6 @@ public class RefreshMails implements Runnable {
                     }
                 }
             }
-        } catch (IOException | IllegalStateException | InterruptedException e) {}
+        } catch (NullPointerException | IOException | IllegalStateException | InterruptedException e) {}
     }
 }

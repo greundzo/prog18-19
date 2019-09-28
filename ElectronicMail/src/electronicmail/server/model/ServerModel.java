@@ -83,14 +83,10 @@ public class ServerModel extends Observable {
                 setChanged();
                 notifyObservers(wrote);
                 break;
-            case "ans":
-            case "ansall":
-            case "forward":
-                
             case "delete":
                 deleteEmail(usr, email);
                 setChanged();
-                notifyObservers(usr + " has deleted an email");
+                notifyObservers(usr + " has deleted email with id " + email.getId());
                 break;
             case "refresh":
                 refresh(usr);
@@ -161,13 +157,9 @@ public class ServerModel extends Observable {
      * @throws IOException
      */
     public void writeflush(String a[], BufferedWriter buff, String usr) throws IOException {
-        if (accountMaxId.get(usr) != null) {
-            maxId = accountMaxId.get(usr);
-        } else {
-            maxId = 0;
-        }
+        maxId = getMaxId(usr);
         buff.append(++maxId + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
-        accountMaxId.put(usr, maxId);
+        //accountMaxId.put(usr, maxId);
         //buff.flush();
     }
 
@@ -193,9 +185,9 @@ public class ServerModel extends Observable {
                     ArrayList<String>to = new ArrayList<>();
                     to.add(line[2]);
              
-                    if (Integer.parseInt(line[0]) > maxId) {
+                    /*if (Integer.parseInt(line[0]) > maxId) {
                         maxId = Integer.parseInt(line[0]);
-                    }
+                    }*/
                     
                     Email em = new Email(line[1], to, line[3], line[4]);
                     
@@ -207,7 +199,7 @@ public class ServerModel extends Observable {
                     
                 }                
                 usersMails.put(usr, emails);    
-                accountMaxId.put(usr, maxId);
+                //accountMaxId.put(usr, maxId);
                 
             } catch(IOException e) {
                 e.printStackTrace();
@@ -242,8 +234,8 @@ public class ServerModel extends Observable {
             ex.printStackTrace();
         }
     }
-    public String maxId(String usr)throws IOException {
-        
+    
+    public int getMaxId(String usr) throws IOException {       
         
         FileReader fr = new FileReader(PATH + "received/" + usr + ".txt");
         BufferedReader br = new BufferedReader(fr);
@@ -252,15 +244,16 @@ public class ServerModel extends Observable {
         while(br.readLine()!= null){
             lines++;    
         }
-        return Integer.toString(lines);
+        
+        return lines; //Integer.toString(lines);
         
         
         
-        // questo funziona solo nel caso in cui ogni utenta ha una directory propria 
-        // lo lascio solo perché non è male come metodo alternativo e potrebbe tornare utile
-        //nella vita *io che faccio okay con la mano*  
-        //Path path = Paths.get(PATH+"received/"+ usr );
-        //long lines = usr.lines(path).count(); 
+        /* questo funziona solo nel caso in cui ogni utenta ha una directory propria 
+         lo lascio solo perché non è male come metodo alternativo e potrebbe tornare utile
+        nella vita *io che faccio okay con la mano*  
+        Path path = Paths.get(PATH+"received/"+ usr );
+        long lines = usr.lines(path).count(); */
     }
 }
 
