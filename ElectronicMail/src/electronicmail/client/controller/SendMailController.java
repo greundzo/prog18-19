@@ -95,30 +95,23 @@ public class SendMailController implements Initializable, Observer {
                 break;
             case "reply all":
                 subLabel.setText("Re:" + email.getSubject());
-                /*
-                Object all[] = email.getTo().toArray();
-                ArrayList<String> to = new ArrayList<>();
+                String tos[] = email.getTo().get(0).split(";");
+  
+                String[] destinations = removeUser(tos);
                 
-                for (Object a : all) {
-                    String me = (String)a;
-                    if(!me.equals(model.getUser())) {
-                        to.add(me);
-                    }
-                }                
-                String formatted = formatString(to);
-                */
-                toLabel.setText(email.getFrom() + ";" + email.getTo().toString().replace(",", ";").replace("[", "").replace("]", "") );                
+                toLabel.setText(email.getFrom() + ";" + Arrays.toString(destinations).replace(",", ";").replace("[", "").replace("]","") );                
                 break;                                     
         }
     }
     
-    public String formatString(ArrayList<String> myArrayList) {
-        String formattedString = myArrayList.toString()
-        .replace(",", ";")  //remove the commas
-        .replace("[", "")  //remove the right bracket
-        .replace("]", "")  //remove the left bracket
-        .trim(); 
-        return formattedString;//remove trailing spaces from partially initialized arrays
+    public String[] removeUser(String[] tos) {
+        String finals[] = new String[tos.length-1];
+        for (int i = 0, k = 0; i < tos.length; i++) {
+            if (!tos[i].equals(model.getUser())) {
+                finals[k++] = tos[i];
+            }
+        }
+        return finals;
     }
     
     @Override

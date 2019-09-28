@@ -36,7 +36,7 @@ public class RefreshMails implements Runnable {
         try {
             synchronized(LOCK) {
                 model.refreshRequest();
-                Thread.sleep(100);
+                Thread.sleep(400);
                 ObservableList<Email> oldMails = model.getObMails();
                 eList.setItems(oldMails);
                 eList.refresh();

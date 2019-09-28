@@ -104,10 +104,10 @@ public class ServerModel extends Observable {
     public synchronized void writeEmail(Email em, String usr) throws IOException {
         
         try {            
-            ArrayList<String> whos = em.getTo();
-            String a = whos.get(0);
+            //ArrayList<String> whos = em.getTo();
+            String a = em.getTo().get(0);
             
-            String toS[] = a.split(";"); // splitto e trovo tutti i destinatari
+            String toS[] = em.getTo().get(0).split(";"); // splitto e trovo tutti i destinatari
             
             String inf = em.toString();
             String[] support = inf.split("§"); //splitto e ho tutti i campi
@@ -159,8 +159,7 @@ public class ServerModel extends Observable {
     public void writeflush(String a[], BufferedWriter buff, String usr) throws IOException {
         maxId = getMaxId(usr);
         buff.append(++maxId + "§§" + a[0] + "§§" + a[1] + "§§" + a[2] + "§§" + a[3] + "§§" + a[4] + "§§" + EOF + "\n");
-        //accountMaxId.put(usr, maxId);
-        //buff.flush();
+        buff.flush();
     }
 
     public void refresh(String usr) {
@@ -199,7 +198,6 @@ public class ServerModel extends Observable {
                     
                 }                
                 usersMails.put(usr, emails);    
-                //accountMaxId.put(usr, maxId);
                 
             } catch(IOException e) {
                 e.printStackTrace();
@@ -207,32 +205,33 @@ public class ServerModel extends Observable {
         }
     }
     
-    public synchronized void deleteEmail(String usr, Email em) {       
-        
-        try {
-            File temp = new File(PATH + "received/" + "temp.txt");
-            File received = new File(PATH + "received/" + usr + ".txt");
-            temp.createNewFile();
-            BufferedReader br = new BufferedReader(new FileReader(received));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(temp, true));
-            
-            String ln;
-            while ((ln = br.readLine()) != null) {
-                String[] line = ln.split("§§");
-                if (!line[0].equals(em.getId())) {
-                    bw.append(ln + "\n");
-                    //bw.flush();
+    public void deleteEmail(String usr, Email em) {       
+        synchronized (LOCKID) {
+            try {
+                File temp = new File(PATH + "received/" + "temp.txt");
+                File received = new File(PATH + "received/" + usr + ".txt");
+                temp.createNewFile();
+                BufferedReader br = new BufferedReader(new FileReader(received));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(temp, true));
+
+                String ln;
+                while ((ln = br.readLine()) != null) {
+                    String[] line = ln.split("§§");
+                    if (!line[0].equals(em.getId())) {
+                        bw.append(ln + "\n");
+                        //bw.flush();
+                    }
                 }
+                br.close();
+                bw.close();           
+
+                received.delete();
+                boolean renameTo = temp.renameTo(received);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-            br.close();
-            bw.close();           
-            
-            received.delete();
-            boolean renameTo = temp.renameTo(received);
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        }    
     }
     
     public int getMaxId(String usr) throws IOException {       
@@ -241,8 +240,10 @@ public class ServerModel extends Observable {
         BufferedReader br = new BufferedReader(fr);
         
         int lines = 0;
-        while(br.readLine()!= null){
-            lines++;    
+        String ln;
+        while((ln = br.readLine())!= null) {
+            String line[] = ln.split("§§");
+            lines = Integer.parseInt(line[0]);    
         }
         
         return lines; //Integer.toString(lines);

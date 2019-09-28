@@ -265,6 +265,7 @@ public class ReadMailController implements Initializable, Observer {
             Scene scene2 = new Scene(parent);
             Stage stage2 = new Stage();
             stage2.setTitle("@DiMailService");
+            stage2.setOnCloseRequest(e -> model.reverseWidget());
             stage2.setScene(scene2);
             stage2.show();
             control.getStage();
