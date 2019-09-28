@@ -242,7 +242,26 @@ public class ServerModel extends Observable {
             ex.printStackTrace();
         }
     }
- 
+    public String maxId(String usr)throws IOException {
+        
+        
+        FileReader fr = new FileReader(PATH + "received/" + usr + ".txt");
+        BufferedReader br = new BufferedReader(fr);
+        
+        int lines = 0;
+        while(br.readLine()!= null){
+            lines++;    
+        }
+        return Integer.toString(lines);
+        
+        
+        
+        // questo funziona solo nel caso in cui ogni utenta ha una directory propria 
+        // lo lascio solo perché non è male come metodo alternativo e potrebbe tornare utile
+        //nella vita *io che faccio okay con la mano*  
+        //Path path = Paths.get(PATH+"received/"+ usr );
+        //long lines = usr.lines(path).count(); 
+    }
 }
 
 
