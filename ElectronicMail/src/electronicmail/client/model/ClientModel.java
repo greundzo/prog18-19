@@ -16,8 +16,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import electronicmail.publics.Email;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.regex.Matcher;  
 import java.util.regex.Pattern;
+import javafx.scene.control.ButtonType;
 
 
 
@@ -28,6 +30,7 @@ import java.util.regex.Pattern;
 public class ClientModel extends Observable {
     private static String userName;
     private boolean widget;
+    private boolean confirmed;
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -37,6 +40,7 @@ public class ClientModel extends Observable {
     public ClientModel() {
         userName = null;
         widget = false;
+        confirmed = false;
     }
 
     public String getUser() {
@@ -57,13 +61,25 @@ public class ClientModel extends Observable {
     public void reverseWidget() {
         widget = !widget;
     }
+    
+    public boolean getConfirmed() {
+        return confirmed;
+    }
+    
+    public void confirm() {
+        confirmed = !confirmed;
+    }
 
-     public void alert(String text) {
+    public void alert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(Alert.AlertType.WARNING.toString());
         alert.setHeaderText(text);
         alert.setContentText("");
-        alert.showAndWait();
+        Optional<ButtonType> confirm = alert.showAndWait();
+
+        if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+            confirm();
+        }
     }
 
     public void request(String rqs, Email obj) throws IOException {

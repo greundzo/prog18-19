@@ -50,17 +50,15 @@ public class RefreshMails implements Runnable {
 
                         if(refreshed.size() > oldMails.size()) {
                             Platform.runLater( () -> {
-                                newMail = true;
                                 eList.setItems(refreshed);
                                 eList.refresh();
                                 eList.setVisible(true);
-                                /*if (newMail == true) {
-                                    model.alert("New mail received!");
-                                    newMail = !newMail; 
-                                } */   
+                                if (model.getConfirmed() == false) {
+                                    model.confirm();
+                                    model.alert("New mail received!");                                     
+                                }    
                                 oldMails.clear();
                                 oldMails.addAll(refreshed);
-                                //System.out.println(refreshed.size() + "AND" + oldMails.size());
                             });
                         } else 
                             if (refreshed.size() < oldMails.size()) {
