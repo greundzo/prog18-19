@@ -188,18 +188,16 @@ public class ReadMailController implements Initializable, Observer {
 
     @FXML
     private void deleteMailAction(ActionEvent event) {
-        if (!model.getWidget()) {
-            model.reverseWidget();
-            try {
-                if (currentEmail != null) {
-                    model.deleteRequest(currentEmail);
-                    readArea.clear();
-                    //updateCell();
-                }
-            } catch (IOException e) {
-                model.alert("Internal error. (Code Error: 10128)");
-            } 
-        }
+
+        try {
+            if (currentEmail != null) {
+                model.deleteRequest(currentEmail);
+                readArea.clear();
+            }
+        } catch (IOException e) {
+            model.alert("Internal error. (Code Error: 10128)");
+        } 
+        
     }
 
     /**
