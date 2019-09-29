@@ -34,46 +34,51 @@ public class RefreshMails implements Runnable {
     @Override
     public void run() {
         try {
-            synchronized(LOCK) {
-                model.refreshRequest();
-                Thread.sleep(400);
-                ObservableList<Email> oldMails = model.getObMails();
-                eList.setItems(oldMails);
-                eList.refresh();
-                eList.setVisible(true); 
+            if (model.getUser() != null) {
+                synchronized(LOCK) {
+                    model.refreshRequest();
+                    Thread.sleep(400);
+                    ObservableList<Email> oldMails = model.getObMails();
+                    eList.setItems(oldMails);
+                    eList.refresh();
+                    eList.setVisible(true); 
 
-                while(true)  {
-                    Thread.sleep(1000);
-                    synchronized (LOCK) {
-                        model.refreshRequest();
-                        ObservableList<Email> refreshed = model.getObMails();
+                    while(true)  {
 
-                        if(refreshed.size() > oldMails.size()) {
-                            Platform.runLater( () -> {
-                                eList.setItems(refreshed);
-                                eList.refresh();
-                                eList.setVisible(true);
-                                if (model.getConfirmed() == false) {
-                                    model.confirm();
-                                    model.alert("New mail received!");                                     
-                                }    
-                                oldMails.clear();
-                                oldMails.addAll(refreshed);
-                            });
-                        } else 
-                            if (refreshed.size() < oldMails.size()) {
-                            Platform.runLater( () -> {
-                                readArea.clear();
-                                eList.setItems(refreshed);
-                                eList.refresh();
-                                eList.setVisible(true);
-                                oldMails.clear();
-                                oldMails.addAll(refreshed);
-                            });
-                        }                       
+                        Thread.sleep(1000);
+                        synchronized (LOCK) {
+                            model.refreshRequest();
+                            ObservableList<Email> refreshed = model.getObMails();
+
+                            if(refreshed.size() > oldMails.size()) {
+                                Platform.runLater( () -> {
+                                    eList.setItems(refreshed);
+                                    eList.refresh();
+                                    eList.setVisible(true);
+                                    if (model.getUser() != null) {
+                                        if (model.getConfirmed() == false) {
+                                            model.confirm();
+                                            model.alert("New mail received!");                                     
+                                        }   
+                                    }    
+                                    oldMails.clear();
+                                    oldMails.addAll(refreshed);
+                                });
+                            } else 
+                                if (refreshed.size() < oldMails.size()) {
+                                Platform.runLater( () -> {
+                                    readArea.clear();
+                                    eList.setItems(refreshed);
+                                    eList.refresh();
+                                    eList.setVisible(true);
+                                    oldMails.clear();
+                                    oldMails.addAll(refreshed);
+                                });
+                            }    
+                        }
                     }
                 }
-            }
+            }    
         } catch (NullPointerException | IOException | IllegalStateException | InterruptedException e) {}
     }
 }

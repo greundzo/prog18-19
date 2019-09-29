@@ -69,18 +69,23 @@ public class SendMailController implements Initializable, Observer {
     
     @FXML
     private void send(ActionEvent event) {
-        ArrayList<String> arr = new ArrayList<>();
-        arr.add(toLabel.getText());
         
-        Email email = new Email(model.getUser(), arr, subLabel.getText(), txtArea.getText());
-        try {
-            model.sendRequest(email);
-            model.reverseWidget();
-            stage.close();
-        } catch (IOException e) {
-            model.alert("Connection interrupted. (Code Error: 11100)");
-            stage.close();
-        }    
+        String check[] = toLabel.getText().split(";");
+        if (checkTos(check)) {
+
+            ArrayList<String> arr = new ArrayList<>();
+            arr.add(toLabel.getText());
+
+            Email email = new Email(model.getUser(), arr, subLabel.getText(), txtArea.getText());
+            try {            
+                model.sendRequest(email);
+                model.reverseWidget();
+                stage.close();
+            } catch (IOException e) {
+                model.alert("Connection interrupted. (Code Error: 11100)");
+                stage.close();
+            }   
+        }
     }
     
     public void setParamethers(String action, Email email) {
@@ -97,21 +102,21 @@ public class SendMailController implements Initializable, Observer {
                 subLabel.setText("Re:" + email.getSubject());
                 String tos[] = email.getTo().get(0).split(";");
   
-                String[] destinations = removeUser(tos);
+                String[] destinations = model.removeUser(tos);
                 
                 toLabel.setText(email.getFrom() + ";" + Arrays.toString(destinations).replace(",", ";").replace("[", "").replace("]","") );                
                 break;                                     
         }
     }
     
-    public String[] removeUser(String[] tos) {
-        String finals[] = new String[tos.length-1];
-        for (int i = 0, k = 0; i < tos.length; i++) {
-            if (!tos[i].equals(model.getUser())) {
-                finals[k++] = tos[i];
+    public boolean checkTos(String[] checks) {
+        for (String c : checks) {
+            if (!model.userEmailCheck(c)) {
+                model.alert("Invalid email address");
+                return false;
             }
         }
-        return finals;
+        return true;
     }
     
     @Override

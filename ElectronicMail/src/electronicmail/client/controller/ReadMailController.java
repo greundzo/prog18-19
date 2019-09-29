@@ -10,6 +10,7 @@ import electronicmail.publics.Email;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -120,14 +121,15 @@ public class ReadMailController implements Initializable, Observer {
         currentEmail = email;
         readArea.setVisible(true);
         readArea.setDisable(false);
-        ArrayList<String> arr = new ArrayList(email.getTo());
-        arr.remove(model.getUser());
+        String tos[] = email.getTo().get(0).split(";");
+  
+        String[] destinations = model.removeUser(tos);
         readArea.setText(
-                "DATA: " + email.getDate() + "\n" +
-                "MITTENTE: " + email.getFrom() + "\n" +
-                "ALTRI DESTINATARI: " + arr.toString() + "\n\n" +
-                "OGGETTO: " + email.getSubject() + "\n\n" +
-                "TESTO: " + "\n" + email.getText());
+                "DATE: " + email.getDate() + "\n" +
+                "SENDER: " + email.getFrom() + "\n" +
+                "OTHER RECEIVERS: " + Arrays.toString(destinations).replace(",", ";").replace("[", "").replace("]","") + "\n\n" +
+                "SUBJECT: " + email.getSubject() + "\n\n" +
+                "TEXT: " + "\n" + email.getText());
           
     }
 

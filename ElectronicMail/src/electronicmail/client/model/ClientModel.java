@@ -69,10 +69,20 @@ public class ClientModel extends Observable {
     public void confirm() {
         confirmed = !confirmed;
     }
+    
+    public String[] removeUser(String[] tos) {
+        String finals[] = new String[tos.length-1];
+        for (int i = 0, k = 0; i < tos.length; i++) {
+            if (!tos[i].equals(userName)) {
+                finals[k++] = tos[i];
+            }
+        }
+        return finals;
+    }
 
     public void alert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(Alert.AlertType.WARNING.toString());
+        alert.setTitle(Alert.AlertType.WARNING.toString().concat(" - " + getUser()));
         alert.setHeaderText(text);
         alert.setContentText("");
         Optional<ButtonType> confirm = alert.showAndWait();

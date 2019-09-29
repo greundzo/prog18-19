@@ -9,7 +9,7 @@
    <children>
       <ScrollPane prefHeight="400.0" prefWidth="200.0">
          <content>
-            <TitledPane fx:id="mailList" animated="false" prefHeight="400.0" prefWidth="202.0" text="Posta in arrivo">
+            <TitledPane fx:id="mailList" animated="false" prefHeight="400.0" prefWidth="202.0" text="Received">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="194.0">
                      <children>
@@ -21,7 +21,7 @@
       </ScrollPane>
       <AnchorPane fx:id="readPane" layoutX="214.0" layoutY="17.0" prefHeight="375.0" prefWidth="363.0">
          <children>
-            <Button fx:id="mailButton" layoutY="2.0" mnemonicParsing="false" onAction="#newMailAction" text="Nuova Mail" />
+            <Button fx:id="mailButton" layoutY="2.0" mnemonicParsing="false" onAction="#newMailAction" text="New Mail" />
             <TextArea fx:id="readArea" editable="false" layoutY="33.0" prefHeight="264.0" prefWidth="363.0" />
             <GridPane alignment="CENTER" layoutX="-12.0" layoutY="302.0" prefHeight="42.0" prefWidth="375.0">
               <columnConstraints>
@@ -34,10 +34,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="ansButton" mnemonicParsing="false" onAction="#ansMailAction" prefHeight="25.0" prefWidth="79.0" text="Rispondi " />
-                  <Button fx:id="ansToAllButton" mnemonicParsing="false" onAction="#ansToAllAction" prefHeight="17.0" prefWidth="107.0" text="Rispondi a tutti " GridPane.columnIndex="1" />
-                  <Button fx:id="forwardButton" alignment="CENTER" mnemonicParsing="false" onAction="#forwardMailAction" text="Inoltra" GridPane.columnIndex="2" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMailAction" prefHeight="25.0" prefWidth="98.0" text="Elimina" GridPane.columnIndex="3" />
+                  <Button fx:id="ansButton" mnemonicParsing="false" onAction="#ansMailAction" prefHeight="25.0" prefWidth="79.0" text="Reply " />
+                  <Button fx:id="ansToAllButton" mnemonicParsing="false" onAction="#ansToAllAction" prefHeight="17.0" prefWidth="107.0" text="Reply All " GridPane.columnIndex="1" />
+                  <Button fx:id="forwardButton" alignment="CENTER" mnemonicParsing="false" onAction="#forwardMailAction" text="Forward" GridPane.columnIndex="2" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMailAction" prefHeight="25.0" prefWidth="98.0" text="Delete" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <Button fx:id="logoutButton" layoutX="300.0" layoutY="2.0" mnemonicParsing="false" onAction="#logoutAction" text="Logout" />
