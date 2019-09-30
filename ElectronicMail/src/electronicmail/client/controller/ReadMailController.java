@@ -9,7 +9,6 @@ import electronicmail.client.model.*;
 import electronicmail.publics.Email;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
@@ -141,7 +140,6 @@ public class ReadMailController implements Initializable, Observer {
                 sendWidget(null);
             } catch (IOException e) {
                 model.alert("Internal error. (Code Error: 10141)");
-                e.printStackTrace();
             }
         }
     }
@@ -275,7 +273,6 @@ public class ReadMailController implements Initializable, Observer {
             }
         } catch (IOException e) {
             model.alert("Internal error. (Code Error: 10141)");
-            e.printStackTrace();
         }
     }
 

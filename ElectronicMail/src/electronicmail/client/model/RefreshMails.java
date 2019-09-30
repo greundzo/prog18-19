@@ -24,12 +24,6 @@ public class RefreshMails implements Runnable {
         eList = list;
         readArea = rAr;
     }
-
-    public void frameRefresh(ObservableList<Email> obs) {
-        eList.setItems(obs);
-        eList.refresh();
-        eList.setVisible(true);
-    }
     
     @Override
     public void run() {

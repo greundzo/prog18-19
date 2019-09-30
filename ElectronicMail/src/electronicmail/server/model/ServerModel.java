@@ -24,9 +24,7 @@ public class ServerModel extends Observable {
     
     
     public static int maxId = 0; // Id massimo email presente nel server
-    public static final Object LOCKID = new Object(); // lock usato per accedere in mutua esclusione alla variabile maxId
-    //2 righe superiori aggiunte da wally
-    
+    public static final Object LOCKID = new Object(); // lock usato per accedere in mutua esclusione alla variabile maxId    
     private ArrayList<Email> emails;
     private final HashMap<String, ArrayList<Email>> usersMails; 
     private final HashMap<String, Integer> accountMaxId;
@@ -104,7 +102,6 @@ public class ServerModel extends Observable {
     public synchronized void writeEmail(Email em, String usr) throws IOException {
         
         try {            
-            //ArrayList<String> whos = em.getTo();
             String a = em.getTo().get(0);
             
             String toS[] = em.getTo().get(0).split(";"); // splitto e trovo tutti i destinatari
@@ -183,10 +180,6 @@ public class ServerModel extends Observable {
                     String line[] = ln.split("§§");
                     ArrayList<String>to = new ArrayList<>();
                     to.add(line[2]);
-             
-                    /*if (Integer.parseInt(line[0]) > maxId) {
-                        maxId = Integer.parseInt(line[0]);
-                    }*/
                     
                     Email em = new Email(line[1], to, line[3], line[4]);
                     
@@ -200,7 +193,6 @@ public class ServerModel extends Observable {
                 usersMails.put(usr, emails);    
                 
             } catch(IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -219,7 +211,6 @@ public class ServerModel extends Observable {
                     String[] line = ln.split("§§");
                     if (!line[0].equals(em.getId())) {
                         bw.append(ln + "\n");
-                        //bw.flush();
                     }
                 }
                 br.close();
@@ -229,7 +220,6 @@ public class ServerModel extends Observable {
                 boolean renameTo = temp.renameTo(received);
 
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
         }    
     }
@@ -246,15 +236,7 @@ public class ServerModel extends Observable {
             lines = Integer.parseInt(line[0]);    
         }
         
-        return lines; //Integer.toString(lines);
-        
-        
-        
-        /* questo funziona solo nel caso in cui ogni utenta ha una directory propria 
-         lo lascio solo perché non è male come metodo alternativo e potrebbe tornare utile
-        nella vita *io che faccio okay con la mano*  
-        Path path = Paths.get(PATH+"received/"+ usr );
-        long lines = usr.lines(path).count(); */
+        return lines; 
     }
 }
 
