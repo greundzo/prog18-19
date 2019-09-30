@@ -48,6 +48,7 @@ public class ServerController implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        consolelog.setWrapText(true);
         servermodel = new ServerModel();
         servermodel.addObserver(this);
         logMsg("Server started");

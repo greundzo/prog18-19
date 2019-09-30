@@ -79,7 +79,7 @@ public class ServerModel extends Observable {
                 break;
             case "newmail":
                 writeEmail(email, usr);
-                Object wrote = usr + " has sent an email";
+                Object wrote = usr + " has sent an email to " + email.getTo().get(0);
                 setChanged();
                 notifyObservers(wrote);
                 break;
